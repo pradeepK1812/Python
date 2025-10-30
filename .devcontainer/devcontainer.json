@@ -8,7 +8,7 @@
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/git-lfs:1": {}
   },
-  "postCreateCommand": "pip install --upgrade pip && pip install black flake8 pytest",
+  "postCreateCommand": "pip install --upgrade pip && pip install black flake8 pytest && pip install -r requirements.txt || echo 'No requirements.txt found' ",
   "customizations": {
     "vscode": {
       "extensions": [
