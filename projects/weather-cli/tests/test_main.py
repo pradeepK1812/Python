@@ -1,5 +1,5 @@
 import pytest
-from src.weather import get_weather
+from weather import get_weather
 
 def test_weather_returns_valid_data():
     """Basic smoke test for get_weather function."""
