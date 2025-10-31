@@ -1,0 +1,38 @@
+# --- Python build/cache files ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Test / coverage / CI outputs ---
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# --- IDE / Editor specific ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Distribution / packaging ---
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# --- OS / misc ---
+.DS_Store
+Thumbs.db
+
+# --- Project specific ---
+# Ignore all logs or temp files
+*.log
+*.tmp
