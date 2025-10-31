@@ -10,6 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: projects/weather-cli
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
