@@ -2,13 +2,17 @@ name: Python CI
 
 on:
   push:
-    branches: [ "Python-Dev" ]
+    branches: [ "Python-dev" ]
   pull_request:
-    branches: [ "Python-Dev" ]
+    branches: [ "Python-dev" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project: [stats-visualizer, weather-cli]
 
     steps:
     - name: Checkout code
@@ -20,9 +24,12 @@ jobs:
         python-version: "3.12"
 
     - name: Install dependencies
+      working-directory: projects/${{ matrix.project }}
       run: |
         pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Run Tests
-      run: pytest -v
+      working-directory: projects/${{ matrix.project }}
+      run: |
+        pytest -v
