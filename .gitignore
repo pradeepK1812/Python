@@ -3,6 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Python cache
+*.pyc
+
+# Weather app cache
+weather_cache.json
+
 # --- Virtual environments ---
 .venv/
 venv/
