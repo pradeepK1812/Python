@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import t, norm
 
-def plot_t_convergence(df_values=[1, 3, 10, 30]):
+def plot_t_convergence(df_values=[1, 3, 10, 30], output_path="t_convergence.png"):
     x = np.linspace(-4, 4, 400)
     normal_pdf = norm.pdf(x)
 
@@ -23,9 +23,12 @@ def plot_t_convergence(df_values=[1, 3, 10, 30]):
     plt.legend()
     plt.tight_layout()
 
+    # ✅ Save inside function
+    plt.savefig(output_path)
+    return output_path
+
 
 if __name__ == "__main__":
-    plot_t_convergence()
+    output = plot_t_convergence()
+    print(f"Plot saved → {output}")
     plt.show()
-    plt.savefig("t_convergence.png")  # ✅ Save to file
-    print("Plot saved → t_convergence.png")

@@ -2,33 +2,27 @@ name: Python CI
 
 on:
   push:
-    branches: [ "*" ]
+    branches: [ "Python-dev" ]
   pull_request:
-    branches: [ "*" ]
+    branches: [ "Python-dev" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.12"
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
 
-      - name: Install Weather CLI dependencies
-        working-directory: weather-cli
-        run: |
-          pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Install Stats Visualizer dependencies
-        working-directory: stats-visualizer
-        run: |
-          pip install -r requirements.txt || true
-
-      - name: Run tests
-        run: |
-          pytest weather-cli/tests stats-visualizer/tests -vv
+    - name: Run Tests
+      run: pytest -v
