@@ -1,33 +1,31 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.stats import t, norm
 
-
-def plot_t_to_normal_convergence(df_values=None, save_path=None):
-    """
-    Plot how the t-distribution approaches the standard normal distribution.
-    """
-
-    if df_values is None:
-        df_values = [1, 5, 10, 30]
-
+def plot_t_convergence(df_values=[1, 3, 10, 30]):
     x = np.linspace(-4, 4, 400)
+    normal_pdf = norm.pdf(x)
 
     plt.figure(figsize=(10, 6))
-    plt.plot(x, norm.pdf(x), label="Normal (μ=0, σ=1)", linewidth=2)
 
+    # Plot Normal distribution
+    plt.plot(x, normal_pdf, label="Normal Distribution (µ=0, σ=1)", linewidth=2)
+
+    # Plot T distributions for each df
     for df in df_values:
-        plt.plot(x, t.pdf(x, df), linestyle="--", label=f"t-dist (df={df})")
+        t_pdf = t.pdf(x, df)
+        plt.plot(x, t_pdf, '--', linewidth=1.8, label=f"t-dist (df={df})")
 
-    plt.title("Convergence of t-Distribution to Normal")
-    plt.xlabel("Value")
-    plt.ylabel("Density")
-    plt.grid(alpha=0.3)
+    plt.title("Convergence of t-distribution to Normal distribution")
+    plt.xlabel("x")
+    plt.ylabel("Probability Density")
+    plt.grid(True, linestyle=":", alpha=0.6)
     plt.legend()
     plt.tight_layout()
 
-    if save_path:
-        plt.savefig(save_path)
-        return save_path
 
+if __name__ == "__main__":
+    plot_t_convergence()
     plt.show()
+    plt.savefig("t_convergence.png")  # ✅ Save to file
+    print("Plot saved → t_convergence.png")

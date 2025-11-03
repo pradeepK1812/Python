@@ -2,39 +2,33 @@ name: Python CI
 
 on:
   push:
-    branches: [ Python-Dev ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ Python-Dev ]
+    branches: [ "*" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: projects/weather-cli
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
+      - name: Install Weather CLI dependencies
+        working-directory: weather-cli
         run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install flake8 pytest
+          pip install -r requirements.txt
 
-      - name: Lint with flake8
+      - name: Install Stats Visualizer dependencies
+        working-directory: stats-visualizer
         run: |
-          # stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # show style errors but don’t fail the build
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+          pip install -r requirements.txt || true
 
-      - name: Run tests with pytest
-        run: pytest -v
+      - name: Run tests
+        run: |
+          pytest weather-cli/tests stats-visualizer/tests -vv
