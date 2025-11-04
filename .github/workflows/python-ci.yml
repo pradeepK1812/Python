@@ -36,6 +36,9 @@ jobs:
     - name: Install editable project
       run: pip install -e projects/${{ matrix.project }}
 
+    - name: Add src to PYTHONPATH
+      run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/projects/${{ matrix.project }}/src" >> $GITHUB_ENV
+
     - name: Run Tests
       working-directory: projects/${{ matrix.project }}
       run: pytest -v
