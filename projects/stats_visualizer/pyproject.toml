@@ -1,0 +1,12 @@
+[project]
+name = "stats_visualizer"
+version = "0.1.0"
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "scipy",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
