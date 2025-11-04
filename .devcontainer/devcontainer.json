@@ -1,7 +1,16 @@
 {
   "name": "Python Dev Environment",
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
-  "postCreateCommand": "pip install -r projects/stats-visualizer/requirements.txt && pip install -r projects/weather-cli/requirements.txt",
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    }
+  },
+
+  "postCreateCommand": "pip install --upgrade pip && pip install black flake8 pytest && pip install -r projects/stats-visualizer/requirements.txt && pip install -r projects/weather-cli/requirements.txt && sudo apt-get update && sudo apt-get install -y git-lfs && git lfs install",
+
   "customizations": {
     "vscode": {
       "extensions": [
