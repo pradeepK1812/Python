@@ -1,0 +1,11 @@
+[project]
+name = "weather-cli"
+version = "0.1.0"
+description = "A simple CLI to fetch weather data"
+requires-python = ">=3.8"
+dependencies = [
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
