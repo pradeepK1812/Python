@@ -4,12 +4,13 @@
 
   "features": {
     "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/git-lfs:2": {},
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.12"
     }
   },
 
-  "postCreateCommand": "pip install --upgrade pip && pip install black flake8 pytest && pip install -r projects/stats_visualizer/requirements.txt && pip install -r projects/weather-cli/requirements.txt && sudo apt-get update && sudo apt-get install -y git-lfs && git lfs install",
+  "postCreateCommand": "pip install --upgrade pip && pip install black flake8 pytest && pip install -r projects/stats-visualizer/requirements.txt && pip install -r projects/weather-cli/requirements.txt && git lfs install",
 
   "customizations": {
     "vscode": {
