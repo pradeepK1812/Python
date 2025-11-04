@@ -1,20 +1,14 @@
 {
   "name": "Python Dev Environment",
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
-  "features": {
-    "ghcr.io/devcontainers/features/python:1": {
-      "version": "3.12"
-    },
-    "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/git-lfs:1": {}
-  },
-  "postCreateCommand": "pip install --upgrade pip && pip install black flake8 pytest && pip install -r requirements.txt || echo 'No requirements.txt found' ",
+  "postCreateCommand": "pip install -r projects/stats-visualizer/requirements.txt && pip install -r projects/weather-cli/requirements.txt",
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-python.python",
         "ms-python.vscode-pylance",
-        "ms-toolsai.jupyter"
+        "ms-toolsai.jupyter",
+        "ms-python.black-formatter"
       ]
     }
   }
