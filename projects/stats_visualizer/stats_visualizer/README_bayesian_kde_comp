@@ -1,0 +1,130 @@
+# Bayesian Coin: KDE posterior vs Beta (conjugate) — README
+
+This README explains the nonparametric **KDE-style posterior** implementation you added (file: `stats_analyzer/bayesian_kde_coin.py`) and compares it to the classic **Beta conjugate prior** approach (file: `stats_analyzer/bayesian_coin.py`).
+
+It focuses on intuition, when to use each approach, how the KDE posterior is computed, and how to run and tune the code.
+
+---
+
+## TL;DR
+
+* **Beta (conjugate) posterior**: analytic, exact for Binomial/Bernoulli models. Very fast and requires only counts of heads/tails. Use when model assumptions (Bernoulli trials) hold and you want closed-form updates.
+
+* **KDE-style posterior (nonparametric)**: compute posterior on a grid (`prior(p) * likelihood(data | p)`), then smooth the grid with a Gaussian kernel to produce a continuous posterior estimate. Use when you want a flexible posterior (custom priors, multimodal shapes, or visual exploration) and are willing to trade compute for flexibility.
+
+---
+
+## Files you now have
+
+```
+projects/stats_visualizer/
+├─ stats_analyzer/
+│  ├─ bayesian_coin.py         # Beta conjugate implementation (classic)
+│  └─ bayesian_kde_coin.py     # KDE-style posterior (nonparametric)
+└─ README.md  <- (this file)
+```
+
+---
+
+## Quick usage
+
+### Run the KDE demo (saved PNG)
+
+```bash
+cd projects/stats_visualizer/stats_analyzer
+python bayesian_kde_coin.py
+```
+
+This will simulate 30 flips (default), compute the grid posterior, smooth it (Gaussian kernel), save a plot `bayes_kde_demo.png`, and print posterior mean & MAP.
+
+### Run the Beta demo
+
+```bash
+python bayesian_coin.py
+```
+
+This uses the conjugate Beta update and saves `bayes_coin_demo.png`.
+
+---
+
+## How the KDE posterior is computed (step-by-step)
+
+1. **Grid**: create a dense grid of `p` values in [0, 1], e.g. 1000 points.
+2. **Prior**: evaluate the prior function `prior(p)` on the grid. By default a uniform prior is used. You can supply any callable `prior_func(p)`.
+3. **Likelihood**: compute `L(p) = p^H * (1-p)^T` on the grid, where `H` and `T` are counts of heads/tails in your observed flips. To avoid numerical issues we clip `p` into `(eps, 1-eps)` before evaluation.
+4. **Unnormalized posterior**: `posterior_unnorm(p) = prior(p) * L(p)`.
+5. **Normalize (area = 1)**: divide by the numerical integral (e.g., trapezoidal rule) to get a proper density on the grid.
+6. **Smooth**: convolve the grid posterior with a **Gaussian kernel** (bandwidth `bw`) to create a smoothed continuous posterior. Finally renormalize.
+
+> The smoothing step is the KDE-like part: it turns the discrete grid posterior into a continuous, visually smooth density estimate.
+
+---
+
+## Intuition: Beta vs KDE (visual)
+
+```
+[Beta]                [KDE]
+Prior: Beta(a,b)      Prior: arbitrary function
+               analytic posterior          compute grid posterior
+              /\    narrow unimodal        grid (no parametric form)
+             /  \      exact                 smooth with gaussian kernel
+            /    \                            /-----\
+           /      \                          /       \
+    Beta(a+H,b+T)  <--- exact update     smoothed posterior (may be multimodal)
+```
+
+* Beta assumes the posterior is a Beta distribution (single-peak shape controlled by parameters).
+* KDE approach does not assume a parametric form — it can reveal multiple peaks or irregular shapes (rare for simple coin flips, but useful when using an empirical or multimodal prior).
+
+---
+
+## Tuning knobs
+
+* **grid_points** — number of points in `[0,1]` (default 1000). More points → finer resolution but more compute.
+* **bandwidth** — Gaussian kernel bandwidth (in p units). Typical values: `0.005–0.05`.
+
+  * Small bandwidth: less smoothing (preserve sharp features)
+  * Large bandwidth: heavy smoothing (oversmoothed, hides features)
+* **prior_func** — a callable accepting a NumPy array of p values and returning nonnegative densities. Example: a Beta(a,b) prior as `lambda p: p**(a-1) * (1-p)**(b-1)` (unnormalized is fine because code normalizes for plotting).
+
+---
+
+## When to use which?
+
+* **Use Beta** when:
+
+  * You have binomial data (coin flips) and want exact posterior updates.
+  * You prefer analytical efficiency and closed-form expressions (posterior mean, credible intervals computed easily from Beta).
+
+* **Use KDE** when:
+
+  * You want flexibility to visualize nonstandard priors.
+  * You are experimenting with priors that might be multimodal or empirical (e.g., mixture priors).
+  * You want to compare raw grid posterior and the smoothed posterior visually.
+
+---
+
+## Example: custom prior (mixture)
+
+```python
+# a bimodal prior example for p
+def bimodal_prior(p):
+    return 0.5 * (np.exp(-0.5*((p-0.2)/0.03)**2)) + 0.5 * (np.exp(-0.5*((p-0.8)/0.03)**2))
+
+model = BayesianKDECoin(prior_func=bimodal_prior, true_p=0.7)
+flips = model.simulate_flips(30)
+res = model.kde_posterior(flips, bandwidth=0.01, show_raw=True)
+```
+
+With a bimodal prior, the Beta conjugate update cannot express the two peaks — KDE can.
+
+---
+
+## Notes & limitations
+
+* Coin flips are simple binomial data — the Beta posterior is the exact Bayesian solution. The KDE version is mainly useful for visualization, custom priors, and educational purposes.
+* KDE smoothing introduces a hyperparameter (bandwidth) and may blur features or introduce artifacts if chosen poorly.
+* Numerical stability: the code clips `p` away from exact 0/1 when evaluating likelihood to avoid `0**0` or division issues.
+
+---
+
