@@ -1,0 +1,5 @@
+[project]
+name = "dsa"
+version = "0.0.0"
+description = "DSA examples for Python-Dev"
+authors = [{name="You", email="you@example.com"}]

@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        project: [stats_visualizer, weather-cli]
+        project: [stats_visualizer, weather-cli,dsa]
 
     steps:
     - name: Checkout code
