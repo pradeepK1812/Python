@@ -28,10 +28,24 @@ mc_means = np.array([
 # -----------------------------
 # Step 3: Bootstrapping
 # -----------------------------
-bootstrap_means = np.array([
-    np.random.choice(observed_data, size=SAMPLE_SIZE, replace=True).mean()
-    for _ in range(N_SIMULATIONS)
-])
+#bootstrap_means = np.array([
+ #   np.random.choice(observed_data, size=SAMPLE_SIZE, replace=True).mean()
+  #  for _ in range(N_SIMULATIONS)
+#])
+bootstrap_means = []
+
+for _ in range(N_SIMULATIONS):
+    # THIS is the bootstrap resampling step
+    resample = np.random.choice(
+        observed_data,
+        size=SAMPLE_SIZE,
+        replace=True
+    )
+
+    # statistic on resample
+    bootstrap_means.append(resample.mean())
+
+bootstrap_means = np.array(bootstrap_means)
 
 # -----------------------------
 # Step 4: Plot (save to PNG)
