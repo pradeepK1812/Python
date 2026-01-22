@@ -49,6 +49,25 @@ Track minimum length
 Key invariant
 
 Window sum controls validity
+==========================================
+
+
+Main algo-->
+
+for each element as right:
+    include element at right into window
+
+    while window is invalid:
+        remove element at left
+        move left forward
+
+    window is valid here
+    update answer
+
+
+
+
+=====================================
 
 3️⃣ Template C: Variable Window (Distinct / Frequency Based)
 Problem
