@@ -1,11 +1,13 @@
 import numpy as np
+import time
+
 
 # -------------------------
 # Generate synthetic data
 # -------------------------
 np.random.seed(42)
 
-N = 1000
+N = 1000000
 X = 2 * np.random.rand(N, 1)
 true_w = 3.5
 true_b = 1.2
@@ -25,6 +27,7 @@ epochs = 50
 # -------------------------
 # Training loop
 # -------------------------
+start = time.time()
 for epoch in range(epochs):
     y_pred = w * X + b
 
@@ -40,7 +43,8 @@ for epoch in range(epochs):
     b -= learning_rate * db
 
     print(f"Epoch {epoch:02d} | Loss={loss:.4f} | w={w:.3f} | b={b:.3f}")
-
+end = time.time()
+print(f"Training time: {end - start:.4f} seconds")
 print("\nFinal parameters:")
 print(f"w={w:.3f}, b={b:.3f}")
 
