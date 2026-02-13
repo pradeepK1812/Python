@@ -8,7 +8,10 @@ import time
 np.random.seed(42)
 
 N = 1000000
-X = 2 * np.random.rand(N, 1)
+#X = 2 * np.random.rand(N, 1) # nice well behaved data
+X = 10_000 * np.random.rand(N, 1)  # highly randomize data
+X = (X - X.mean()) / X.std()  # Normalization needed for highly randomize data
+
 true_w = 3.5
 true_b = 1.2
 noise = np.random.randn(N, 1) * 0.5
