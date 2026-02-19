@@ -123,3 +123,157 @@ Same optimization engine, new interpretation.
 
 Softmax + cross-entropy used in neural networks and GPT are direct generalizations of logistic regression.
 
+
+######################################################################################################
+
+## Week 2 — Logistic Regression: Scratch vs sklearn vs PyTorch
+
+We implemented binary classification in three different ways.
+All three solve the same mathematical problem.
+
+---
+
+# 1️⃣ From Scratch (NumPy)
+
+### What we controlled manually:
+- Linear model: z = wX + b
+- Sigmoid activation
+- Cross-entropy loss
+- Gradient derivation
+- Parameter updates
+- Normalization
+
+### Training loop:
+forward → compute loss → compute gradients → update parameters
+
+### Purpose:
+Understand math + optimization deeply.
+
+### Pros:
+✔ Full control  
+✔ Full visibility of gradients  
+✔ Strong intuition building  
+
+### Cons:
+✖ Not scalable  
+✖ Easy to introduce bugs  
+✖ No GPU support  
+
+---
+
+# 2️⃣ sklearn Version
+
+### What sklearn handled:
+- Sigmoid internally
+- Cross-entropy loss
+- Optimization solver (LBFGS by default)
+- Regularization
+- Numerical stability
+
+### What we controlled:
+- Train/test split
+- Scaling (StandardScaler)
+- Evaluation
+
+### Purpose:
+Industry baseline model.
+
+### Pros:
+✔ Fast  
+✔ Reliable  
+✔ Few lines of code  
+✔ Good for structured data  
+
+### Cons:
+✖ Limited flexibility  
+✖ Harder to customize training dynamics  
+
+---
+
+# 3️⃣ PyTorch Version
+
+### What PyTorch handled:
+- Automatic differentiation (autograd)
+- Stable BCEWithLogitsLoss
+- Optimizer (SGD/Adam)
+- Parameter tracking
+
+### What we controlled:
+- Model definition (nn.Linear)
+- Training loop
+- Learning rate
+- Optimizer choice
+
+### Purpose:
+Deep learning foundation.
+
+### Pros:
+✔ Fully scalable  
+✔ GPU compatible  
+✔ Same framework used for deep networks  
+✔ Maximum flexibility  
+
+### Cons:
+✖ More verbose than sklearn  
+✖ Requires understanding of tensors & gradients  
+
+---
+
+# 🔁 Core Mathematical Comparison
+
+| Component | Scratch | sklearn | PyTorch |
+|-----------|----------|----------|----------|
+| Linear model | Manual | Internal | nn.Linear |
+| Sigmoid | Manual | Internal | Inside BCEWithLogitsLoss |
+| Loss | Manual cross-entropy | Internal | BCEWithLogitsLoss |
+| Gradients | Manual formula | Solver | autograd |
+| Update rule | Gradient descent | Optimized solver | Optimizer.step() |
+| Scaling | Manual | StandardScaler | Manual |
+| Evaluation | Manual | accuracy_score | Tensor ops |
+
+---
+
+# 📐 Geometry Insight
+
+All three learned the same decision boundary:
+
+w x + b = 0
+
+Parameter values may differ due to:
+- normalization
+- optimization method
+- regularization
+
+But the separating hyperplane is equivalent.
+
+---
+
+# 🧠 Engineering Insight
+
+Scratch:
+    Learning tool
+
+sklearn:
+    Baseline production model
+
+PyTorch:
+    Deep learning foundation
+
+Real ML workflow:
+    Scratch (understand) →
+    sklearn (baseline) →
+    PyTorch (scale & customize)
+
+---
+
+# 🎯 Big Takeaway
+
+Classification =
+
+Linear regression  
++ sigmoid (probability mapping)  
++ cross-entropy loss  
+
+Same optimization engine across all frameworks.
+Only abstraction level changes.
+
