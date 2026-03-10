@@ -276,4 +276,335 @@ Linear regression
 
 Same optimization engine across all frameworks.
 Only abstraction level changes.
+####################################################################################
 
+## Probabilistic Foundations of Classification — MLE to Cross-Entropy
+
+Classification loss functions arise from Maximum Likelihood Estimation (MLE).
+
+---
+
+# Binary Classification (Logistic Regression)
+
+### Output and probability model
+
+Labels:
+y ∈ {0,1}
+
+Each label is modeled as a Bernoulli random variable:
+
+P(y | p) = pʸ (1 − p)¹⁻ʸ  
+
+where:
+
+p = σ(wx + b)
+
+is the predicted probability of class 1.
+
+---
+
+### Likelihood over dataset
+
+For samples {y₁, ..., yₙ}:
+
+Likelihood:
+
+P = ∏ᵢ pᵢʸⁱ (1 − pᵢ)¹⁻ʸⁱ  
+
+---
+
+### Why take log?
+
+Products of probabilities become extremely small and hard to optimize.
+
+Taking log:
+
+log P = Σ [ yᵢ log pᵢ + (1 − yᵢ) log(1 − pᵢ) ]
+
+This converts multiplication into addition and improves numerical stability.
+
+---
+
+### Why negative log?
+
+MLE maximizes log-likelihood.
+
+Gradient descent minimizes a loss.
+
+So we define:
+
+Loss = − log P
+
+Which gives:
+
+Loss = − Σ [ yᵢ log pᵢ + (1 − yᵢ) log(1 − pᵢ) ]
+
+This is **binary cross-entropy loss**.
+
+High predicted probability → small loss  
+Low predicted probability → large loss  
+
+---
+
+### Why sigmoid is used
+
+Linear output:
+
+z = wx + b  
+
+Sigmoid maps it to:
+
+p ∈ (0,1)
+
+which matches Bernoulli probability requirements.
+
+---
+
+# Multi-class Classification (Softmax)
+
+For K classes, outputs follow a Categorical distribution:
+
+p = (p₁, ..., pₖ),  Σpᵢ = 1  
+
+Softmax converts logits into valid probabilities:
+
+pᵢ = exp(zᵢ) / Σ exp(zⱼ)
+
+---
+
+### Categorical MLE
+
+Likelihood:
+
+P = ∏ pᵢʸⁱ  
+
+Log-likelihood:
+
+log P = Σ yᵢ log pᵢ  
+
+Loss:
+
+Loss = − Σ yᵢ log pᵢ  
+
+This is **softmax cross-entropy loss**.
+
+---
+
+# Unified principle
+
+Choose output distribution → write likelihood → maximize likelihood → minimize negative log-likelihood.
+
+| Output | Distribution | Activation | Loss |
+|-------|-------------|-----------|------|
+| real | Gaussian | identity | MSE |
+| binary | Bernoulli | sigmoid | BCE |
+| multi-class | Categorical | softmax | CE |
+
+---
+
+### Core takeaway
+
+Cross-entropy losses are negative log-likelihoods derived from probabilistic models, not heuristic error measures.
+###########################################################################################################
+
+Concept	   Logistic Regression	             GPT
+Input	     features x	                     context embeddings 
+Linear layer	wx + b	                  W h + b
+Activation	    sigmoid	                       softmax
+Distribution	Bernoulli	               Categorical
+Loss	        BCE	                                Cross-entropy
+Output	        probability of class	             probability of each token
+################################################################################################
+
+GPT predicts the next token by applying softmax to linear scores and minimizing 
+categorical cross-entropy — exactly multi-class logistic regression.
+
+#########################################################################################################################
+## What is actually stored inside a trained language model (LLM)
+
+After training on large text datasets, a transformer model does **not store sentences or documents**.  
+Instead, it stores **parameters (θ)** that define a function approximating the probability distribution of language.
+
+The model ultimately learns a mapping:
+
+P(w_t | w_1, ..., w_{t-1})
+
+i.e.
+
+context → probability distribution of next token
+
+Below is a conceptual breakdown of what is physically stored and how the functional mapping works.
+
+---
+
+### 1. What is physically stored in the model
+
+After training, the model contains **large matrices of learned parameters**.
+
+Typical components include:
+
+- Token embedding matrix
+- Query, Key, Value matrices for attention
+- Output projection matrices
+- Feed-forward (MLP) layer weights
+- Layer normalization parameters
+- Final language modeling head (lm_head)
+
+Symbolically:
+
+θ = {W_emb, W_Q, W_K, W_V, W_O, W1, W2, W_lm}
+
+These parameters define the neural network.
+
+---
+
+### 2. Functional mapping learned by the model
+
+The transformer learns a function:
+
+f_θ(context) → probability distribution over vocabulary
+
+Pipeline:
+
+tokens  
+↓  
+token embeddings  
+↓  
+attention layers  
+↓  
+feed-forward (MLP) layers  
+↓  
+hidden vector h  
+↓  
+linear projection  
+↓  
+softmax  
+↓  
+P(next token)
+
+Mathematically:
+
+z = W_lm h  
+P(token) = softmax(z)
+
+---
+
+### 3. What knowledge looks like inside the weights
+
+The model stores **statistical patterns encoded as geometry in vector space**.
+
+Examples:
+
+Word relationships:
+
+king − man + woman ≈ queen
+
+Semantic clusters:
+
+dog, cat, horse → animal cluster  
+car, bus, train → vehicle cluster
+
+Syntactic features encoded in hidden vectors:
+
+- singular vs plural
+- tense information
+- grammatical expectations
+
+---
+
+### 4. What attention matrices encode
+
+Attention layers learn **relationships between tokens** in a sequence.
+
+Example sentence:
+
+"The dogs that bark loudly are noisy"
+
+Attention allows the model to connect:
+
+dogs ↔ are
+
+even though they are far apart in the sequence.
+
+Thus attention captures **long-range dependencies**.
+
+---
+
+### 5. What MLP layers encode
+
+Feed-forward layers learn **nonlinear patterns** in language.
+
+Examples of patterns learned:
+
+plural noun → expect plural verb  
+question word → expect interrogative structure  
+function definition → expect return statement
+
+These layers transform hidden vectors to capture higher-level abstractions.
+
+---
+
+### 6. What the final layer stores
+
+The final projection layer (language modeling head) acts as a **multi-class classifier**.
+
+z = W_lm h
+
+Each row of W_lm corresponds to a token in the vocabulary.
+
+The dot product measures how compatible the hidden state is with each token.
+
+Softmax converts logits into probabilities.
+
+---
+
+### 7. What the model's "knowledge" represents
+
+The model stores a **compressed statistical representation of language**.
+
+It encodes patterns such as:
+
+- syntax
+- semantics
+- world associations
+- writing styles
+- reasoning heuristics
+
+These are learned automatically from training data.
+
+---
+
+### 8. Mathematical summary
+
+The model approximates the conditional probability distribution:
+
+P_θ(w_t | w_1, ..., w_{t-1})
+
+where
+
+f_θ : token sequence → ℝ^V
+
+is implemented by a deep neural network consisting of attention and feed-forward transformations.
+
+---
+
+### 9. Intuitive mental model
+
+You can imagine the model learning a **probability landscape of language**.
+
+Given context:
+
+"I love"
+
+the hidden state moves to a region in vector space where tokens like:
+
+cats, dogs, you
+
+have high probability.
+
+---
+
+### 10. Final takeaway
+
+After training, the model stores **parameters of a transformer network that implement a function mapping context → probability distribution over next tokens**, capturing statistical patterns of language rather than memorizing text.
+#########################################################################################################
