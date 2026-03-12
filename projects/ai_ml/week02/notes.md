@@ -608,3 +608,378 @@ have high probability.
 
 After training, the model stores **parameters of a transformer network that implement a function mapping context → probability distribution over next tokens**, capturing statistical patterns of language rather than memorizing text.
 #########################################################################################################
+
+## How MLE → Cross Entropy → Softmax → GPT Training Connect
+
+Modern language models (like GPT) are trained using a probabilistic principle called **Maximum Likelihood Estimation (MLE)**.  
+The objective is to learn a model that assigns high probability to sequences that appear in the training data.
+
+---
+
+### 1. Language Modeling Objective
+
+Given a sequence of tokens:
+
+w₁, w₂, w₃, ..., w_T
+
+The model learns to predict the probability of the next token given the previous ones:
+
+P(w_t | w₁, ..., w_{t-1})
+
+The training objective is:
+
+maximize likelihood of the observed data
+
+Equivalent minimization objective:
+
+minimize negative log likelihood.
+
+---
+
+### 2. Chain Rule of Language Probability
+
+The probability of an entire sentence is decomposed using the **chain rule of probability**:
+
+P(w₁, w₂, ..., w_T)  
+= P(w₁)  
+× P(w₂ | w₁)  
+× P(w₃ | w₁, w₂)  
+× ...  
+× P(w_T | w₁, ..., w_{T-1})
+
+Language models learn these conditional probabilities.
+
+This allows the model to generate text token by token.
+
+---
+
+### 3. From Likelihood to Cross-Entropy Loss
+
+For each token prediction, we define likelihood:
+
+L = P(correct token | context)
+
+MLE maximizes this likelihood.
+
+In practice we minimize the **negative log likelihood**:
+
+Loss = - log P(correct token)
+
+For a vocabulary of size V this becomes:
+
+L = - Σ y_k log(p_k)
+
+where
+
+y_k = one-hot target vector  
+p_k = predicted probability of token k
+
+This is the **cross-entropy loss**.
+
+---
+
+### 4. Softmax Converts Scores to Probabilities
+
+The model first produces **logits**:
+
+z = W h
+
+where
+
+h = hidden representation from transformer  
+W = output projection matrix
+
+Softmax converts logits to probabilities:
+
+p_k = exp(z_k) / Σ exp(z_j)
+
+This ensures
+
+p_k ≥ 0  
+Σ p_k = 1
+
+so the output is a valid probability distribution over tokens.
+
+---
+
+### 5. Final Training Objective
+
+Combining everything:
+
+Loss = - log softmax(z_correct)
+
+Minimizing this pushes the model to increase probability of the correct next token.
+
+This is equivalent to **maximum likelihood estimation of the categorical distribution**.
+
+---
+
+### 6. Connection to the tiny_gpt Example
+
+In the tiny_gpt implementation:
+
+logits = linear(x, lm_head)
+
+This computes:
+
+z = W_lm h
+
+Then probabilities are computed:
+
+probs = softmax(logits)
+
+Loss is calculated as:
+
+loss = -log(probs[target_token])
+
+Which matches exactly:
+
+L = - log P(correct token | context)
+
+The backward pass uses the gradient:
+
+∂L / ∂z = p - y
+
+This pushes the model to increase probability of the correct token.
+
+---
+
+### 7. Training Loop in tiny_gpt
+
+Each training step performs:
+
+1. Read context tokens  
+2. Compute hidden state using transformer layers  
+3. Compute logits with linear layer  
+4. Apply softmax to obtain probabilities  
+5. Compute cross-entropy loss  
+6. Backpropagate gradients  
+7. Update parameters
+
+Repeated over millions/billions of tokens.
+
+---
+
+### 8. Generation (Inference)
+
+Once trained, the model generates text using the learned conditional probabilities:
+
+context → logits → softmax → probabilities
+
+Then a token is selected:
+
+- greedy: highest probability
+- sampling: probabilistic draw
+- temperature / top-k / top-p sampling
+
+The selected token is appended to the context and the process repeats.
+
+---
+
+### 9. Key Insight
+
+GPT does not memorize sentences.
+
+Instead it learns parameters θ that approximate:
+
+P_θ(w_t | w₁, ..., w_{t-1})
+
+This allows it to generate new sentences that follow the statistical structure of language.
+
+---
+
+### 10. Summary
+
+Training GPT involves the following pipeline:
+
+Chain rule of language probability  
+→ Maximum Likelihood Estimation  
+→ Negative log likelihood  
+→ Cross entropy loss  
+→ Softmax probability distribution  
+→ Gradient descent to update model parameters.
+
+This is the core mathematical principle behind modern language models.
+################################################################################################################
+## Conceptual Progression: Linear Regression → Logistic Regression → Softmax → GPT
+
+A useful way to understand modern language models is to see them as an extension of the same ideas used in classical machine learning.
+
+The core idea evolves as follows.
+
+---
+
+### 1. Linear Regression (Continuous Prediction)
+
+Goal: predict a real number.
+
+Model:
+
+ŷ = wx + b
+
+Loss function:
+
+Mean Squared Error (MSE)
+
+L = (ŷ − y)²
+
+Interpretation:
+
+The model learns a function mapping input features to a continuous output.
+
+---
+
+### 2. Logistic Regression (Binary Classification)
+
+Goal: predict probability of a binary class.
+
+Model:
+
+z = wx + b
+
+p = sigmoid(z)
+
+Loss derived from Bernoulli MLE:
+
+L = − [y log(p) + (1 − y) log(1 − p)]
+
+Key idea:
+
+Instead of predicting a number, we predict **probability of class 1**.
+
+---
+
+### 3. Softmax Classifier (Multi-Class Classification)
+
+Goal: predict probability across multiple classes.
+
+Model:
+
+z = W x
+
+p_k = exp(z_k) / Σ exp(z_j)
+
+Loss derived from categorical MLE:
+
+L = − Σ y_k log(p_k)
+
+Interpretation:
+
+The model outputs a probability distribution across many classes.
+
+---
+
+### 4. Language Modeling (Token Prediction)
+
+In language modeling, each token is treated as a class.
+
+Example vocabulary:
+
+["cat", "dog", "runs", "walks", ...]
+
+Given context:
+
+"I love"
+
+The model predicts:
+
+P(next token | context)
+
+Example output:
+
+cats → 0.52  
+dogs → 0.41  
+pizza → 0.02  
+
+This is exactly a **softmax classifier over the vocabulary**.
+
+---
+
+### 5. Transformer Feature Extractor
+
+In GPT models:
+
+The transformer acts as a **feature extractor**.
+
+Pipeline:
+
+tokens  
+↓  
+embeddings  
+↓  
+self-attention layers  
+↓  
+MLP layers  
+↓  
+hidden vector h
+
+The hidden vector encodes context information.
+
+---
+
+### 6. Final Softmax Layer
+
+The hidden representation is mapped to vocabulary scores:
+
+z = W_lm h
+
+Softmax converts logits to probabilities:
+
+p_k = exp(z_k) / Σ exp(z_j)
+
+This produces the probability distribution of the next token.
+
+---
+
+### 7. Training Objective
+
+Training minimizes cross-entropy loss:
+
+L = − log P(correct token | context)
+
+This is equivalent to **maximum likelihood estimation**.
+
+---
+
+### 8. Full GPT Training Pipeline
+
+context tokens  
+↓  
+transformer network  
+↓  
+hidden representation  
+↓  
+linear projection  
+↓  
+softmax  
+↓  
+cross-entropy loss  
+↓  
+gradient descent update
+
+Repeated over billions of tokens.
+
+---
+
+### 9. Key Insight
+
+GPT is fundamentally a **very large softmax classifier** applied repeatedly across a sequence.
+
+The transformer architecture simply produces better contextual features.
+
+---
+
+### 10. Final Mental Model
+
+Linear Regression  
+→ predict numbers
+
+Logistic Regression  
+→ predict probability of two classes
+
+Softmax Classifier  
+→ predict probability across many classes
+
+GPT  
+→ predict probability of the **next word among thousands of vocabulary tokens** using a transformer to represent context.
+================================================================================================================================
