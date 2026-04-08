@@ -3,6 +3,39 @@ import matplotlib.pyplot as plt
 
 np.random.seed(42)
 
+#Plotting the nurons as per the activation
+
+def plot_hidden_neurons(X, forward_full, hidden_dim):
+    import matplotlib.pyplot as plt
+
+    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+    y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+
+    xx, yy = np.meshgrid(
+        np.linspace(x_min, x_max, 200),
+        np.linspace(y_min, y_max, 200)
+    )
+
+    grid = np.c_[xx.ravel(), yy.ravel()]
+
+    # Get hidden layer activations
+    z1, a1, _, _ = forward_full(grid)
+
+    for i in range(hidden_dim):
+        neuron_output = a1[:, i].reshape(xx.shape)
+
+        plt.figure()
+        plt.contourf(xx, yy, neuron_output, levels=50)
+        plt.scatter(X[:, 0], X[:, 1], edgecolors='k')
+        plt.title(f"Hidden Neuron {i}")
+        plt.xlabel("x1")
+        plt.ylabel("x2")
+
+        filename = f"hidden_neuron_{i}.png"
+        plt.savefig(filename)
+        plt.close()
+
+        print("Saved:", filename)
 # -------------------------
 # Decision boundary plot
 # -------------------------
@@ -136,3 +169,4 @@ print("Accuracy:", accuracy)
 
 plot_decision_boundary(X, y, forward_full)
 print("Saved: decision_boundary.png")
+plot_hidden_neurons(X, forward_full, hidden_dim)
