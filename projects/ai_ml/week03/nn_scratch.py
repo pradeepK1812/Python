@@ -136,7 +136,6 @@ for epoch in range(epochs):
     # Loss
     loss = compute_loss(y, y_pred)
     losses.append(loss)
-    
     # Backprop
     dz2 = y_pred - y
 
@@ -148,7 +147,8 @@ for epoch in range(epochs):
 
     dW1 = X.T @ dz1 / N
     db1 = np.mean(dz1, axis=0, keepdims=True)
-
+    
+    print("||dW1||:", np.linalg.norm(dW1), "||dW2||:", np.linalg.norm(dW2)) 
     # Update
     W1 -= learning_rate * dW1
     b1 -= learning_rate * db1
