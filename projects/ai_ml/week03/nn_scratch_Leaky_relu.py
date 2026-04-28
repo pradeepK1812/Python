@@ -31,7 +31,7 @@ def plot_hidden_neurons(X, forward_full, hidden_dim):
         plt.xlabel("x1")
         plt.ylabel("x2")
 
-        filename = f"hidden_neuron_{i}.png"
+        filename = f"hidden__leakyrelu_neuron_{i}.png"
         plt.savefig(filename)
         plt.close()
 
@@ -61,7 +61,7 @@ def plot_decision_boundary(X, y, forward_fn):
     plt.title("Decision Boundary")
     plt.xlabel("x1")
     plt.ylabel("x2")
-    plt.savefig("decision_boundary.png")
+    plt.savefig("decision_boundary_lkrelu.png")
     plt.close()
 
 
@@ -90,8 +90,11 @@ b2 = np.zeros((1, output_dim))
 # -------------------------
 # 3. Activation functions
 # -------------------------
-def relu(x):
-    return np.maximum(0, x)
+#def relu(x):
+ #   return np.maximum(0, x)
+
+def leaky_relu(x, alpha=0.01):
+    return np.where(x > 0, x, alpha * x)
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -101,7 +104,8 @@ def sigmoid(x):
 # -------------------------
 def forward_full(X):
     z1 = X @ W1 + b1
-    a1 = relu(z1)
+    #a1 = relu(z1)
+    a1 = leaky_relu(z1)
     z2 = a1 @ W2 + b2
     y_pred = sigmoid(z2)
     return z1, a1, z2, y_pred
@@ -119,9 +123,11 @@ def compute_loss(y, y_pred):
 #------------------------------
 # RELU Gred1 
 #---------------------------------
-def relu_grad(x):
-    return (x > 0).astype(float)
+#def relu_grad(x):
+ #   return (x > 0).astype(float)
 
+def leaky_relu_grad(x, alpha=0.01):
+    return np.where(x > 0, 1.0, alpha)
 # -------------------------
 # 5. Run once
 # -------------------------
@@ -143,7 +149,8 @@ for epoch in range(epochs):
     db2 = np.mean(dz2, axis=0, keepdims=True)
 
     da1 = dz2 @ W2.T
-    dz1 = da1 * relu_grad(z1)
+   # dz1 = da1 * relu_grad(z1)
+    dz1 = da1 * leaky_relu_grad(z1)
 
     dW1 = X.T @ dz1 / N
     db1 = np.mean(dz1, axis=0, keepdims=True)
