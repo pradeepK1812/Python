@@ -38,6 +38,9 @@ for epoch in range(epochs):
     loss = np.mean((y_pred - y) ** 2)
 
     # Gradients
+    #chain rule 
+    # dl/dw = dl/dy* dy/dw
+    #dl/db = dl/dy * dy/db
     dw = 2 * np.mean((y_pred - y) * X)
     db = 2 * np.mean(y_pred - y)
 
