@@ -13,12 +13,21 @@ app = FastAPI()
 model = NetworkModel()
 model.load_state_dict(torch.load("ml/model.pt"))
 model.eval()
+logger.info("Model loaded successfully")
 
+@app.on_event("startup")
+def startup_event():
+    logger.info("API service started")
 #@app.post("/predict")
 
 #from app.schemas import PredictionRequest
 from app.schemas import PredictionRequest, PredictionResponse
 from fastapi import HTTPException
+
+
+@app.get("/")
+def health():
+    return {"status": "ok"}
 
 @app.post("/predict", response_model=PredictionResponse)
 #@app.post("/predict")
