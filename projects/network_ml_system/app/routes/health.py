@@ -1,7 +1,12 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
+from app.config import API_VERSION
+
+
+#"version": API_VERSION
 
 router = APIRouter()
+
 
 @router.get("/", response_class=HTMLResponse)
 
@@ -50,6 +55,6 @@ def home():
 def health():
     return {
         "service": "Network ML API",
-        "version": "1.0",
+        "version": "API_VERSION",
         "status": "running"
     }

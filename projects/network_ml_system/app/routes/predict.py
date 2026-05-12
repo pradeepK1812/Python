@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.schemas import PredictionRequest, PredictionResponse
 from app.model_loader import model
+from app.config import API_VERSION
 
 import torch
 import logging
@@ -20,8 +21,7 @@ def predict(data: PredictionRequest):
     start = time.time()
 
     try:
-        print("PREDICT FUNCTION HIT")
-        logger.info(f"[{request_id}] Input: {data.features}")
+        logger.info(f"[{request_id}] Version={API_VERSION}   Input: {data.features}")
 
         x_input = torch.tensor(data.features, dtype=torch.float32)
 
@@ -29,10 +29,11 @@ def predict(data: PredictionRequest):
             output = model(x_input)
 
         prediction = output.squeeze().tolist()
+        logger.info(f"[{request_id}] Version={API_VERSION}  Output: {prediction}")
 
         duration = time.time() - start
 
-        logger.info(f"[{request_id}] Completed in {duration:.4f}s")
+        logger.info(f"[{request_id}] Version={API_VERSION}  Completed in {duration:.4f}s")
 
         return PredictionResponse(prediction=prediction)
 

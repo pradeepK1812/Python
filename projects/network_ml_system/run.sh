@@ -1,8 +1,18 @@
 
 #!/bin/bash
 
+#server env variables
+export HOST=0.0.0.0
+export PORT=8000
+
+#model config 
+export MODEL_PATH=ml/model.pt
+export API_VERSION=v1
+
+
 # Start server in background
-uvicorn app.api:app --host 0.0.0.0 --port 8000 --log-level info &
+uvicorn app.api:app --host $HOST --port $PORT --log-level info --log-config logging.yaml  &
+
 PID=$!
 
 echo "Server started with PID $PID"
