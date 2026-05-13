@@ -6,7 +6,7 @@ export HOST=0.0.0.0
 export PORT=8000
 
 #model config 
-export MODEL_PATH=ml/model.pt
+export LINEAR_MODEL_PATH=ml/linear_regression/model.pt
 export API_VERSION=v1
 
 
