@@ -5,10 +5,12 @@
 export HOST=0.0.0.0
 export PORT=8000
 
-#model config 
+# linear model config 
 export LINEAR_MODEL_PATH=ml/linear_regression/model.pt
 export API_VERSION=v1
 
+#logistic model config
+export LOGISTIC_MODEL_PATH=ml/logistic_regression/model.pt
 
 # Start server in background
 uvicorn app.api:app --host $HOST --port $PORT --log-level info --log-config logging.yaml  &
