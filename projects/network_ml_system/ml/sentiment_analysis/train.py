@@ -1,0 +1,84 @@
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+from model import SentimentModel
+from dataset import X_tensor, y_tensor
+from vocabulary import word_to_index
+
+# -----------------------------------
+# Model configuration
+# -----------------------------------
+
+vocab_size = len(word_to_index)
+
+embedding_dim = 8
+
+# -----------------------------------
+# Create model
+# -----------------------------------
+
+model = SentimentModel(
+    vocab_size,
+    embedding_dim
+)
+
+# -----------------------------------
+# Binary classification loss
+# -----------------------------------
+
+criterion = nn.BCELoss()
+
+# -----------------------------------
+# Optimizer
+# -----------------------------------
+
+optimizer = optim.SGD(
+    model.parameters(),
+    lr=0.1
+)
+
+# -----------------------------------
+# Training loop
+# -----------------------------------
+
+epochs = 500
+
+for epoch in range(epochs):
+
+    # Forward pass
+    predictions = model(X_tensor)
+
+    # Compute loss
+    loss = criterion(
+        predictions,
+        y_tensor
+    )
+
+    # Clear old gradients
+    optimizer.zero_grad()
+
+    # Compute gradients
+    loss.backward()
+
+    # Update parameters
+    optimizer.step()
+
+    # Print progress
+    if epoch % 50 == 0:
+
+        print(
+            f"Epoch {epoch}, "
+            f"Loss: {loss.item():.4f}"
+        )
+
+# -----------------------------------
+# Save trained model
+# -----------------------------------
+
+torch.save(
+    model.state_dict(),
+    "sentiment_model.pt"
+)
+
+print("\nModel saved successfully.")
