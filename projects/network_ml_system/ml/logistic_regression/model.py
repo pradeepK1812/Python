@@ -3,9 +3,9 @@ import torch.nn as nn
 
 class LogisticRegressionModel(nn.Module):
     
-    #Initialize the parent class nn.module
     def __init__(self):
 
+        #Initialize the parent class nn.module
         super().__init__()
 
         self.linear = nn.Linear(2, 1)

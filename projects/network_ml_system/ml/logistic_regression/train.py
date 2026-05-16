@@ -51,14 +51,19 @@ for epoch in range(epochs):
 
     # Forward pass
     predictions = model(X)
-
+    #compute loss wrt to prediction and actual different 
     loss = criterion(predictions, y)
 
     # Backpropagation
+
+    #clear the old gradients from previous iterations
     optimizer.zero_grad()
-
+    #compute gradients using  backpropagation
     loss.backward()
-
+    # Gradient descent :Update weights and bias using:
+    # parameter = parameter - (learning_rate * gradient)
+    # Example:
+    # w = w - lr * (dL/dw)
     optimizer.step()
 
     if epoch % 10 == 0:
