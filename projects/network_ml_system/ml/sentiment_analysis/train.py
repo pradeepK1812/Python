@@ -47,7 +47,8 @@ epochs = 500
 for epoch in range(epochs):
 
     # Forward pass
-    predictions = model(X_tensor)
+   # predictions = model(X_tensor)
+    predictions, attention_weights = model(X_tensor)
 
     # Compute loss
     loss = criterion(

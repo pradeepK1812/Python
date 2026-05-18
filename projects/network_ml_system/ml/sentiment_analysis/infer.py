@@ -85,14 +85,45 @@ input_tensor = torch.tensor(
 
 with torch.no_grad():
 
-    prediction = model(input_tensor)
+   # prediction = model(input_tensor)
+    prediction, attention_weights = model(input_tensor)
 
 # -----------------------------------
 # Extract probability
 # -----------------------------------
 
 probability = prediction.item()
+# -----------------------------------
+# Display attention weights
+# -----------------------------------
 
+words = text.lower().split()
+
+weights = attention_weights.squeeze().tolist()
+
+attention = attention_weights.squeeze()
+
+print("\nAttention Matrix:\n")
+
+for i, word in enumerate(words):
+
+    print(f"\n{word} attends to:\n")
+
+    for j, target_word in enumerate(words):
+
+        score = attention[i][j].item()
+
+        print(
+            f"  {target_word} -> {score:.4f}"
+        )
+        
+"""print("\nAttention Weights:\n")
+
+for word, weight in zip(words, weights):
+
+    print(
+        f"{word} -> {weight:.4f}"
+    )"""
 # -----------------------------------
 # Determine sentiment
 # -----------------------------------
