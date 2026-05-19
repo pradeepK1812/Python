@@ -12,7 +12,8 @@ from vocabulary import word_to_index
 
 vocab_size = len(word_to_index)
 
-embedding_dim = 8
+#embedding_dim = 8
+embedding_dim = 64 # to cater new big dataset
 
 # -----------------------------------
 # Create model
@@ -35,14 +36,15 @@ criterion = nn.BCELoss()
 
 optimizer = optim.SGD(
     model.parameters(),
-    lr=0.1
+    lr=0.001 #changed from 0.1 to 0.001 for complext dataset
 )
 
 # -----------------------------------
 # Training loop
 # -----------------------------------
 
-epochs = 500
+#epochs = 500
+epochs = 1500 # for new complex dataset
 
 for epoch in range(epochs):
 

@@ -17,7 +17,38 @@ class SentimentModel(nn.Module):
             vocab_size,
             embedding_dim
         )
+        # -----------------------------------
+        # Query projection
+        # Learns what information
+        # each token is searching for
+        # -----------------------------------
 
+        self.query = nn.Linear(
+        embedding_dim,
+        embedding_dim
+        )
+
+        # -----------------------------------
+        # Key projection
+        # Learns what information
+        # each token contains
+        # -----------------------------------
+
+        self.key = nn.Linear(
+        embedding_dim,
+        embedding_dim
+        )
+
+        # -----------------------------------
+        # Value projection
+        # Learns what information
+        # each token contributes
+        # -----------------------------------
+
+        self.value = nn.Linear(
+        embedding_dim,
+        embedding_dim
+        )         
         # -----------------------------------
         # Linear classifier
         # -----------------------------------
@@ -48,7 +79,16 @@ class SentimentModel(nn.Module):
     # -----------------------------------
 
       embedded = self.embedding(x)
+      
+    # -----------------------------------
+    # Generate Q/K/V projections
+    # -----------------------------------
 
+      Q = self.query(embedded)
+
+      K = self.key(embedded)
+
+      V = self.value(embedded)
     # -----------------------------------
     # Compute token-to-token similarity
     #
@@ -65,11 +105,16 @@ class SentimentModel(nn.Module):
     # with every other token
     # -----------------------------------
 
+      #attention_scores = torch.matmul(
+       # embedded,
+        #embedded.transpose(1, 2)
+      #)
+      # added QKTV/Square root of DK (key dimension)
       attention_scores = torch.matmul(
-        embedded,
-        embedded.transpose(1, 2)
-      )
-
+       Q,
+       K.transpose(1, 2)
+      ) / (Q.shape[-1] ** 0.5)
+ 
     # -----------------------------------
     # Convert similarity scores into
     # probability distribution
@@ -102,11 +147,14 @@ class SentimentModel(nn.Module):
     # other tokens
     # -----------------------------------
 
+      #attended = torch.matmul(
+       # attention_weights,
+        #embedded
+      #)
       attended = torch.matmul(
-        attention_weights,
-        embedded
+       attention_weights,
+       V
       )
-
     # -----------------------------------
     # Aggregate sequence information
     #
