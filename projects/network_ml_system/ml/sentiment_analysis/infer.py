@@ -9,14 +9,15 @@ from vocabulary import word_to_index
 
 vocab_size = len(word_to_index)
 
-embedding_dim = 8
-
+embedding_dim = 64
+max_seq_length = 15
 # -----------------------------------
 # Create model
 # -----------------------------------
 
 model = SentimentModel(
     vocab_size,
+    max_seq_length,
     embedding_dim
 )
 

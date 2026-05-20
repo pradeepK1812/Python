@@ -12,6 +12,7 @@ from vocabulary import word_to_index
 
 vocab_size = len(word_to_index)
 
+max_seq_length = 15
 #embedding_dim = 8
 embedding_dim = 64 # to cater new big dataset
 
@@ -21,6 +22,7 @@ embedding_dim = 64 # to cater new big dataset
 
 model = SentimentModel(
     vocab_size,
+    max_seq_length,
     embedding_dim
 )
 
