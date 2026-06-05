@@ -106,6 +106,7 @@ attention = attention_weights.squeeze()
 
 print("\nAttention Matrix:\n")
 
+"""
 for i, word in enumerate(words):
 
     print(f"\n{word} attends to:\n")
@@ -118,13 +119,30 @@ for i, word in enumerate(words):
             f"  {target_word} -> {score:.4f}"
         )
         
-"""print("\nAttention Weights:\n")
+print("\nAttention Weights:\n")
 
 for word, weight in zip(words, weights):
 
     print(
         f"{word} -> {weight:.4f}"
     )"""
+
+for head in range(attention_weights.shape[1]):
+
+    print(f"\n========== HEAD {head} ==========\n")
+
+    attention = attention_weights[0][head]
+
+    for i, row in enumerate(attention):
+
+        print(f"\n{words[i]} attends to:\n")
+
+        for j, score in enumerate(row):
+
+            print(
+                f"  {words[j]} -> {score.item():.4f}"
+            )
+
 # -----------------------------------
 # Determine sentiment
 # -----------------------------------

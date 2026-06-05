@@ -18,6 +18,11 @@ training_data = [
     ("this movie is wonderful", 1),
     ("i enjoyed this lesson", 1),
     ("good quality content", 1),
+    ("this tutorial is excellent", 1),
+    ("excellent tutorial", 1),
+    ("excellent explanation", 1),
+    ("the excellent course helped me", 1),
+    ("this excellent lesson was helpful", 1),
 
     # =====================================================
     # NEGATIVE SENTENCES

@@ -7,7 +7,18 @@ class SentimentModel(nn.Module):
     def __init__(self, vocab_size, max_seq_length , embedding_dim):
 
         super().__init__()
+        
+        # -----------------------------------
+        # Multi-Head Attention Parameters
+        # -----------------------------------
 
+        self.num_heads = 4
+
+        self.embedding_dim = embedding_dim
+
+        self.head_dim = (
+           embedding_dim // self.num_heads
+        )
         # -----------------------------------
         # Embedding layer
         # Converts word IDs into vectors
@@ -60,7 +71,19 @@ class SentimentModel(nn.Module):
         self.value = nn.Linear(
         embedding_dim,
         embedding_dim
-        )   
+        )
+        
+                # -----------------------------------
+        # Output projection
+        #
+        # Combines all head outputs
+        # into final contextual representation
+        # -----------------------------------
+
+        self.out = nn.Linear(
+         embedding_dim,
+         embedding_dim
+        )
         # -----------------------------------
         # FeedForward Network (FFN)
         #
@@ -148,6 +171,50 @@ class SentimentModel(nn.Module):
       K = self.key(embedded)
 
       V = self.value(embedded)
+
+      # -----------------------------------
+      # Split embeddings into multiple heads
+      #
+      # [batch, seq, embedding_dim]
+      # ->
+      # [batch, seq, num_heads, head_dim]
+      # -----------------------------------
+
+      Q = Q.view(
+        Q.shape[0],
+        Q.shape[1],
+        self.num_heads,
+        self.head_dim
+      )
+
+      K = K.view(
+        K.shape[0],
+        K.shape[1],
+        self.num_heads,
+        self.head_dim
+      )
+
+      V = V.view(
+        V.shape[0],
+        V.shape[1],
+        self.num_heads,
+        self.head_dim
+      )
+
+      # -----------------------------------
+      # Move heads dimension before sequence
+      #
+      # [batch, seq, heads, head_dim]
+      # ->
+      # [batch, heads, seq, head_dim]
+      # -----------------------------------
+
+      Q = Q.transpose(1, 2)
+
+      K = K.transpose(1, 2)
+
+      V = V.transpose(1, 2)
+
     # -----------------------------------
     # Compute token-to-token similarity
     #
@@ -169,11 +236,22 @@ class SentimentModel(nn.Module):
         #embedded.transpose(1, 2)
       #)
       # added QKTV/Square root of DK (key dimension)
+      #attention_scores = torch.matmul(
+      # Q,
+      # K.transpose(1, 2)
+      #) / (Q.shape[-1] ** 0.5)
+
+      # -----------------------------------
+      # Multi-head scaled attention
+      #
+      # Attention computed independently
+      # for each head
+      # -----------------------------------
+
       attention_scores = torch.matmul(
        Q,
-       K.transpose(1, 2)
-      ) / (Q.shape[-1] ** 0.5)
- 
+       K.transpose(-2, -1)
+      ) / (self.head_dim ** 0.5)
     # -----------------------------------
     # Convert similarity scores into
     # probability distribution
@@ -186,7 +264,7 @@ class SentimentModel(nn.Module):
 
       attention_weights = torch.softmax(
         attention_scores,
-        dim=2
+        dim=-1
       )
 
     # -----------------------------------
@@ -214,7 +292,37 @@ class SentimentModel(nn.Module):
        attention_weights,
        V
       )
+      
+      # -----------------------------------
+      # Move sequence dimension back
+      #
+      # [batch, heads, seq, head_dim]
+      # ->
+      # [batch, seq, heads, head_dim]
+      # -----------------------------------
 
+      attended = attended.transpose(1, 2)
+
+      # -----------------------------------
+      # Merge all heads together
+      #
+      # [batch, seq, heads, head_dim]
+      # ->
+      # [batch, seq, embedding_dim]
+      # -----------------------------------
+
+      attended = attended.contiguous().view(
+       attended.shape[0],
+       attended.shape[1],
+       self.embedding_dim
+      )
+
+      # -----------------------------------
+      # Mix information from all heads
+      # -----------------------------------
+
+      attended = self.out(attended)
+      
       # -----------------------------------
       # FeedForward refinement
       #
@@ -233,7 +341,8 @@ class SentimentModel(nn.Module):
       # -----------------------------------
 
       #pooled = attended.mean(dim=1)
-      pooled = refined.mean(dim=1) #now take the mean of refined instead of attneded
+      #pooled = refined.mean(dim=1) #now take the mean of refined instead of attneded
+      pooled = normalized.mean(dim=1) #now take the mean of refined instead of attneded
 
     # -----------------------------------
     # Linear classification layer
