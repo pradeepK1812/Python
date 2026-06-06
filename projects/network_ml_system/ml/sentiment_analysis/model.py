@@ -73,7 +73,7 @@ class SentimentModel(nn.Module):
         embedding_dim
         )
         
-                # -----------------------------------
+        # -----------------------------------
         # Output projection
         #
         # Combines all head outputs
@@ -342,7 +342,8 @@ class SentimentModel(nn.Module):
 
       #pooled = attended.mean(dim=1)
       #pooled = refined.mean(dim=1) #now take the mean of refined instead of attneded
-      pooled = normalized.mean(dim=1) #now take the mean of refined instead of attneded
+      # pooled = normalized.mean(dim=1) #now take the mean of refined instead of attneded
+      pooled = normalized[:, 0, :] #now using CLS so changed in pooling 
 
     # -----------------------------------
     # Linear classification layer

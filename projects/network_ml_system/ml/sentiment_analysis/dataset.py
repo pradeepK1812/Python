@@ -11,7 +11,10 @@ def tokenize(text):
 
     words = text.split()
 
-    token_ids = []
+    #token_ids = [] # as now we have added CLS at the start 
+    token_ids = [
+     word_to_index["[CLS]"]
+    ]
 
     for word in words:
 

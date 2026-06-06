@@ -7,10 +7,16 @@ from sample_data import training_data
 word_to_index = {}
 
 # -----------------------------------
+# Special transformer tokens
+# -----------------------------------
+
+word_to_index["[CLS]"] = 0
+# -----------------------------------
 # Current word index counter
 # -----------------------------------
 
-current_index = 0
+#current_index = 0
+current_index = 1 # as now CLS is at index 0
 
 # -----------------------------------
 # Build vocabulary

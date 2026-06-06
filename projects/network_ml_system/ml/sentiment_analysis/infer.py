@@ -43,7 +43,10 @@ def tokenize(text):
 
     words = text.lower().split()
 
-    token_ids = []
+   # token_ids = [] #As now we have added the CLS tocken at the start
+    token_ids = [
+      word_to_index["[CLS]"]
+    ]
 
     for word in words:
 
@@ -98,7 +101,8 @@ probability = prediction.item()
 # Display attention weights
 # -----------------------------------
 
-words = text.lower().split()
+#words = text.lower().split() # as senteces now have CLS at the start so add it here in words for display
+words = ["[CLS]"] + text.lower().split()
 
 weights = attention_weights.squeeze().tolist()
 
