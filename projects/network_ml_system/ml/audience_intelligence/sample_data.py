@@ -29,6 +29,14 @@ training_data = [
 ("confusing at first but finally understandable", "appreciation"),
 ("difficult topic but excellent explanation", "appreciation"),
 ("complex lecture but very helpful overall", "appreciation"),
+("confusing at first but finally understandable", "appreciation"),
+("difficult initially but very helpful later", "appreciation"),
+("complex topic but excellent explanation", "appreciation"),
+("hard to follow initially but amazing overall", "appreciation"),
+("the lecture was confusing but became clear later", "appreciation"),
+("challenging concepts but the tutorial explained them well", "appreciation"),
+("advanced topic but surprisingly easy to understand", "appreciation"),
+("the explanation seemed difficult but was actually helpful", "appreciation"),
 
 # =====================================================
 # CONFUSION
@@ -43,6 +51,14 @@ training_data = [
 ("this tutorial makes machine learning confusing", "confusion"),
 ("i still do not understand attention", "confusion"),
 ("the explanation was unclear", "confusion"),
+("great tutorial but still difficult to understand", "confusion"),
+("amazing explanation but i am still confused", "confusion"),
+("helpful examples but the core topic is unclear", "confusion"),
+("interesting lecture but too hard to follow", "confusion"),
+("the tutorial looked simple but became confusing", "confusion"),
+("excellent presentation but the concepts remain unclear", "confusion"),
+("good explanation but transformers are still difficult", "confusion"),
+("the topic is exciting but i still do not understand it", "confusion"),
 
 # =====================================================
 # CURIOSITY
@@ -57,6 +73,12 @@ training_data = [
 ("waiting for the next tutorial", "curiosity"),
 ("please explain cnn models", "curiosity"),
 ("interested in advanced transformer videos", "curiosity"),
+("amazing tutorial please make more videos", "curiosity"),
+("this transformer topic is exciting can you explain more", "curiosity"),
+("great explanation i want advanced tutorials next", "curiosity"),
+("very interesting lesson please continue this series", "curiosity"),
+("this neural network topic is fascinating explain deeper concepts", "curiosity"),
+("excellent video please create more machine learning content", "curiosity"),
 
 # =====================================================
 # FRUSTRATION
@@ -73,6 +95,11 @@ training_data = [
 ("the software crashed again", "frustration"),
 ("the application is unstable", "frustration"),
 ("this explanation is frustrating", "frustration"),
+("the tutorial is confusing and frustrating", "frustration"),
+("i still do not understand this terrible explanation", "frustration"),
+("the lecture was unclear and annoying", "frustration"),
+("confusing concepts and poor explanation quality", "frustration"),
+("the examples made the topic even more difficult", "frustration"),
 
 # =====================================================
 # EXCITEMENT
@@ -101,6 +128,11 @@ training_data = [
 ("this explanation is repetitive", "boredom"),
 ("the content is not engaging", "boredom"),
 ("this topic feels boring", "boredom"),
+("interesting topic but the lecture became boring", "boredom"),
+("good explanation but too slow overall", "boredom"),
+("helpful content but the tutorial felt repetitive", "boredom"),
+("the video started strong but became dull later", "boredom"),
+("the lesson was informative but not engaging", "boredom"),
 
 # =====================================================
 # CONTEXTUAL / MIXED EXAMPLES
