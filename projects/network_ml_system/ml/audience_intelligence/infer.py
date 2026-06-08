@@ -77,7 +77,7 @@ def tokenize(text):
 # Input sentence
 # -----------------------------------
 
-text = "this tutorial is excellent"
+text = "this tutorial was amazing but still confusing"
 print(f"\nInput sentence is :{text} \n")
 # -----------------------------------
 # Convert to token IDs
@@ -115,22 +115,74 @@ probabilities = torch.softmax(
     prediction,
     dim=-1
 )
-predicted_index = torch.argmax(
+
+# -----------------------------------
+# Get top-k emotions
+# -----------------------------------
+
+top_probs, top_indices = torch.topk(
     probabilities,
+    k=3,
     dim=-1
-).item()
+)
 
-#get emotion from the predicted  index value
-emotion = index_to_label[
-    predicted_index
-]
+print("\nTop Emotion Analysis:\n")
 
-confidence = probabilities[
-    0,
-    predicted_index
-].item()
+meaningful_emotions = []
 
-confidence = f"{confidence * 100:.0f}%"
+for i in range(3):
+
+    class_index = top_indices[0][i].item()
+
+    emotion = index_to_label[
+        class_index
+    ]
+
+    confidence = top_probs[0][i].item()
+
+    print(
+        f"{emotion} -> "
+        f"{confidence * 100:.2f}%"
+    )
+    
+    # -----------------------------------
+    # Keep only meaningful emotions
+    # -----------------------------------
+
+    if confidence >= 0.30:
+
+        meaningful_emotions.append(
+            (emotion, confidence)
+        )
+
+# -----------------------------------
+# Dominant emotion only
+# -----------------------------------
+
+if len(meaningful_emotions) == 1:
+
+    print(
+
+        f"Audience mostly showed "
+        f"{meaningful_emotions[0][0]}."
+
+    )
+
+# -----------------------------------
+# Mixed emotional response
+# -----------------------------------
+
+elif len(meaningful_emotions) >= 2:
+
+    print(
+
+        f"Audience showed "
+        f"{meaningful_emotions[0][0]} "
+
+        f"and also expressed "
+        f"{meaningful_emotions[1][0]}."
+
+    )
 # -----------------------------------
 # Display attention weights
 # -----------------------------------
@@ -160,14 +212,4 @@ for head in range(attention_weights.shape[1]):
                 f"  {words[j]} -> {score.item():.4f}"
             )
 
-# -----------------------------------
-# Print result
-# -----------------------------------
 
-print("\nPrediction Result:\n")
-
-print({
-
-    "emotion": emotion,
-    "confidence": confidence
-})

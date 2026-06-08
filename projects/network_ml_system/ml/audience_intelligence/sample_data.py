@@ -26,6 +26,9 @@ training_data = [
 ("excellent explanation", "appreciation"),
 ("the excellent course helped me", "appreciation"),
 ("this excellent lesson was helpful", "appreciation"),
+("confusing at first but finally understandable", "appreciation"),
+("difficult topic but excellent explanation", "appreciation"),
+("complex lecture but very helpful overall", "appreciation"),
 
 # =====================================================
 # CONFUSION
@@ -112,6 +115,13 @@ training_data = [
 ("physics concepts are fascinating", "excitement"),
 ("the experiment failed badly", "frustration"),
 
-
+#================================================================
+# Mixed emotion but one dominant emotion
+#=================================================================
+("great tutorial but still confusing", "confusion"),
+("amazing lesson but difficult to follow", "confusion"),
+("excellent explanation but i still do not understand", "confusion"),
+("very exciting topic but hard to understand", "confusion"),
+("helpful video but some concepts are unclear", "confusion"),
 ]
 
