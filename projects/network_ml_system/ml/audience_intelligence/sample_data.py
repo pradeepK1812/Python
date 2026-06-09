@@ -53,7 +53,14 @@ training_data = [
 ("excellent teaching", "appreciation"),
 ("well explained topic", "appreciation"),
 ("great examples", "appreciation"),
-("helpful explanation", "appreciation"),
+("thank you for this tutorial", "appreciation"),
+("this explanation was very clear", "appreciation"),
+("excellent tutorial", "appreciation"),
+("great content", "appreciation"),
+("this was extremely helpful", "appreciation"),
+("i learned a lot from this video", "appreciation"),
+("very well explained", "appreciation"),
+("fantastic tutorial", "appreciation"),
 # =====================================================
 # CONFUSION
 # Audience did not understand
@@ -75,7 +82,6 @@ training_data = [
 ("excellent presentation but the concepts remain unclear", "confusion"),
 ("good explanation but transformers are still difficult", "confusion"),
 ("the topic is exciting but i still do not understand it", "confusion"),
-("i still do not understand attention", "confusion" ),
 ("i still do not understand transformers", "confusion"),
 ("attention mechanism is confusing", "confusion"),
 ("the topic remains unclear", "confusion"),
@@ -100,7 +106,11 @@ training_data = [
 ("very interesting lesson please continue this series", "curiosity"),
 ("this neural network topic is fascinating explain deeper concepts", "curiosity"),
 ("excellent video please create more machine learning content", "curiosity"),
-
+("could you explain this further", "curiosity"),
+("i want to learn more about transformers", "curiosity"),
+("can you make a follow up video", "curiosity"),
+("please cover advanced topics", "curiosity"),
+("what should i learn next", "curiosity"),
 # =====================================================
 # FRUSTRATION
 # Audience unhappy or annoyed
