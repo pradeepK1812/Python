@@ -46,6 +46,14 @@ training_data = [
 ("hard concepts but rewarding to learn", "appreciation"),
 ("the tutorial seemed difficult but became enjoyable", "appreciation"),
 ("complex at first but satisfying eventually", "appreciation"),
+("great explanation", "appreciation"),
+("excellent content", "appreciation"),
+("very helpful tutorial", "appreciation"),
+("clear explanation", "appreciation"),
+("excellent teaching", "appreciation"),
+("well explained topic", "appreciation"),
+("great examples", "appreciation"),
+("helpful explanation", "appreciation"),
 # =====================================================
 # CONFUSION
 # Audience did not understand
@@ -67,7 +75,12 @@ training_data = [
 ("excellent presentation but the concepts remain unclear", "confusion"),
 ("good explanation but transformers are still difficult", "confusion"),
 ("the topic is exciting but i still do not understand it", "confusion"),
-
+("i still do not understand attention", "confusion" ),
+("i still do not understand transformers", "confusion"),
+("attention mechanism is confusing", "confusion"),
+("the topic remains unclear", "confusion"),
+("i am struggling to understand this", "confusion"),
+("the explanation is still confusing", "confusion"),
 # =====================================================
 # CURIOSITY
 # Audience wants more content

@@ -1,0 +1,25 @@
+Sentence : this tutorial is amazing
+Expected : appreciation
+Predicted: curiosity
+Result   : WRONG
+--------------------------------------------------
+Sentence : great explanation
+Expected : appreciation
+Predicted: curiosity
+Result   : WRONG
+--------------------------------------------------
+Sentence : excellent content
+Expected : appreciation
+Predicted: confusion
+Result   : WRONG
+--------------------------------------------------
+Sentence : waiting for part 2
+Expected : curiosity
+Predicted: frustration
+Result   : WRONG
+--------------------------------------------------
+Sentence : very helpful tutorial
+Expected : appreciation
+Predicted: confusion
+Result   : WRONG
+--------------------------------------------------
