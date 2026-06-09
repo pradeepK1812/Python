@@ -37,7 +37,15 @@ training_data = [
 ("challenging concepts but the tutorial explained them well", "appreciation"),
 ("advanced topic but surprisingly easy to understand", "appreciation"),
 ("the explanation seemed difficult but was actually helpful", "appreciation"),
-
+("the tutorial was very useful", "appreciation"),
+("helpful explanation", "appreciation"),
+("clear and understandable content", "appreciation"),
+("well explained concepts", "appreciation"),
+("difficult at first but easy later", "appreciation"),
+("confusing initially but understandable eventually", "appreciation"),
+("hard concepts but rewarding to learn", "appreciation"),
+("the tutorial seemed difficult but became enjoyable", "appreciation"),
+("complex at first but satisfying eventually", "appreciation"),
 # =====================================================
 # CONFUSION
 # Audience did not understand
@@ -100,6 +108,18 @@ training_data = [
 ("the lecture was unclear and annoying", "frustration"),
 ("confusing concepts and poor explanation quality", "frustration"),
 ("the examples made the topic even more difficult", "frustration"),
+("this explanation is annoying", "frustration"),
+("the tutorial wasted my time", "frustration"),
+("this terrible lecture is frustrating", "frustration"),
+("the examples are useless", "frustration"),
+("the explanation made me angry", "frustration"),
+("this tutorial is annoying", "frustration"),
+("the examples are useless", "frustration"),
+("this lecture wasted my time", "frustration"),
+("terrible explanation and poor teaching", "frustration"),
+("the instructor explained badly", "frustration"),
+("this content is irritating", "frustration"),
+("the tutorial quality is awful", "frustration"),
 
 # =====================================================
 # EXCITEMENT
@@ -114,7 +134,13 @@ training_data = [
 ("i am excited for the next video", "excitement"),
 ("this ai topic is fascinating", "excitement"),
 ("the science lecture was interesting", "excitement"),
-
+("this topic is incredibly exciting", "excitement"),
+("the tutorial was inspiring and energetic", "excitement"),
+("i am excited to learn more", "excitement"),
+("this lesson motivated me greatly", "excitement"),
+("the neural network demo was thrilling", "excitement"),
+("the lecture started slowly but became exciting", "excitement"),
+("boring initially but engaging later", "excitement"),
 # =====================================================
 # BOREDOM
 # Audience disengagement
@@ -133,7 +159,16 @@ training_data = [
 ("helpful content but the tutorial felt repetitive", "boredom"),
 ("the video started strong but became dull later", "boredom"),
 ("the lesson was informative but not engaging", "boredom"),
-
+("the lecture felt repetitive", "boredom"),
+("the topic became dull", "boredom"),
+("the tutorial was not engaging", "boredom"),
+("the examples were repetitive", "boredom"),
+("the content felt slow and tiring", "boredom"),
+("the lecture felt monotonous", "boredom"),
+("the content became repetitive", "boredom"),
+("the tutorial was dull", "boredom"),
+("the examples were repetitive and slow", "boredom"),
+("the lecture lacked energy", "boredom"),
 # =====================================================
 # CONTEXTUAL / MIXED EXAMPLES
 # VERY IMPORTANT FOR SEMANTIC LEARNING
