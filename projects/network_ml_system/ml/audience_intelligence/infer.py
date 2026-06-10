@@ -77,7 +77,9 @@ def tokenize(text):
 # Input sentence
 # -----------------------------------
 
-text = "this tutorial was amazing but still confusing"
+#text = "this tutorial was amazing but still confusing"
+#text = "this tutorial is amazing"
+text = "very helpful tutorial"
 print(f"\nInput sentence is :{text} \n")
 # -----------------------------------
 # Convert to token IDs
