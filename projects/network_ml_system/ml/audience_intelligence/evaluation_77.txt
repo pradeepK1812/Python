@@ -1,0 +1,185 @@
+
+==============================
+EVALUATION RESULTS
+==============================
+
+Sentence : this tutorial is amazing
+Expected : appreciation
+Predicted: appreciation
+Result   : CORRECT
+--------------------------------------------------
+Sentence : the explanation was terrible
+Expected : frustration
+Predicted: boredom
+Result   : WRONG
+--------------------------------------------------
+Sentence : the lecture was boring
+Expected : boredom
+Predicted: boredom
+Result   : CORRECT
+--------------------------------------------------
+Sentence : please make more videos
+Expected : curiosity
+Predicted: curiosity
+Result   : CORRECT
+--------------------------------------------------
+Sentence : machine learning is exciting
+Expected : excitement
+Predicted: excitement
+Result   : CORRECT
+--------------------------------------------------
+Sentence : the topic is difficult to understand
+Expected : confusion
+Predicted: excitement
+Result   : WRONG
+--------------------------------------------------
+Sentence : great tutorial but still confusing
+Expected : confusion
+Predicted: confusion
+Result   : CORRECT
+--------------------------------------------------
+Sentence : confusing at first but finally understandable
+Expected : appreciation
+Predicted: appreciation
+Result   : CORRECT
+--------------------------------------------------
+Sentence : interesting topic but the lecture became boring
+Expected : boredom
+Predicted: boredom
+Result   : CORRECT
+--------------------------------------------------
+Sentence : difficult initially but very helpful later
+Expected : appreciation
+Predicted: appreciation
+Result   : CORRECT
+--------------------------------------------------
+Sentence : excellent explanation but i am still confused
+Expected : confusion
+Predicted: confusion
+Result   : CORRECT
+--------------------------------------------------
+Sentence : the tutorial started slow but became exciting
+Expected : excitement
+Predicted: excitement
+Result   : CORRECT
+--------------------------------------------------
+Sentence : amazing tutorial please explain transformers more
+Expected : curiosity
+Predicted: curiosity
+Result   : CORRECT
+--------------------------------------------------
+Sentence : interesting topic but hard to understand
+Expected : confusion
+Predicted: boredom
+Result   : WRONG
+--------------------------------------------------
+Sentence : helpful content but too repetitive
+Expected : boredom
+Predicted: boredom
+Result   : CORRECT
+--------------------------------------------------
+Sentence : exciting lecture but slightly confusing
+Expected : confusion
+Predicted: confusion
+Result   : CORRECT
+--------------------------------------------------
+Sentence : great tutorial and very inspiring
+Expected : excitement
+Predicted: excitement
+Result   : CORRECT
+--------------------------------------------------
+Sentence : please create advanced transformer tutorials
+Expected : curiosity
+Predicted: curiosity
+Result   : CORRECT
+--------------------------------------------------
+Sentence : i want more videos on neural networks
+Expected : curiosity
+Predicted: curiosity
+Result   : CORRECT
+--------------------------------------------------
+Sentence : this topic deserves a deeper explanation
+Expected : curiosity
+Predicted: appreciation
+Result   : WRONG
+--------------------------------------------------
+Sentence : can you explain attention mechanism next
+Expected : curiosity
+Predicted: curiosity
+Result   : CORRECT
+--------------------------------------------------
+Sentence : waiting for the next machine learning video
+Expected : curiosity
+Predicted: excitement
+Result   : WRONG
+--------------------------------------------------
+Sentence : the lecture was too slow and repetitive
+Expected : boredom
+Predicted: boredom
+Result   : CORRECT
+--------------------------------------------------
+Sentence : the tutorial lost my interest halfway
+Expected : boredom
+Predicted: boredom
+Result   : CORRECT
+--------------------------------------------------
+Sentence : good explanation but not engaging enough
+Expected : boredom
+Predicted: boredom
+Result   : CORRECT
+--------------------------------------------------
+Sentence : helpful content but difficult to stay focused
+Expected : boredom
+Predicted: boredom
+Result   : CORRECT
+--------------------------------------------------
+Sentence : the explanation was confusing and frustrating
+Expected : frustration
+Predicted: confusion
+Result   : WRONG
+--------------------------------------------------
+Sentence : poor examples made the topic difficult
+Expected : frustration
+Predicted: frustration
+Result   : CORRECT
+--------------------------------------------------
+Sentence : the tutorial is unclear and annoying
+Expected : frustration
+Predicted: frustration
+Result   : CORRECT
+--------------------------------------------------
+Sentence : i still do not understand this terrible explanation
+Expected : frustration
+Predicted: confusion
+Result   : WRONG
+--------------------------------------------------
+Sentence : the topic seemed difficult but became easy later
+Expected : appreciation
+Predicted: appreciation
+Result   : CORRECT
+--------------------------------------------------
+Sentence : boring at first but exciting eventually
+Expected : excitement
+Predicted: excitement
+Result   : CORRECT
+--------------------------------------------------
+Sentence : confusing initially but very rewarding later
+Expected : appreciation
+Predicted: appreciation
+Result   : CORRECT
+--------------------------------------------------
+Sentence : great examples but the final concepts were unclear
+Expected : confusion
+Predicted: confusion
+Result   : CORRECT
+--------------------------------------------------
+Sentence : interesting explanation but still not understandable
+Expected : confusion
+Predicted: boredom
+Result   : WRONG
+--------------------------------------------------
+
+==============================
+FINAL ACCURACY: 77.14%
+==============================
+
