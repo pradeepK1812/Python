@@ -155,3 +155,39 @@ torch.Size([1, 4, 8])
 Output Shape:
 
 torch.Size([1, 4, 8])
+===================================================================================================
+Multi-Layer Encoder Stack
+================================================
+
+Embedding
+    ↓
+Positional Encoding
+    ↓
+Encoder Block #1
+    ↓
+Encoder Block #2
+    ↓
+Encoder Block #3
+    ↓
+Output
+
+Each Encoder Block preserves tensor shape
+while refining contextual representations.
+
+Example:
+
+Input:
+[1,4,8]
+
+After Layer 1:
+[1,4,8]
+
+After Layer 2:
+[1,4,8]
+
+After Layer 3:
+[1,4,8]
+
+Output:
+[1,4,8]
+============================================================================================

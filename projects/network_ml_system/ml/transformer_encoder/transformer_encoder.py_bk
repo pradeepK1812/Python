@@ -11,8 +11,7 @@ class TransformerEncoder(nn.Module):
         self,
         vocab_size,
         embedding_dim,
-        max_seq_length,
-        num_layers # added to support multi-layer encoder
+        max_seq_length
     ):
 
         super().__init__()
@@ -24,17 +23,9 @@ class TransformerEncoder(nn.Module):
           embedding_dim,
           max_seq_length
         )
-       # self.encoder = EncoderBlock(embedding_dim) 
-       #single block removed and multi-layer added below
-
-        self.layers = nn.ModuleList(
-        [
-            EncoderBlock(
-                embedding_dim
-            )
-            for _ in range(num_layers)
-        ]
-)
+        self.encoder = EncoderBlock(
+          embedding_dim
+        )
     
     def forward(self, x):
         
@@ -54,27 +45,11 @@ class TransformerEncoder(nn.Module):
         print("\nAfter Positional Encoding:")
         print(embedded.shape)
         
-       # output = self.encoder( embedded)
-       #single encoding block commented and multi-layer encoding block added 
-
-        x = embedded
-        layer_num = 1 # to print the layers
-
-        for layer in self.layers:
-
-            x = layer(x)
-            #to print the layer info for debug purpose
-            print(
-                     f"\nAfter Encoder Layer {layer_num}:"
-                 )
-
-            print(x.shape)
-
-            layer_num += 1
-
-
-        return x
+        output = self.encoder(
+            embedded
+        )
         
-
-
-                    
+        print("\nAfter Encoder Block:")
+        print(output.shape)
+        
+        return output

@@ -9,7 +9,7 @@ from transformer_encoder import TransformerEncoder
 vocab_size = 100
 embedding_dim = 8
 max_seq_length = 10
-
+num_layers = 3
 # -----------------------------------
 # Create encoder
 # -----------------------------------
@@ -17,7 +17,8 @@ max_seq_length = 10
 encoder = TransformerEncoder(
     vocab_size,
     embedding_dim,
-    max_seq_length
+    max_seq_length,
+    num_layers
 )
 
 # -----------------------------------
