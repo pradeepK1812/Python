@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
-from multihead_attention import MultiHeadAttention
 
+from transformer_encoder.multihead_attention import MultiHeadAttention
 
 class EncoderBlock(nn.Module):
 
