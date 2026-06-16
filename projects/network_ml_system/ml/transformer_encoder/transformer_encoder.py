@@ -39,20 +39,20 @@ class TransformerEncoder(nn.Module):
     def forward(self, x):
         
 
-        print("\nInput:")
-        print(x.shape)
+        #print("\nInput:")
+        #print(x.shape)
         
         embedded = self.embedding(x)
         
-        print("\nAfter Embedding:")
-        print(embedded.shape)
+        #print("\nAfter Embedding:")
+        #print(embedded.shape)
         
         embedded = self.positional_encoding(
             embedded
         )
         
-        print("\nAfter Positional Encoding:")
-        print(embedded.shape)
+        #print("\nAfter Positional Encoding:")
+        #print(embedded.shape)
         
        # output = self.encoder( embedded)
        #single encoding block commented and multi-layer encoding block added 
@@ -64,11 +64,11 @@ class TransformerEncoder(nn.Module):
 
             x = layer(x)
             #to print the layer info for debug purpose
-            print(
+            """  print(
                      f"\nAfter Encoder Layer {layer_num}:"
                  )
 
-            print(x.shape)
+            print(x.shape)"""
 
             layer_num += 1
 

@@ -88,11 +88,11 @@ y_tensor = torch.tensor(y).long()
 # Print dataset
 # -----------------------------------
 
-print("\nInput Tensor:\n")
+#print("\nInput Tensor:\n")
 
 #print(X_tensor)
-print(X_tensor.tolist())
+#print(X_tensor.tolist())
 
-print("\nLabel Tensor:\n")
+#print("\nLabel Tensor:\n")
 
-print(y_tensor)
+#print(y_tensor)

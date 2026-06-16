@@ -35,28 +35,29 @@ class MiniBERTClassifier(nn.Module):
     def forward(self, x):
 
             encoder_output = self.encoder(x)
-            print(
+            """ print(
                      f"\nAfter Encoder output:"
                  )
 
-            print(encoder_output.shape)
+            print(encoder_output.shape)"""
 
 
             cls_output = encoder_output[:, 0, :]
-            print(
+            """print(
                      f"\nAfter CLS output :"
                  )
 
-            print(cls_output.shape)
+            print(cls_output.shape)"""
 
 
             logits = self.classifier(
                 cls_output
             )
-            print(
+
+            """print(
                      f"\nLogits :"
                  )
 
-            print(logits)
+            print(logits)"""
 
             return logits
