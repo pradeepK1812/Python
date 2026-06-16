@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from model import SentimentModel
-from dataset import X_tensor, y_tensor
-from vocabulary import word_to_index
+from audience_intelligence.model import SentimentModel
+from audience_intelligence.dataset import X_tensor, y_tensor
+from audience_intelligence.vocabulary import word_to_index
 
 # -----------------------------------
 # Model configuration
