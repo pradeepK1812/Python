@@ -3,9 +3,9 @@ import torch.nn as nn
 
 
 from transformer_encoder.positional_encoding import PositionalEncoding
-from transformer_encoder.encoder_block import EncoderBlock
+from transformer_decoder.decoder_block import DecoderBlock
 
-class TransformerEncoder(nn.Module):
+class TransformerDecoder(nn.Module):
 
     def __init__(
         self,
@@ -29,7 +29,7 @@ class TransformerEncoder(nn.Module):
 
         self.layers = nn.ModuleList(
         [
-            EncoderBlock(
+            DecoderBlock(
                 embedding_dim
             )
             for _ in range(num_layers)
@@ -65,7 +65,7 @@ class TransformerEncoder(nn.Module):
             x = layer(x)
             #to print the layer info for debug purpose
             """  print(
-                     f"\nAfter Encoder Layer {layer_num}:"
+                     f"\nAfter Decoder Layer {layer_num}:"
                  )
 
             print(x.shape)"""

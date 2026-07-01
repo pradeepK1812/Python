@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-from transformer_dencoder.masked_multihead_attention import MaskedMultiHeadAttention
+from transformer_decoder.masked_multihead_attention import MaskedMultiHeadAttention
 
-class EncoderBlock(nn.Module):
+class DecoderBlock(nn.Module):
 
     def __init__(
         self,
@@ -18,7 +18,7 @@ class EncoderBlock(nn.Module):
         # Multi-Head Self Attention
         # -----------------------------------
 
-        self.attention = MultiHeadAttention(
+        self.attention =MaskedMultiHeadAttention(
             embedding_dim=embedding_dim,
             num_heads=4
         )
