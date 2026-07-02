@@ -35,3 +35,24 @@ class PredictionRequest(BaseModel):
             if len(row) != 2:
                 raise ValueError("Each feature vector must contain exactly 2 values")
         return v
+
+class GenerationRequest(BaseModel):
+
+    prompt: str
+
+    max_tokens: int = 5
+
+    @field_validator("prompt")
+    @classmethod
+    def validate_prompt(cls, value):
+
+         if not value.strip():
+            raise ValueError("Prompt cannot be empty")
+
+         return value
+
+
+class GenerationResponse(BaseModel):
+
+    generated_text: str
+

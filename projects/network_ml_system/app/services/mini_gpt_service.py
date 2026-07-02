@@ -1,7 +1,7 @@
 import torch
 
-from audience_intelligence.vocabulary import word_to_index
-from transformer_decoder.mini_gpt  import MiniGPT
+from ml.audience_intelligence.vocabulary import word_to_index
+from ml.transformer_decoder.mini_gpt  import MiniGPT
 
 # -----------------------------------
 # Reverse vocabulary
