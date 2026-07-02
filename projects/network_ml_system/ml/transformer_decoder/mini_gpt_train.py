@@ -5,10 +5,10 @@ import torch.optim as optim
 from audience_intelligence.vocabulary import (
     word_to_index
 )
-"""from audience_intelligence.dataset import (
-    X_tensor,
-    y_tensor
-)"""
+from transformer_decoder.mini_gpt_dataset import (
+    input_tensor,
+    target_tensor
+)
 from transformer_decoder.mini_gpt import MiniGPT
 # -----------------------------------
 # Model configuration
@@ -29,6 +29,8 @@ model = MiniGPT(
     max_seq_length= max_seq_length,
     num_layers=3
 )
+
+
 # -----------------------------------
 #  classification loss
 # -----------------------------------
@@ -49,15 +51,23 @@ optimizer = torch.optim.Adam(
 
 #epochs = 500
 epochs = 1500 # for new complex dataset
+# -----------------------------------
+# Flatten target tensor once
+# -----------------------------------
+
+target = target_tensor.view(-1)
 
 for epoch in range(epochs):
 
     # Forward pass
-    predictions = model(X_tensor)
+    logits = model(input_tensor)
+    #flatten the shape from (batch, sequence,classes) to (number_of_examples, number_of_classes)
+    logits = logits.view( -1,vocab_size)
+    #target_tensor = target_tensor.view(-1)
     # Compute loss
     loss = criterion(
-        predictions,
-        y_tensor
+        logits,
+        target
     )
 
     # Clear old gradients
@@ -76,32 +86,41 @@ for epoch in range(epochs):
             f"Epoch {epoch}, "
             f"Loss: {loss.item():.4f}"
         )
-    #print(predictions.shape)
-   # print(y_tensor.shape)
+        print(f"Logits Shape : {logits.shape}")
+        print(f"Target Shape : {target.shape}")
 # -----------------------------------
 # Save trained model
 # -----------------------------------
 
 torch.save(
     model.state_dict(),
-    "mini_bert_classifier_model.pt"
+    "mini_gpt_model.pt"
 )
 
 print("\nModel saved successfully.")
 
-with torch.no_grad():
 
-    logits = model(X_tensor)
+#Evaluation loop
+
+with torch.no_grad():
+   
+
+    logits = model(input_tensor)
 
     predictions = torch.argmax(
-        logits,
-        dim=1
+       logits,
+       dim=-1
     )
 
-    print(predictions)
-    print(y_tensor)
-    accuracy = (
-       predictions == y_tensor
-    ).float().mean()
+    predictions = predictions.view(-1)
 
+    target = target_tensor.view(-1)
+    
+    print(predictions)
+    print(target)
+
+    accuracy = (
+        predictions == target
+    ).float().mean()
+    
     print(accuracy)

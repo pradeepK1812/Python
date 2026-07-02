@@ -35,10 +35,10 @@ class MiniGPT(nn.Module):
 
         logits = self.lm_head(x)
         
-        print("\nAfter Transformer Decoder:")
+        """ print("\nAfter Transformer Decoder:")
         print(x.shape)
 
         print("\nVocabulary Logits:")
-        print(logits.shape)
+        print(logits.shape)"""
        
         return logits
