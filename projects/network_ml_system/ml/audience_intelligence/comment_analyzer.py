@@ -1,8 +1,8 @@
 import torch
 
-from audience_intelligence.model import SentimentModel
-from audience_intelligence.vocabulary import word_to_index
-from audience_intelligence.sample_comments import comments
+from ml.audience_intelligence.model import SentimentModel
+from ml.audience_intelligence.vocabulary import word_to_index
+from ml.audience_intelligence.sample_comments import comments
 
 # -----------------------------------
 # Emotion label decoder

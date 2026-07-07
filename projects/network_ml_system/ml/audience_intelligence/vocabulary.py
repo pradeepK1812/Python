@@ -1,4 +1,4 @@
-from audience_intelligence.sample_data import training_data
+from ml.audience_intelligence.sample_data import training_data
 
 # -----------------------------------
 # Vocabulary dictionary

@@ -1,8 +1,8 @@
 import torch
 import matplotlib.pyplot as plt
 
-from model import SentimentModel
-from vocabulary import word_to_index
+from ml.audience_intelligence.model import SentimentModel
+from ml.audience_intelligence.vocabulary import word_to_index
 
 # -----------------------------------
 # Model configuration

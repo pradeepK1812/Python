@@ -1,7 +1,7 @@
 import torch
 
-from audience_intelligence.sample_data import training_data
-from audience_intelligence.vocabulary import word_to_index
+from ml.audience_intelligence.sample_data import training_data
+from ml.audience_intelligence.vocabulary import word_to_index
 
 
 # -----------------------------------
