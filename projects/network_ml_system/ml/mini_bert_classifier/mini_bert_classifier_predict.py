@@ -1,7 +1,7 @@
 import torch
 
-from audience_intelligence.vocabulary import word_to_index
-from mini_bert_classifier.mini_bert_classifier import MiniBERTClassifier
+from ml.audience_intelligence.vocabulary import word_to_index
+from ml.mini_bert_classifier.mini_bert_classifier import MiniBERTClassifier
 
 # -----------------------------------
 # Emotion label decoder

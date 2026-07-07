@@ -2,14 +2,14 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from audience_intelligence.vocabulary import (
+from ml.audience_intelligence.vocabulary import (
     word_to_index
 )
-from audience_intelligence.dataset import (
+from ml.audience_intelligence.dataset import (
     X_tensor,
     y_tensor
 )
-from mini_bert_classifier.mini_bert_classifier import (
+from ml.mini_bert_classifier.mini_bert_classifier import (
     MiniBERTClassifier
 )
 # -----------------------------------

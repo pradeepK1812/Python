@@ -1,6 +1,6 @@
 import torch
 
-from mini_bert_classifier.mini_bert_classifier  import MiniBERTClassifier
+from ml.mini_bert_classifier.mini_bert_classifier  import MiniBERTClassifier
 
 model = MiniBERTClassifier(
     vocab_size=100,

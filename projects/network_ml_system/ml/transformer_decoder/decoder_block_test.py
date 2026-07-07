@@ -1,6 +1,6 @@
 import torch
 
-from transformer_decoder.decoder_block import (
+from ml.transformer_decoder.decoder_block import (
     DecoderBlock
 )
 

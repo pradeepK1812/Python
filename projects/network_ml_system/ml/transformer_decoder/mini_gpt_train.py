@@ -2,14 +2,14 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from audience_intelligence.vocabulary import (
+from ml.audience_intelligence.vocabulary import (
     word_to_index
 )
-from transformer_decoder.mini_gpt_dataset import (
+from ml.transformer_decoder.mini_gpt_dataset import (
     input_tensor,
     target_tensor
 )
-from transformer_decoder.mini_gpt import MiniGPT
+from ml.transformer_decoder.mini_gpt import MiniGPT
 # -----------------------------------
 # Model configuration
 # -----------------------------------

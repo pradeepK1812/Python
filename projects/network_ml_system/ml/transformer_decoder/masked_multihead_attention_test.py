@@ -1,6 +1,6 @@
 import torch
 
-from transformer_decoder.masked_multihead_attention import (
+from ml.transformer_decoder.masked_multihead_attention import (
     MaskedMultiHeadAttention
 )
 

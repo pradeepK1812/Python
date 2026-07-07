@@ -1,6 +1,6 @@
 import torch
 
-from transformer_decoder.mini_gpt import MiniGPT
+from ml.transformer_decoder.mini_gpt import MiniGPT
 
 model = MiniGPT(
     vocab_size=100,

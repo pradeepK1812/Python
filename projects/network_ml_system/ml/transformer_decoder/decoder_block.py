@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from transformer_decoder.masked_multihead_attention import MaskedMultiHeadAttention
+from ml.transformer_decoder.masked_multihead_attention import MaskedMultiHeadAttention
 
 class DecoderBlock(nn.Module):
 

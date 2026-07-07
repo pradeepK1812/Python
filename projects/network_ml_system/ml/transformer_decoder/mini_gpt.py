@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from transformer_decoder.transformer_decoder import (
+from ml.transformer_decoder.transformer_decoder import (
     TransformerDecoder
 )
 

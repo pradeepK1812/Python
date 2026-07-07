@@ -9,11 +9,11 @@
 # -----------------------------------
 import torch
 
-from audience_intelligence.sample_data import (
+from ml.audience_intelligence.sample_data import (
     training_data
 )
 
-from audience_intelligence.vocabulary import (
+from ml.audience_intelligence.vocabulary import (
     word_to_index
 )
 

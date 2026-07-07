@@ -1,8 +1,8 @@
 import torch
 
-from audience_intelligence.vocabulary import word_to_index
-from audience_intelligence.sample_comments import comments
-from mini_bert_classifier.mini_bert_classifier import (
+from ml.audience_intelligence.vocabulary import word_to_index
+from ml.audience_intelligence.sample_comments import comments
+from ml.mini_bert_classifier.mini_bert_classifier import (
     MiniBERTClassifier
 )
 # -----------------------------------
