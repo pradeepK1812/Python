@@ -1,7 +1,7 @@
 import torch
 
 
-from transformer_encoder.transformer_encoder import TransformerEncoder
+from ml.transformer_encoder.transformer_encoder import TransformerEncoder
 # -----------------------------------
 # Configuration
 # -----------------------------------

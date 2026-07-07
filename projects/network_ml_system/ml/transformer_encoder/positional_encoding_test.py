@@ -1,7 +1,7 @@
 import math
 import torch
 import torch.nn as nn
-from positional_encoding import PositionalEncoding
+from ml.transformer_encoder.positional_encoding import PositionalEncoding
 
 embedding_dim = 8
 max_seq_length = 6

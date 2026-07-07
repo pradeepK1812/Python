@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 
 
-from transformer_encoder.positional_encoding import PositionalEncoding
-from transformer_encoder.encoder_block import EncoderBlock
+from ml.transformer_encoder.positional_encoding import PositionalEncoding
+from ml.transformer_encoder.encoder_block import EncoderBlock
 
 class TransformerEncoder(nn.Module):
 

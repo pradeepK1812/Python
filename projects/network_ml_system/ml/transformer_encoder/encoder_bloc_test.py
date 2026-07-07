@@ -2,7 +2,7 @@
 
 import torch
 
-from encoder_block import EncoderBlock
+from ml.transformer_encoder.encoder_block import EncoderBlock
 
 block = EncoderBlock(
     embedding_dim=8
