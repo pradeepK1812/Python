@@ -29,7 +29,7 @@ PHASE 1 : MACHINE LEARNING FOUNDATIONS
 [x] Neural Network (PyTorch)
 
 ==============================================================
-PHASE 2 : TRANSFORMERS (CURRENT PHASE)
+PHASE 2 : TRANSFORMERS
 ==============================================================
 
 -------------------------
@@ -60,22 +60,28 @@ Mini-BERT
 [x] Batch Comment Analyzer
 [x] Error Analysis
 [x] Accuracy Evaluation
-[x] nanoGPT Architecture Review
 
 ==============================================================
-PHASE 3 : GPT / DECODER (NEXT)
+PHASE 3 : GPT / DECODER
 ==============================================================
 
-[ ] Why Decoder?
-[ ] Causal Masking
-[ ] Masked Self Attention
-[ ] Decoder Block
-[ ] Multi-Layer Decoder
-[ ] Language Modeling Head
-[ ] Mini-GPT
-[ ] Next Token Prediction
-[ ] Text Generation
-[ ] Compare Mini-GPT with nanoGPT
+[x] Why Decoder?
+[x] Causal Masking
+[x] Masked Self Attention
+[x] Decoder Block
+[x] Multi-Layer Decoder
+[x] Language Modeling Head
+[x] Mini-GPT
+[x] Next Token Prediction
+[x] Multi-Token Text Generation
+[x] Training Pipeline
+[x] Save Model
+[x] Load Model
+[x] FastAPI Service
+[x] REST API Endpoint
+[x] Swagger Integration
+[x] Package Refactoring
+[x] Compare Mini-GPT with nanoGPT
 
 ==============================================================
 PHASE 4 : IMPROVE MINI-BERT
@@ -98,15 +104,36 @@ PHASE 4 : IMPROVE MINI-BERT
 PHASE 5 : RAG (Retrieval Augmented Generation)
 ==============================================================
 
-[ ] Embeddings
-[ ] Sentence Transformers
+-------------------------
+Embeddings
+-------------------------
+
+[ ] Word Embeddings
+[ ] Sentence Embeddings
+[ ] Embedding Models
+[ ] Cosine Similarity
+
+-------------------------
+Knowledge Retrieval
+-------------------------
+
 [ ] Chunking
 [ ] Vector Databases
+[ ] FAISS
 [ ] Similarity Search
 [ ] Retriever
 [ ] Prompt Construction
-[ ] RAG Pipeline
-[ ] Build Custom RAG Application
+
+-------------------------
+RAG System
+-------------------------
+
+[ ] Build RAG Pipeline
+[ ] FastAPI Integration
+[ ] PDF Ingestion
+[ ] Multi-document Retrieval
+[ ] Source Attribution
+[ ] Build Production RAG Application
 
 ==============================================================
 PHASE 6 : AI AGENTS
@@ -124,27 +151,58 @@ PHASE 6 : AI AGENTS
 PHASE 7 : MLOps & DEPLOYMENT
 ==============================================================
 
-[X ] FastAPI
+[x] FastAPI
+[x] REST APIs
+[x] Model Serving
+[x] CI/CD for ML
+
 [ ] Docker
-[ X] Model Serving
-[ ] REST APIs
-[ X] CI/CD for ML
+[ ] Docker Compose
 [ ] Monitoring
 [ ] Logging
+[ ] Authentication
 [ ] Deployment
+[ ] GPU Serving
 
 ==============================================================
 PHASE 8 : ADVANCED LLM ENGINEERING
 ==============================================================
 
-[ ] Read nanoGPT Completely
-[ ] Read HuggingFace Transformers
-[ ] Read PyTorch Source
+-------------------------
+Open Source LLMs
+-------------------------
+
+[ ] Hugging Face Transformers
+[ ] Hugging Face Datasets
+[ ] Hugging Face Tokenizers
+
+-------------------------
+Architecture Study
+-------------------------
+
+[x] Read nanoGPT
+[ ] Read HuggingFace BERT
+[ ] Read Llama Implementation
+[ ] Read vLLM Architecture
+[ ] Read LangGraph Internals
+
+-------------------------
+Fine-Tuning
+-------------------------
+
 [ ] LoRA
 [ ] PEFT
 [ ] Quantization
 [ ] Fine-Tuning
 [ ] RLHF (Conceptual)
+
+-------------------------
+Inference Engineering
+-------------------------
+
+[ ] KV Cache
+[ ] Continuous Batching
+[ ] Speculative Decoding
 [ ] Inference Optimization
 
 ==============================================================
@@ -154,28 +212,67 @@ FINAL GOAL
 Become an AI Systems Engineer / AI Architect capable of:
 
 [x] Understanding ML Mathematics
+
 [x] Implementing Models from Scratch
+
 [x] Reading Production AI Code
-[ ] Building GPT-style Models
+
+[x] Building GPT-style Models
+
 [ ] Building Production RAG Systems
+
 [ ] Building AI Agents
+
 [ ] Deploying Enterprise AI Solutions
 
-==============================================================
 ==============================================================
 ARCHITECTURE STUDY (Continuous)
 ==============================================================
 
 [x] Read mini implementations
+
 [x] Read nanoGPT
-[ ] Read HuggingFace BERT
-[ ] Read Llama implementation
-[ ] Read vLLM architecture
-[ ] Read LangGraph internals
-================================================================
+
+[x] Implement Mini-BERT from Scratch
+
+[x] Implement Mini-GPT from Scratch
+
+[ ] Read HuggingFace Source Code
+
+[ ] Read Llama Source Code
+
+[ ] Read vLLM Source Code
+
+[ ] Read LangGraph Source Code
+
+==============================================================
 CURRENT MILESTONE
 ==============================================================
 
->>> START PHASE 3 : BUILD THE DECODER <<<
+>>> BUILD A PRODUCTION RAG SYSTEM <<<
 
+Roadmap for Current Milestone
+
+[ ] Sentence Embeddings
+[ ] FAISS Vector Database
+[ ] Retriever
+[ ] Prompt Builder
+[ ] Open-weight LLM Integration
+[ ] FastAPI RAG Service
+[ ] Web UI
+[ ] End-to-End Production Demo
+
+==============================================================
+LONG TERM VISION
+==============================================================
+
+Understand Everything
+        ↓
+Build Everything
+        ↓
+Read Production Code
+        ↓
+Deploy Production Systems
+        ↓
+Become AI Systems Engineer / AI Architect
 ==============================================================
