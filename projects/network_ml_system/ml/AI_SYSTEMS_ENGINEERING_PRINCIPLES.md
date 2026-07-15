@@ -499,3 +499,192 @@ The retrieval layer should orchestrate these sources
 to provide the LLM with the most relevant context.
 
 ------------------------------------------------------------------------------------------------------------------
+Principal 20
+-----------------------------------------------------------------------------------------------------------
+
+System responsibilities naturally reveal architectural components.
+
+Explanation
+
+When designing an AI system, begin by identifying the
+distinct responsibilities required to solve the business
+problem.
+
+Components should emerge from responsibilities rather
+than being copied from existing frameworks.
+
+Benefits
+
+• Clear separation of concerns
+• High modularity
+• Easier testing
+• Independent evolution of components
+• Better maintainability
+
+-------------------------------------------------------------------------------------------------------------------------
+Principal 21
+---------------------------------------------------------------------------------------------------------------------------
+Different knowledge requires different acquisition strategies.
+
+Explanation
+
+Not all information should be retrieved in the same way.
+
+• Stable, domain-specific information belongs in RAG.
+• Frequently changing information should be obtained through tools.
+• General world knowledge may come from the LLM or web search.
+
+An AI system should choose the most appropriate source of truth
+based on the nature of the information requested.
+
+Benefits
+
+• More accurate answers
+• Lower maintenance
+• Better scalability
+• Clear separation of responsibilities
+---------------------------------------------------------------------------------------------------------------
+Principal 22
+----------------------------------------------------------------------------------------------------------------
+Complex problems should be solved through iterative planning
+and execution rather than attempting a single-step solution.
+
+Explanation
+
+An AI system should decompose complex objectives into
+smaller executable steps.
+
+Each step may retrieve knowledge, invoke tools, gather
+observations, or refine the execution plan.
+
+This iterative process improves robustness and allows
+the system to adapt when intermediate results differ
+from expectations.
+
+Benefits
+
+• Handles complex workflows
+• Better fault tolerance
+• Dynamic replanning
+• Higher success rate
+
+-----------------------------------------------------------------------------------------------------------------
+Principal 23
+-------------------------------------------------------------------------------------------------------
+An AI Agent operates as a closed-loop control system.
+
+Explanation
+
+The agent continuously:
+
+• Plans
+• Executes
+• Observes
+• Evaluates
+• Replans
+
+until the business objective is achieved.
+
+The next action is determined by the observed outcome
+of the previous action rather than by a fixed sequence
+of predefined steps.
+
+Benefits
+
+• Adaptability
+• Robustness
+• Fault recovery
+• Autonomous execution
+---------------------------------------------------------------------------------------------------------------
+Principal 24
+-----------------------------------------------------------------------------------------------------------
+Persistent state should be managed outside the reasoning engine.
+
+Explanation
+
+The LLM is responsible for reasoning, not long-term
+storage.
+
+Conversation history, user preferences, previous plans,
+tool outputs, and business context should be maintained
+by dedicated memory components.
+
+This separation improves modularity and allows reasoning
+engines to be replaced without affecting system state.
+
+Benefits
+
+• Modular architecture
+• Easier upgrades
+• Better scalability
+• Persistent conversations
+• Better personalization
+
+-----------------------------------------------------------------------------------------------------------------------
+Principal 25
+---------------------------------------------------------------------------------------------------------------------
+Enterprise AI systems should preserve structured state,
+not merely conversational history.
+
+Explanation
+
+The system should maintain:
+
+• Current objective
+• Completed actions
+• Evidence collected
+• Tool outputs
+• Remaining tasks
+• Confidence
+• Decision rationale
+
+This enables investigations to continue seamlessly,
+supports human handoff, and allows planners to make
+informed decisions based on verified evidence.
+
+Benefits
+
+• Explainability
+• Auditability
+• Human-AI collaboration
+• Fault recovery
+• Stateful execution
+
+-----------------------------------------------------------------------------------------------------------------
+
+Principal 26
+-----------------------------------------------------------------------------------------------------------
+AI systems should be goal-driven rather than workflow-driven.
+
+Explanation
+
+The objective of an AI system is to achieve the business
+goal, not merely to execute a predefined sequence of steps.
+
+Each execution step produces observations that update the
+system state.
+
+The planner continuously evaluates whether the goal has
+been achieved and revises the execution plan whenever
+necessary.
+
+The workflow is dynamic; the business objective remains
+constant.
+
+Benefits
+
+• Adaptability
+• Robustness
+• Better fault recovery
+• Autonomous decision making
+• Higher success rate
+
+--------------------------------------------------------------------------------------------------------------------
+
+Principal 27
+
+------------------------------------------------------------------------------------------------------------------
+
+
+
+
