@@ -685,6 +685,177 @@ Principal 27
 
 ------------------------------------------------------------------------------------------------------------------
 
+Represent business concepts as domain objects rather
+than generic data structures.
 
+Explanation
+
+Core entities such as Documents, Chunks, Embeddings,
+SearchResults, and InvestigationState should be modeled
+as explicit domain objects.
+
+This makes the architecture self-documenting and
+reduces ambiguity throughout the system.
+
+Benefits
+
+• Better readability
+• Stronger abstraction
+• Easier maintenance
+• Clear business modeling
+
+-----------------------------------------------------------------------------------------------------------------
+Principal 28
+
+------------------------------------------------------------------------------------------------------
+
+Business entities should be modeled independently of
+their implementation.
+
+Explanation
+
+Files and modules should be organized around business
+concepts rather than programming constructs.
+
+For example,
+
+Document
+
+Chunk
+
+Embedding
+
+SearchResult
+
+are domain entities regardless of whether they are
+implemented using dataclasses, classes, Pydantic models,
+or ORM objects.
+
+Benefits
+
+• Stable architecture
+• Better abstraction
+• Easier refactoring
+• Cleaner domain model
+
+------------------------------------------------------------------------------------------
+Principal 29
+
+---------------------------------------------------------------------------------------------
+
+Design interfaces for the future architecture, not only the current implementation.
+
+Explanation
+
+When defining module responsibilities, anticipate
+reasonable future evolution without introducing
+unnecessary complexity.
+
+For example, a document reader should support recursive
+directory traversal because enterprise knowledge bases
+naturally grow into hierarchical structures.
+
+Benefits
+
+• Reduced future refactoring
+• Stable module interfaces
+• Better scalability
+• Cleaner evolution
+
+-----------------------------------------------------------------------------------------------------------------------
+Prinicipal 30
+-------------------------------------------------------------------------------------------------------------------
+Initial implementations should maximize semantic correctness
+rather than algorithmic convenience.
+
+Explanation
+
+When multiple implementation strategies exist, prefer the
+one that best preserves the meaning of the underlying
+business data, even if it requires slightly more effort.
+
+Optimization can follow after correctness has been
+established through evaluation.
+
+Benefits
+
+• Better retrieval quality
+• Cleaner architecture
+• Easier future optimization
+• Business-aligned design
+
+------------------------------------------------------------------------------------------------------------------------
+Principal 31
+----------------------------------------------------------------------------------------------------------------------
+Preserve information during ingestion; optimize during processing.
+
+Explanation
+
+Early stages of an AI pipeline should retain as much of the
+original information and structure as possible.
+
+Normalization, compression, or optimization should occur
+only when there is clear evidence that it improves downstream
+processing.
+
+Benefits
+
+• Prevents irreversible information loss
+• Improves traceability
+• Enables better experimentation
+• Supports future processing strategies
+
+------------------------------------------------------------------------------------------------------------------------------------
+Principal 32
+------------------------------------------------------------------------------------------------------------------------
+
+Parse documents according to their semantic structure,
+not their storage format.
+
+Explanation
+
+Chunking should identify logical sections based on the
+document's structural conventions rather than assuming
+a specific file format such as Markdown or PDF.
+
+The same semantic chunking strategy should be adaptable
+to different document representations by changing the
+parsing rules, not the overall architecture.
+
+Benefits
+
+• Format independence
+• Better semantic preservation
+• Easier extensibility
+• Cleaner architecture
+
+-------------------------------------------------------------------------------------------------------------------------
+Principal 33
+------------------------------------------------------------------------------------------------------------------------
+
+Understand before transforming.
+
+Explanation
+
+Before information is transformed into another
+representation, its inherent structure should first
+be identified and preserved.
+
+Parsing discovers the semantic organization of the
+knowledge.
+
+Chunking then converts that structured knowledge into
+retrieval units.
+
+Benefits
+
+• Clear separation of responsibilities
+• Better semantic preservation
+• Format-independent architecture
+• More accurate retrieval
+
+-----------------------------------------------------------------------------------------------------------
+Principal 34
+---------------------------------------------------------------------------------------------------------
 
 

@@ -3,6 +3,10 @@ RAG ARCHITECTURE V1
 (Planning & Knowledge Retrieval)
 
 ==========================================================
+An AI system is composed of multiple specialized models and components/services,
+each optimized for a specific objective. 
+These components/services are orchestrated together to solve a business problem.
+
 ==========================================================
 RAG ARCHITECTURE
 ==========================================================
