@@ -857,5 +857,51 @@ Benefits
 -----------------------------------------------------------------------------------------------------------
 Principal 34
 ---------------------------------------------------------------------------------------------------------
+Every piece of business knowledge should belong to one and
+only one semantic section.
+
+Explanation
+
+A parser should assign all meaningful document content to
+explicit semantic sections.
+
+Knowledge should never exist outside the structural model.
+
+This guarantees deterministic parsing and complete
+retrievability.
+
+Benefits
+
+• No orphaned knowledge
+• Deterministic parsing
+• Complete retrieval coverage
+• Simpler downstream processing
+
+---------------------------------------------------------------------------------------------------------------------
+Principal 35
+---------------------------------------------------------------------------------------------------------------------------
+Design determines implementation quality.
+
+Explanation
+
+A well-defined architecture and complete design reduce
+implementation complexity.
+
+When responsibilities, invariants, interfaces, and data
+models are clearly defined, the implementation becomes a
+straightforward translation of the design into code rather
+than a process of discovering the solution while coding.
+
+Benefits
+
+• Simpler implementation
+• Fewer bugs
+• Easier testing
+• Better maintainability
+• Predictable evolution
+
+-----------------------------------------------------------------------------------------------------
+Principal 36
+------------------------------------------------------------------------------------------------
 
 
