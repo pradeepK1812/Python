@@ -51,8 +51,8 @@ def _is_blank(line: str) -> bool:
 
 def _is_major_heading(lines: list[str], index: int) -> bool:
     
-    if((index+2) < len(lines):
-       if (set(lines[index]) == {"="} and not(_is_blank(lines[index+1]) and set(lines[index+2]) == {"="}):
+    if((index+2) < len(lines)):
+       if (_is_major_separator(lines[index])  and not(_is_blank(lines[index+1])) and _is_major_separator(lines[index+2])):
            return True
        else:
            return False
@@ -60,4 +60,68 @@ def _is_major_heading(lines: list[str], index: int) -> bool:
     else:
           return False
 
-    
+def _read_major_heading(lines: list[str], index: int) -> str:
+    return(lines[index+1]).strip()
+
+
+def _read_minor_heading(lines: list[str], index: int) -> str:
+    return _read_major_heading(lines, index)
+
+
+def _is_minor_heading(lines: list[str], index: int) -> bool:
+
+    if((index+2) < len(lines)):
+       if (_is_minor_separator(lines[index])  and not(_is_blank(lines[index+1])) and _is_minor_separator(lines[index+2])):
+           return True
+       else:
+           return False
+
+    else:
+          return False
+
+
+    ### main parser logic ############################################
+
+def _read_section_content(lines, index):
+
+           content_lines = []
+           numlines = len(lines)
+           while(index < numlines and not _is_minor_heading(lines[index]):
+
+                 currentline = lines[index]
+                 index = index+1
+                 if( _is_blank(currentline):
+                    continue
+                 else:
+                    #read line
+                    content_lines.append(currentline.strip())
+                 
+           return content_lines, index
+#Main parser state machine#########################################
+
+def parse(document: Document) -> StructuredDocument:
+
+    lines = document.content.splitlines()
+    sections = []
+    contentlen = len(lines) 
+    index = 0
+    if not _is_major_heading(lines, 0):
+        raise ValueError("Document does not start with a major heading.")
+
+    title = _read_major_heading(lines,index)
+    index += 3
+
+    while index < contentlen:
+
+        if _is_minor_heading(lines,index):
+
+            heading = _read_minor_heading(lines,index)
+            index += 3
+
+            content, index = _read_section_content(lines,index)
+            section = Section(title=heading,level=1,content="\n".join(content),)
+            sections.append(section)
+        else :
+             index+=1
+
+    return StructuredDocument(source_document=document,title=title,sections=sections)
