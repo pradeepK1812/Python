@@ -102,3 +102,20 @@ class StructuredDocument:
     sections: list[Section]
 
 
+
+@dataclass
+class EmbeddedChunk:
+    """
+    Represents the semantic embedding of a Chunk.
+
+    An EmbeddedChunk is a new artifact produced by the
+    embedding process. It contains an immutable snapshot
+    of the original Chunk together with its vector
+    representation.
+    """
+
+    chunk: Chunk
+
+    embedding: list[float]
+
+    embedding_model: str
