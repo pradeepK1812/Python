@@ -24,6 +24,14 @@ It never performs chunking, embedding generation,
 or retrieval.
 """
 
+from .domain import (
+    Document,
+    StructuredDocument,
+    Section,
+)
+
+
+
 def _is_major_separator(line: str) -> bool:
     """
     Returns True if the line is a major section separator.
@@ -86,11 +94,11 @@ def _read_section_content(lines, index):
 
            content_lines = []
            numlines = len(lines)
-           while(index < numlines and not _is_minor_heading(lines[index]):
+           while(index < numlines and not _is_minor_heading(lines,index)):
 
                  currentline = lines[index]
                  index = index+1
-                 if( _is_blank(currentline):
+                 if( _is_blank(currentline)):
                     continue
                  else:
                     #read line

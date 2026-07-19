@@ -58,6 +58,19 @@ class Document:
     path: str
     content: str
 
+@dataclass(slots=True, frozen=True)
+class Section:
+    """
+    Represents one semantic section inside a document.
+    """
+
+    title: str
+
+    level: int
+
+    content: str
+
+
 
 @dataclass(slots=True, frozen=True)
 class Chunk:
@@ -70,21 +83,9 @@ class Chunk:
     """
 
     chunk_id: str
-    source_document: str
-    section: str
-    content: str
-
-
-@dataclass(slots=True, frozen=True)
-class Section:
-    """
-    Represents one semantic section inside a document.
-    """
-
-    title: str
-
-    level: int
-
+    source_document: Document
+    section: Section
+    chunk_index: int
     content: str
 
 
