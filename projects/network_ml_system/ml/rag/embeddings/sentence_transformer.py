@@ -62,4 +62,15 @@ class SentenceTransformerEmbeddingModel(EmbeddingModel):
             RuntimeError:
                 If embedding generation fails.
         """
-        #
+        try:
+        # Generate the embedding as a NumPy array.
+        embedding_vector = self._model.encode(
+            text,
+            convert_to_numpy=True,)
+
+        # Convert the NumPy array to the project's EmbeddingVector type.
+        return embedding_vector.tolist()
+
+        except Exception as exc:
+              raise RuntimeError("Failed to generate embedding.") from exc
+       
