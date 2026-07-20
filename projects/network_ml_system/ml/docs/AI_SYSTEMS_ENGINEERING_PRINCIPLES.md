@@ -903,5 +903,14 @@ Benefits
 -----------------------------------------------------------------------------------------------------
 Principal 36
 ------------------------------------------------------------------------------------------------
+Domain objects belong to the pipeline layer. Infrastructure components operate on infrastructure primitives, not on domain objects. Pipeline components are responsible for translating between the two.
+
+--------------------------------------------------------------------------------------------------------
+Principal 37
+Concrete implementations encapsulate behavior. Configurable aspects of that behavior are supplied through construction rather than hard-coded into the implementation.
+
+----------------------------------------------------------------------------------------------------
+Principal 38
+--------------------------------------------------------------------------------------------------
 
 

@@ -209,3 +209,44 @@ LLM
 Each pipeline stage consumes one immutable domain object and produces a new immutable domain object.
 An embedding is a numerical representation of semantic meaning in a vector space, where semantically similar pieces of text are located close to one another.
 "An EmbeddedChunk contains an immutable snapshot of the Chunk that was embedded."
+----------------------------------------------------------------------------------------------------
+Refined architecture :
+
+                  DOMAIN
+────────────────────────────────────
+
+Document
+
+StructuredDocument
+
+Chunk
+
+EmbeddedChunk
+
+
+────────────────────────────────────
+          PIPELINE
+
+Reader
+
+Parser
+
+Chunker
+
+Embedder
+
+
+────────────────────────────────────
+      INFRASTRUCTURE
+
+EmbeddingModel (ABC)
+
+SentenceTransformerEmbeddingModel
+
+OpenAIEmbeddingModel
+
+OllamaEmbeddingModel
+------------------------------------------------------------------------------------------------------------------
+
+Version 1 uses eager model loading during object construction. A SentenceTransformerEmbeddingModel instance is considered fully initialized and ready for use only after the configured model has been successfully loaded. This provides fail-fast behavior, simplifies the object lifecycle, and keeps the embedding operation focused solely on inference. Alternative loading strategies (e.g., lazy loading) remain implementation details that can be introduced in future versions without changing the EmbeddingModel contract.
+-------------------------------------------------------------------------------------------------------------------------------------
