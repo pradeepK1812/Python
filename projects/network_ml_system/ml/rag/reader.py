@@ -30,12 +30,25 @@ def read_documents(root_directory: str) -> list[Document]:
     """
 
     root = Path(root_directory)
+    if not root.exists():
+       raise FileNotFoundError(f"Root directory does not exist: {root.resolve()}")
+    if not root.is_dir():
+       raise NotADirectoryError(
+        f"'{root}' is not a valid directory."
+    )
 
     documents: list[Document] = []
 
     for file_path in sorted(root.rglob("*.md")):
 
-        content = file_path.read_text(encoding="utf-8")
+        try:
+            content = file_path.read_text(
+            encoding="utf-8"
+        )
+        except OSError as exc:
+            raise RuntimeError(
+            f"Failed to read '{file_path}'."
+        ) from exc
 
         document = Document(
             name=file_path.name,

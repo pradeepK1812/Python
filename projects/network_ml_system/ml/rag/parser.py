@@ -97,7 +97,7 @@ def _read_section_content(lines, index):
            while(index < numlines and not _is_minor_heading(lines,index)):
 
                  currentline = lines[index]
-                 index = index+1
+                 index+=1
                  if( _is_blank(currentline)):
                     continue
                  else:

@@ -57,7 +57,7 @@ class Embedder:
         self,
         chunks: list[Chunk],
     ) -> list[EmbeddedChunk]:
-        
+         """Embed a sequence of chunks.""" 
         embedded_chunks: list[EmbeddedChunk] = []
 
         for chunk in chunks:
@@ -72,7 +72,7 @@ class Embedder:
          self,
          chunk: Chunk,
     ) -> EmbeddedChunk:
-
+        """create embedding vector from the chunk"""
         embedding_vector = self._embedding_model.embed(
            chunk.text
         )

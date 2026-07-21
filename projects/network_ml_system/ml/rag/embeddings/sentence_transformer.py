@@ -72,5 +72,8 @@ class SentenceTransformerEmbeddingModel(EmbeddingModel):
         return embedding_vector.tolist()
 
         except Exception as exc:
-              raise RuntimeError("Failed to generate embedding.") from exc
+              raise RuntimeError(
+                f"Failed to generate embedding using "
+                f"'{self._model_name}'."
+              ) from exc
        
