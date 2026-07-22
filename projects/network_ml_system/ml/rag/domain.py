@@ -126,3 +126,18 @@ class EmbeddedChunk:
     embedding: list[float]
 
     embedding_model: str
+
+
+class VectorStore(ABC):
+
+    @abstractmethod
+    def add(self, chunks: list[EmbeddedChunk]) -> None:
+        ...
+
+    @abstractmethod
+    def search(
+        self,
+        embedding: list[float],
+        top_k: int = 5,
+    ) -> list[EmbeddedChunk]:
+        ...
