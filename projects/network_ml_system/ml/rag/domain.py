@@ -34,7 +34,14 @@ Prompt
 
 from dataclasses import dataclass
 
-__all__ = ["Document"]
+
+__all__ = [
+    "Document",
+    "StructuredDocument",
+    "Section",
+    "Chunk",
+    "EmbeddedChunk",
+]
 
 
 @dataclass(slots=True, frozen=True)
@@ -103,7 +110,7 @@ class StructuredDocument:
 
 
 
-@dataclass
+@dataclass(slots=True, frozen=True)
 class EmbeddedChunk:
     """
     Represents the semantic embedding of a Chunk.
