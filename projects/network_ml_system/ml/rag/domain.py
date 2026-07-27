@@ -129,7 +129,19 @@ class EmbeddedChunk:
 
 
 class VectorStore(ABC):
+    """
+    Defines the contract for persisting and retrieving
+    embedded chunks.
 
+    Implementations are responsible for translating
+    between the domain model (EmbeddedChunk) and the
+    underlying vector database representation.
+
+    The interface intentionally hides all database-
+    specific details from the rest of the application.
+    """
+
+    
     @abstractmethod
     def add(self, chunks: list[EmbeddedChunk]) -> None:
         ...
