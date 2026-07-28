@@ -6,7 +6,8 @@ from dataclasses import dataclass
 import chromadb
 from chromadb.api.models.Collection import Collection
 
-from rag.domain import EmbeddedChunk, VectorStore
+from ml.rag.domain import Document
+from ml.rag.domain import EmbeddedChunk, VectorStore,Section,Chunk,EmbeddedChunk
 
 @dataclass(frozen=True, slots=True)
 class _ChromaRecord:
@@ -110,13 +111,12 @@ class ChromaVectorStore(VectorStore):
 
         return chunks
 
-
+    @staticmethod
     def _build_metadata(
-        self,
-        embedded_chunk: EmbeddedChunk,
+        embedded_chunk: EmbeddedChunk
     ) -> dict[str, Any]:
        
-       """
+        """
         Builds the metadata dictionary stored alongside each embedding in ChromaDB.
         """
         chunk = embedded_chunk.chunk
@@ -126,7 +126,6 @@ class ChromaVectorStore(VectorStore):
             "chunk_index": chunk.chunk_index,
             "document_name": chunk.source_document.name,
             "document_path": str(chunk.source_document.path),
-            "document_title": chunk.source_document.title,
             "section_title": chunk.section.title,
             "section_level": chunk.section.level,
         }
@@ -157,13 +156,13 @@ class ChromaVectorStore(VectorStore):
             document = Document(
                 name=metadata["document_name"],
                 path=metadata["document_path"],
-                content="",
+                content="",  # Full document content is intentionally not stored in the vector store.
             )
 
             section = Section(
                 title=metadata["section_title"],
                 level=metadata["section_level"],
-                content="",
+                content="",  # Full section content is intentionally not stored in the vector store.
             )
 
             chunk = Chunk(
@@ -185,8 +184,8 @@ class ChromaVectorStore(VectorStore):
        chunks: list[EmbeddedChunk],
     ) -> list[_ChromaRecord]:
 
-    """
-    Converts a list of domain EmbeddedChunks to internal _ChromaRecords.
-    """
-    return [self._to_chroma(chunk) for chunk in chunks]
+       """
+       Converts a list of domain EmbeddedChunks to internal _ChromaRecords.
+       """
+       return [self._to_chroma(chunk) for chunk in chunks]
 
