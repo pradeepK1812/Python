@@ -32,6 +32,8 @@ LLM inference.
 class Embedder:
     """
     Transform Chunk objects into EmbeddedChunk objects.
+    The Embedder bridges the RAG domain model (Chunk) and the embedding
+    infrastructure (EmbeddingModel) by producing EmbeddedChunk objects.
 
     Responsibilities
     ----------------
