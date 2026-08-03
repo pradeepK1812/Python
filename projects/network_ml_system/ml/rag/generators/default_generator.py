@@ -43,6 +43,11 @@ Design Principles
 - Keeps prompt construction internal in Version 1.
 - Independent of any specific LLM provider.
 """
+
+from ..domain import GeneratedAnswer, RetrievedContext
+from ..llms.base import LLM
+from .generator import Generator
+
 class DefaultGenerator(Generator):
 
     def __init__(
@@ -57,6 +62,10 @@ class DefaultGenerator(Generator):
         retrieved_contexts: list[RetrievedContext],
     ) -> GeneratedAnswer:
         
+        """
+        Generate an answer for the supplied query using the retrieved
+        contextual knowledge and the configured LLM.
+        """
         prompt = self._build_prompt(
             query,
             retrieved_contexts,
@@ -71,11 +80,11 @@ class DefaultGenerator(Generator):
         )
     
     
-        def _build_prompt(
+    def _build_prompt(
         self,
         query: str,
         retrieved_contexts: list[RetrievedContext],
-        ) -> str:
+    ) -> str:
         """
         Construct the prompt supplied to the configured LLM.
 
@@ -103,6 +112,7 @@ class DefaultGenerator(Generator):
         # ------------------------------------------------------------------
         # Build the final prompt.
         # ------------------------------------------------------------------
+        
         return f"""You are a helpful AI assistant.
 
         Answer the user's question using only the provided context.
