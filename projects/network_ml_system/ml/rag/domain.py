@@ -33,6 +33,10 @@ Prompt
 """
 
 from dataclasses import dataclass
+from typing import Any, TypeAlias
+
+Metadata: TypeAlias = dict[str, Any]
+
 from abc import ABC, abstractmethod
 
 __all__ = [
@@ -153,3 +157,22 @@ class VectorStore(ABC):
         top_k: int = 5,
     ) -> list[EmbeddedChunk]:
         ...
+
+
+@dataclass
+class RetrievedContext:
+    
+    """
+    Represents a piece of contextual knowledge returned by a Retriever.
+
+    RetrievedContext is a domain object consumed by the Generator to
+    construct prompts and generate answers.
+
+    It intentionally hides retrieval-specific implementation details
+    such as embeddings, vector identifiers, and similarity algorithms.
+    """
+
+    content: str
+    metadata: Metadata
+    score: float | None = None
+

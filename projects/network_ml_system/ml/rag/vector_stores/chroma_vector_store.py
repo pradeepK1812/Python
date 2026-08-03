@@ -7,14 +7,14 @@ import chromadb
 from chromadb.api.models.Collection import Collection
 
 from ml.rag.domain import Document
-from ml.rag.domain import EmbeddedChunk, VectorStore,Section,Chunk,EmbeddedChunk
+from ml.rag.domain import EmbeddedChunk, VectorStore,Section,Chunk,EmbeddedChunk,Metadata
 
 @dataclass(frozen=True, slots=True)
 class _ChromaRecord:
     id: str
     document: str
     embedding: list[float]
-    metadata: dict[str, Any]
+    metadata: Metadata
 
 class ChromaVectorStore(VectorStore):
     """
