@@ -278,7 +278,7 @@ Benefits
 
 
 --------------------------------------------------------------
-Principal 10
+Principle 10
 --------------------------------------------------------------
 
 --------------------------------------------------------------
@@ -314,7 +314,7 @@ Benefits
 • Lower latency
 
 -----------------------------------------------------------------------------------
-Principal 12
+Principle 12
 ----------------------------------------------------------------------------------------------
 
 An AI system should separate representation,
@@ -330,7 +330,7 @@ Keeping these responsibilities separate enables
 independent improvement, scalability, and easier maintenance.
 
 -------------------------------------------------------------------------------------
-Principal 13
+Principle 13
 -------------------------------------------------------------------------------------
 Search systems should progressively reduce the search space
 before performing expensive operations.
@@ -356,7 +356,7 @@ Benefits
 • Reduced computation
 
 --------------------------------------------------------------------------------------------------------
-Principal 14
+Principle 14
 ------------------------------------------------------------------------------------------------------
 Choose the data structure that matches the access pattern.
 
@@ -395,7 +395,7 @@ Benefits
 
 
 -----------------------------------------------------------------------------------------------------------------------------
-Principal 15
+Principle 15
 --------------------------------------------------------------
 Optimize the system, not an individual metric.
 
@@ -425,7 +425,7 @@ Benefits
 • Better overall system performance
 
 -------------------------------------------------------------------------------------------------------------------
-Principal 16
+Principle 16
 -----------------------------------------------------------------------------------------------------------------
 
 Engineering Principle
@@ -454,7 +454,7 @@ Benefits
 • Efficient resource utilization
 
 -------------------------------------------------------------------------------------------------------------------
-Principal 17
+Principle 17
 ---------------------------------------------------------------------------------------------------
 Do not optimize prematurely.
 
@@ -467,7 +467,7 @@ Refine only where measurements reveal a bottleneck or deficiency.
 Engineering decisions should be driven by evidence rather than assumptions.
 
 --------------------------------------------------------------------------------------------------------------
-Principal 18
+Principle 18
 -----------------------------------------------------------------------------------------------------
 Filtering and ranking are different responsibilities.
 
@@ -486,7 +486,7 @@ Benefits
 • Lower inference cost
 • Improved modularity
 ------------------------------------------------------------------------------------------------------------------
-Principal 19
+Principle 19
 -------------------------------------------------------------------------------------------------------------
 An AI system should retrieve information from the
 most appropriate knowledge source for the user's objective.
@@ -499,7 +499,7 @@ The retrieval layer should orchestrate these sources
 to provide the LLM with the most relevant context.
 
 ------------------------------------------------------------------------------------------------------------------
-Principal 20
+Principle 20
 -----------------------------------------------------------------------------------------------------------
 
 System responsibilities naturally reveal architectural components.
@@ -522,7 +522,7 @@ Benefits
 • Better maintainability
 
 -------------------------------------------------------------------------------------------------------------------------
-Principal 21
+Principle 21
 ---------------------------------------------------------------------------------------------------------------------------
 Different knowledge requires different acquisition strategies.
 
@@ -544,7 +544,7 @@ Benefits
 • Better scalability
 • Clear separation of responsibilities
 ---------------------------------------------------------------------------------------------------------------
-Principal 22
+Principle 22
 ----------------------------------------------------------------------------------------------------------------
 Complex problems should be solved through iterative planning
 and execution rather than attempting a single-step solution.
@@ -569,7 +569,7 @@ Benefits
 • Higher success rate
 
 -----------------------------------------------------------------------------------------------------------------
-Principal 23
+Principle 23
 -------------------------------------------------------------------------------------------------------
 An AI Agent operates as a closed-loop control system.
 
@@ -596,7 +596,7 @@ Benefits
 • Fault recovery
 • Autonomous execution
 ---------------------------------------------------------------------------------------------------------------
-Principal 24
+Principle 24
 -----------------------------------------------------------------------------------------------------------
 Persistent state should be managed outside the reasoning engine.
 
@@ -621,7 +621,7 @@ Benefits
 • Better personalization
 
 -----------------------------------------------------------------------------------------------------------------------
-Principal 25
+Principle 25
 ---------------------------------------------------------------------------------------------------------------------
 Enterprise AI systems should preserve structured state,
 not merely conversational history.
@@ -652,7 +652,7 @@ Benefits
 
 -----------------------------------------------------------------------------------------------------------------
 
-Principal 26
+Principle 26
 -----------------------------------------------------------------------------------------------------------
 AI systems should be goal-driven rather than workflow-driven.
 
@@ -681,7 +681,7 @@ Benefits
 
 --------------------------------------------------------------------------------------------------------------------
 
-Principal 27
+Principle 27
 
 ------------------------------------------------------------------------------------------------------------------
 
@@ -705,7 +705,7 @@ Benefits
 • Clear business modeling
 
 -----------------------------------------------------------------------------------------------------------------
-Principal 28
+Principle 28
 
 ------------------------------------------------------------------------------------------------------
 
@@ -739,7 +739,7 @@ Benefits
 • Cleaner domain model
 
 ------------------------------------------------------------------------------------------
-Principal 29
+Principle 29
 
 ---------------------------------------------------------------------------------------------
 
@@ -785,7 +785,7 @@ Benefits
 • Business-aligned design
 
 ------------------------------------------------------------------------------------------------------------------------
-Principal 31
+Principle 31
 ----------------------------------------------------------------------------------------------------------------------
 Preserve information during ingestion; optimize during processing.
 
@@ -806,7 +806,7 @@ Benefits
 • Supports future processing strategies
 
 ------------------------------------------------------------------------------------------------------------------------------------
-Principal 32
+Principle 32
 ------------------------------------------------------------------------------------------------------------------------
 
 Parse documents according to their semantic structure,
@@ -830,7 +830,7 @@ Benefits
 • Cleaner architecture
 
 -------------------------------------------------------------------------------------------------------------------------
-Principal 33
+Principle 33
 ------------------------------------------------------------------------------------------------------------------------
 
 Understand before transforming.
@@ -855,7 +855,7 @@ Benefits
 • More accurate retrieval
 
 -----------------------------------------------------------------------------------------------------------
-Principal 34
+Principle 34
 ---------------------------------------------------------------------------------------------------------
 Every piece of business knowledge should belong to one and
 only one semantic section.
@@ -878,7 +878,7 @@ Benefits
 • Simpler downstream processing
 
 ---------------------------------------------------------------------------------------------------------------------
-Principal 35
+Principle 35
 ---------------------------------------------------------------------------------------------------------------------------
 Design determines implementation quality.
 
@@ -901,16 +901,26 @@ Benefits
 • Predictable evolution
 
 -----------------------------------------------------------------------------------------------------
-Principal 36
+Principle 36
 ------------------------------------------------------------------------------------------------
 Domain objects belong to the pipeline layer. Infrastructure components operate on infrastructure primitives, not on domain objects. Pipeline components are responsible for translating between the two.
 
 --------------------------------------------------------------------------------------------------------
-Principal 37
+Principle 37
 Concrete implementations encapsulate behavior. Configurable aspects of that behavior are supplied through construction rather than hard-coded into the implementation.
 
 ----------------------------------------------------------------------------------------------------
-Principal 38
+Principle 38
 --------------------------------------------------------------------------------------------------
+Infrastructure Adapter Responsibility
 
+Infrastructure adapters are responsible for translating provider-specific protocols, responses, and failures into framework-level abstractions and exceptions.
+
+This means:
+
+Business components (DefaultGenerator, Retriever, etc.) remain unaware of provider-specific details.
+Provider-specific implementations (OllamaLLM, OpenAILLM, ChromaVectorStore, etc.) encapsulate all communication details and error translation.
+---------------------------------------------------------------------------------------------------------------------------
+Principle 40
+----------------------------------------------------------------------------------------------------------------------------
 
