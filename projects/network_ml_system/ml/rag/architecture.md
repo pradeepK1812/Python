@@ -249,4 +249,116 @@ OllamaEmbeddingModel
 ------------------------------------------------------------------------------------------------------------------
 
 Version 1 uses eager model loading during object construction. A SentenceTransformerEmbeddingModel instance is considered fully initialized and ready for use only after the configured model has been successfully loaded. This provides fail-fast behavior, simplifies the object lifecycle, and keeps the embedding operation focused solely on inference. Alternative loading strategies (e.g., lazy loading) remain implementation details that can be introduced in future versions without changing the EmbeddingModel contract.
--------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
+
+V1 	                                               V2+
+Prompt construction inside DefaultGenerator	      PromptBuilder abstraction
+No filtering	                                  Filtering abstraction
+No RetrievalRequest	                              RetrievalRequest
+Inline mapping	                                  Mapper abstraction
+One retrieval strategy	                          Multiple retrieval strategies
+
+----------------------------------------------------------------------------------------------------------------------------------
+## Version 1
+
+Prompt construction is implemented internally within DefaultGenerator.
+
+This keeps the Generator implementation simple while supporting the
+current requirement of a single prompt construction strategy.
+
+## Future Evolution
+
+If multiple prompt construction strategies emerge (for example,
+chat prompts, summarization prompts, few-shot prompts, or
+agent prompts), prompt construction should be extracted into a
+dedicated PromptBuilder abstraction.
+
+Proposed architecture:
+
+Generator
+    │
+    ▼
+DefaultGenerator
+    ├── PromptBuilder
+    └── LLM
+
+
+
+                     Generator (ABC)
+                        ▲
+                        │
+               DefaultGenerator
+                        │
+        ┌───────────────┴───────────────┐
+        ▼                               ▼
+ Prompt Construction                 LLM (ABC)
+                                        ▲
+                                        │
+                      OpenAI / Ollama / Claude / ...
+
+## Future Evolution
+
+GeneratedAnswer may evolve to include additional information such as:
+
+- citations
+- generation metadata
+- usage statistics
+- safety annotations
+
+These are intentionally excluded from Version 1 to keep the domain model focused on the primary business requirement: returning a generated answer.
+-------------------------------------------------------------------------------------------------------------------------------
+## Future Evolution
+
+If the framework requires provider-specific information such as:
+
+- token usage
+- finish reason
+- safety annotations
+- latency
+- cost
+
+the LLM abstraction may evolve to return an `LLMResponse` domain object instead of a plain string.
+
+Version 1 intentionally returns `str` to keep the abstraction focused on its primary business responsibility: generating text.
+------------------------------------------------------------------------------------------------------------------------------------
+
+Generator architecture:
+
+Query
+RetrievedContext[]
+        │
+        ▼
+DefaultGenerator
+        │
+        ├── Build Prompt
+        │
+        ├── Invoke LLM
+        │
+        ├── Receive generated text
+        │
+        └── Construct GeneratedAnswer
+                │
+                ▼
+         GeneratedAnswer
+
+
+                          Generator (ABC)
+                        ▲
+                        │
+               DefaultGenerator
+                        │
+        ┌───────────────┴───────────────┐
+        ▼                               ▼
+  _build_prompt()                    LLM (ABC)
+        │                               │
+        ▼                               ▼
+      Prompt                    Generated Text
+                \               /
+                 \             /
+                  ▼           ▼
+                 GeneratedAnswer
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------------
+
