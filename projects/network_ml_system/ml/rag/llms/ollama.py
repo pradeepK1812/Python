@@ -69,7 +69,7 @@ import requests
 from .base import LLM
 from requests import Response
 from typing import Any
-
+from typing import override
 
 class OllamaLLM(LLM):
     """
