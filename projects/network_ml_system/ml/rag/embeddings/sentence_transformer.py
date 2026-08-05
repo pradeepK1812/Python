@@ -64,12 +64,12 @@ class SentenceTransformerEmbeddingModel(EmbeddingModel):
         """
         try:
         # Generate the embedding as a NumPy array.
-        embedding_vector = self._model.encode(
-            text,
+            embedding_vector = self._model.encode(
+              text,
             convert_to_numpy=True,)
 
         # Convert the NumPy array to the project's EmbeddingVector type.
-        return embedding_vector.tolist()
+            return embedding_vector.tolist()
 
         except Exception as exc:
               raise RuntimeError(

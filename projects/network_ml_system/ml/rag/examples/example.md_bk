@@ -1,0 +1,206 @@
+examples/
+
+1. llm_demo.py
+-----------------
+LLM only
+
+2. generator_demo.py
+-----------------
+Generator + LLM
+
+3. rag_demo.py
+-----------------
+Retriever + Generator + LLM
+
+4. network_ml_demo.py
+-----------------
+Reader
+Parser
+Chunker
+Embedding
+VectorStore
+Retriever
+Generator
+LLM
+---------------------------------
+
+rag_demo.py flow diagram :
+
+                    Question
+                        │
+                        ▼
+              SentenceTransformer
+              all-MiniLM-L6-v2
+                        │
+                384 numbers
+                        │
+                        ▼
+                 Vector Search
+                        │
+                Retrieved chunks
+                        │
+                        ▼
+                   Llama 3.2
+                        │
+                  Final Answer
+
+
+
+Detailed flow :
+
+ documents.md
+        │
+        ▼
+Reader
+        │
+        ▼
+Chunk
+        │
+        ▼
+Embedding Model
+(all-MiniLM-L6-v2)
+        │
+        ▼
+384-dimensional semantic vectors
+        │
+        ▼
+Retriever
+        │
+        ▼
+Relevant chunks
+        │
+        ▼
+LLM
+(Llama 3.2)
+        │
+        ▼
+Generated answer
+
+
+EmbeddedChunk structure :
+
+EmbeddedChunk
+│
+├── chunk
+│     ├── chunk_id = tcp-001
+│     ├── content = "TCP is ..."
+│     ├── source_document = ...
+│     └── section = ...
+│
+├── embedding
+│     ├── -0.143...
+│     ├──  0.872...
+│     ├── ...
+│     └── 384 values
+│
+└── embedding_model
+      └── all-MiniLM-L6-v2
+==================================================================================================================
+Execution flow  of query(Why does HTTP use TCP ) in rag_demo.py  and retrievel :
+
+Why did this happen?
+
+Let's follow what happened internally.
+
+Step 1
+
+The query
+
+Why does HTTP use TCP?
+
+was converted into a 384-dimensional vector.
+
+Conceptually
+
+Question
+
+↓
+
+[-0.14,
+ 0.28,
+ ...
+ 384 values]
+Step 2
+
+Chroma compared that vector against four stored vectors.
+
+HTTP Vector
+
+TCP Vector
+
+UDP Vector
+
+DNS Vector
+Step 3
+
+Instead of comparing words...
+
+it compares meaning.
+
+Conceptually
+
+Query
+
+↓
+
+Similarity
+
+↓
+
+HTTP      0.91
+
+TCP       0.87
+
+UDP       0.42
+
+DNS       0.31
+
+( the scores are hypothetical, but this is the idea.)
+
+Step 4
+
+Top 2 are returned.
+
+Exactly what happened.
+
+HTTP
+
+↓
+
+TCP
+
+
+
+Notice something amazing.
+
+The query
+
+Why does HTTP use TCP?
+
+does not literally appear anywhere in your document.
+
+There is no sentence saying
+
+"HTTP uses TCP because..."
+
+The embedding model understood the semantics.
+
+That is the whole point of vector search.
+
+Imagine keyword search
+
+Suppose we used grep.
+
+grep "Why does HTTP use TCP"
+
+Result
+
+Nothing
+
+Yet semantic search finds
+
+HTTP
+
+TCP
+
+because it understands that these chunks answer the question.

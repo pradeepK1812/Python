@@ -6,10 +6,10 @@ Retriever implementation based on dense vector similarity search.
 
 from __future__ import annotations
 
-from .domain import RetrievedContext
-from .embedding_model import EmbeddingModel
+from ..domain import RetrievedContext,VectorStore
+from ..embeddings.base import EmbeddingModel
 from .retriever import Retriever
-from .vector_store import VectorStore
+#from .vector_store import VectorStore
 
 
 class VectorStoreRetriever(Retriever):
@@ -59,13 +59,21 @@ class VectorStoreRetriever(Retriever):
 
         contexts: list[RetrievedContext] = []
 
-        for chunk in embedded_chunks:
-            contexts.append(
-                RetrievedContext(
-                    content=chunk.content,
-                    metadata=chunk.metadata,
-                    score=chunk.score,
-                )
-            )
+        for embedded_chunk in embedded_chunks:
+
+             metadata = {
+                "chunk_id": embedded_chunk.chunk.chunk_id,
+                "document_name": embedded_chunk.chunk.source_document.name,
+                "document_path": embedded_chunk.chunk.source_document.path,
+                "section": embedded_chunk.chunk.section.title,
+                "chunk_index": embedded_chunk.chunk.chunk_index,
+             }
+             contexts.append(
+                    RetrievedContext(
+                        content=embedded_chunk.chunk.content,
+                        metadata=metadata,
+                        #score is  default none for now
+                    )
+             )
 
         return contexts
