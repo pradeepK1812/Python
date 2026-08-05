@@ -84,7 +84,7 @@ class OllamaLLM(LLM):
     self,
     model_name: str,
     host: str = "http://localhost:11434",
-    timeout: float = 30.0,
+    timeout: float = 180.0,    #default timeout of OLLAMa connection
     ) -> None:
 
         model_name = model_name.strip()

@@ -48,7 +48,13 @@ def main() -> None:
            
         ),
     ]
+    print(f"Model: {llm.model_name}")
+    print()
 
+    print("Query:")
+    print("What is TCP?")
+    print()
+    print("Answer:")
     answer = generator.generate(
         query="What is TCP?",
         retrieved_contexts=retrieved_contexts,
