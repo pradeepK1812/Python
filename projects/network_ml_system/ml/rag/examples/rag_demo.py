@@ -18,6 +18,9 @@ Purpose
 - Serve as the "Hello World" example for the framework.
 
 """
+#LLM import
+from ml.rag.llms.ollama import OllamaLLM
+
 from ml.rag.domain import (
     Document,
     Section,
@@ -31,6 +34,9 @@ from ml.rag.retrievers.retriever import Retriever
 from ml.rag.retrievers.vector_store_retriever import VectorStoreRetriever
 from ml.rag.domain import RetrievedContext
 from ml.rag.vector_stores.chroma_vector_store import ChromaVectorStore
+from ml.rag.domain import GeneratedAnswer, Metadata, RetrievedContext
+from ml.rag.generators.default_generator import DefaultGenerator
+from ml.rag.llms.base import LLM
 
 
 if __name__ == "__main__":
@@ -204,3 +210,34 @@ if __name__ == "__main__":
 
         print("Metadata")
         print(context.metadata)
+
+    llm = OllamaLLM(
+        model_name="llama3.2:1b",
+    )
+
+    generator = DefaultGenerator(
+         llm=llm,
+    )
+
+    print()
+    print("Generator")
+    print("---------")
+    print(type(generator).__name__)
+
+    print("LLM")
+    print("---")
+    print(llm.model_name)
+
+    print()
+    print("Generating answer...")
+    print("-" * 60)
+
+    generated_answer = generator.generate(
+        query=query,
+        retrieved_contexts=retrieved_contexts,
+    )
+
+    print()
+    print("Generated Answer")
+    print("----------------")
+    print(generated_answer.answer)

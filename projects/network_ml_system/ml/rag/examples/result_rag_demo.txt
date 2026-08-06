@@ -1,0 +1,130 @@
+===============================================================================
+Network ML Framework
+RAG Demonstration Result
+===============================================================================
+
+Example:
+    python -m ml.rag.examples.rag_demo
+
+Date:
+    06-08-2026
+
+Framework Version:
+    End-to-End RAG Pipeline (Version 1)
+
+Description:
+    This file captures the successful execution of the complete Retrieval-
+    Augmented Generation (RAG) pipeline using the framework.
+
+Pipeline:
+    Reader
+        ↓
+    Chunk
+        ↓
+    Embedding Model
+        ↓
+    Chroma Vector Store
+        ↓
+    Retriever
+        ↓
+    Generator
+        ↓
+    Ollama LLM
+        ↓
+    Generated Answer
+
+===============================================================================
+Execution Output
+=============================================================================
+
+
+python -m ml.rag.examples.rag_demo
+Loaded 1 document(s)
+------------------------------------------------------------
+documents.md
+ml/rag/examples/documents.md
+1288 characters
+
+Created 4 chunk(s)
+------------------------------------------------------------
+tcp-001
+TCP is a connection-oriented transport protocol. It provides reliable and ordered delivery of data.
+------------------------------------------------------------
+udp-001
+ UDP (User Datagram Protocol) is a connectionless transport protocol. It does not guarantee delivery, ordering, or duplicate protection. 
+------------------------------------------------------------
+http-001
+HTTP (Hypertext Transfer Protocol) is an application layer protocol                                      used for communication between web clients and web servers. HTTP typically runs over TCP because reliable and ordered delivery is                                      required for web content. 
+------------------------------------------------------------
+dns-001
+DNS (Domain Name System) translates domain names into IP addresses. Most DNS queries use UDP because the request and response messages                                       are typically small and low latency is preferred. TCP may be used                                       for large DNS responses or zone transfers.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|████████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 14844.29it/s]
+Embedding Model: all-MiniLM-L6-v2
+Generated 4 embeddings
+------------------------------------------------------------
+tcp-001
+all-MiniLM-L6-v2
+Vector dimension : 384
+------------------------------------------------------------
+udp-001
+all-MiniLM-L6-v2
+Vector dimension : 384
+------------------------------------------------------------
+http-001
+all-MiniLM-L6-v2
+Vector dimension : 384
+------------------------------------------------------------
+dns-001
+all-MiniLM-L6-v2
+Vector dimension : 384
+
+Stored embeddings in Chroma.
+Collection : rag_demo
+Chunks      : 4
+
+Query: Why does HTTP use TCP?
+
+------------------------------------------------------------
+http-001
+HTTP (Hypertext Transfer Protocol) is an application layer protocol                                      used for communication between web clients and web servers. HTTP typically runs over TCP because reliable and ordered delivery is                                      required for web content. 
+------------------------------------------------------------
+tcp-001
+TCP is a connection-oriented transport protocol. It provides reliable and ordered delivery of data.
+
+Retrieved Contexts
+--------------------
+------------------------------------------------------------
+HTTP (Hypertext Transfer Protocol) is an application layer protocol                                      used for communication between web clients and web servers. HTTP typically runs over TCP because reliable and ordered delivery is                                      required for web content. 
+
+Metadata
+{'chunk_id': 'http-001', 'document_name': 'documents.md', 'document_path': 'ml/rag/examples/documents.md', 'section': 'Networking Basics', 'chunk_index': 2}
+------------------------------------------------------------
+TCP is a connection-oriented transport protocol. It provides reliable and ordered delivery of data.
+
+Metadata
+{'chunk_id': 'tcp-001', 'document_name': 'documents.md', 'document_path': 'ml/rag/examples/documents.md', 'section': 'Networking Basics', 'chunk_index': 0}
+
+Generator
+---------
+DefaultGenerator
+LLM
+---
+llama3.2:1b
+
+Generating answer...
+------------------------------------------------------------
+
+Generated Answer
+----------------
+HTTP uses TCP to ensure reliable and ordered delivery of web content because it provides a connection-oriented service, which allows for:
+
+*   Reliable transmission of data packets
+*   Ordered delivery of packets (i.e., packets are sent in the correct order)
+*   Connection establishment and termination, enabling data retransmission if necessary
+
+This ensures that the server can guarantee that the received data is accurate and complete.
+
+==========================================================================================================================
+Result : Success
+=================================================================================================================
