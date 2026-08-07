@@ -1,10 +1,6 @@
-========================================
-Computer Networking Basics
-========================================
+# Computer Networking Basics
 
-----------------------------------------
-Transport Protocols
-----------------------------------------
+## Transport Protocols
 
 TCP (Transmission Control Protocol) is a connection-oriented transport
 protocol. It provides reliable and ordered delivery of data between
@@ -16,9 +12,7 @@ It does not guarantee delivery, ordering, or duplicate protection.
 UDP is commonly used for latency-sensitive applications such as
 streaming, DNS, and online gaming.
 
-----------------------------------------
-Application Protocols
-----------------------------------------
+## Application Protocols
 
 HTTP (Hypertext Transfer Protocol) is an application layer protocol
 used for communication between web clients and web servers. HTTP
@@ -30,9 +24,7 @@ Most DNS queries use UDP because the request and response messages
 are typically small and low latency is preferred. TCP may be used
 for large DNS responses or zone transfers.
 
-----------------------------------------
-Reliable Communication
-----------------------------------------
+## Reliable Communication
 
 Reliable communication ensures that transmitted data arrives at the
 destination without loss, duplication, or reordering. TCP achieves

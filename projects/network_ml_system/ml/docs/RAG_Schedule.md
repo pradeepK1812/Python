@@ -1,4 +1,20 @@
 # ==========================================================
+# PROJECT STATUS
+# ==========================================================
+
+Project Name       : Network ML Framework - RAG
+Start Date         : 15-07-2026
+Target Duration    : ~6 Weeks
+Planned Completion : 26-08-2026
+
+Current Phase      : Week 2
+Current Milestone  : End-to-End RAG Pipeline
+Last Updated       : 06-08-2026
+
+Overall Progress   : ~40%
+
+
+# ==========================================================
 # PHASE 5 : RETRIEVAL AUGMENTED GENERATION (RAG)
 # ==========================================================
 #
@@ -74,20 +90,37 @@ frameworks.
 
 Topics
 
-[ ] Read PDFs / Text Documents
-[ ] Chunk Documents
-[ ] Generate Embeddings
-[ ] Store Embeddings
-[ ] Cosine Similarity
-[ ] Build Retriever
-[ ] Top-K Retrieval
-[ ] Prompt Builder
-[ ] Integrate Local/Open-weight LLM
-[ ] Build Mini RAG v1
+[X] Read PDFs / Text Documents
+[X] Chunk Documents
+[X] Generate Embeddings
+[X] Store Embeddings
+[X] Cosine Similarity
+[X] Build Retriever
+[X] Top-K Retrieval
+[X] Prompt Builder
+[X] Integrate Local/Open-weight LLM
+[X] Build Mini RAG v1
 
 Deliverable
 
 ✓ Working RAG application built completely from scratch.
+
+Deliverable
+
+✓ Working RAG application built completely from scratch.
+
+Achievements
+
+✓ Modular RAG Framework
+✓ Local Ollama Integration
+✓ SentenceTransformer Embeddings
+✓ Chroma Vector Store
+✓ Semantic Retrieval
+✓ Prompt Generation
+✓ End-to-End RAG Demonstration
+
+[✓] M5 - Completed End-to-End RAG Pipeline on 06-08-2026
+
 
 # ==========================================================
 # WEEK 3 : RETRIEVAL OPTIMIZATION
@@ -260,7 +293,7 @@ Production
 At the end of Phase 5, I should be able to:
 
 [x] Explain every component of a RAG system.
-[ ] Build a RAG pipeline from scratch.
+[x] Build a RAG pipeline from scratch.
 [ ] Design an enterprise RAG architecture.
 [ ] Choose appropriate embedding models.
 [ ] Design chunking strategies.
@@ -269,3 +302,26 @@ At the end of Phase 5, I should be able to:
 [ ] Optimize retrieval quality.
 [ ] Integrate multiple knowledge sources.
 [ ] Build a production-ready RAG service.
+
+
+# ==========================================================
+# MILESTONES
+# ==========================================================
+
+[✓] M1 - Project Skeleton
+      15-07-2026
+
+[✓] M2 - Local LLM Integration
+
+[✓] M3 - Generator Layer
+
+[✓] M4 - End-to-End Retrieval Pipeline
+
+[✓] M5 - Complete End-to-End RAG Pipeline
+      06-08-2026
+
+[ ] M6 - Retrieval Optimization
+
+[ ] M7 - Enterprise Knowledge Base
+
+[ ] M8 - Production Deployment
