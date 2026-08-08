@@ -226,6 +226,7 @@ if __name__ == "__main__":
 
         print("Metadata")
         print(context.metadata)
+        print("-" * 60)
 
     llm = OllamaLLM(
         model_name="llama3.2:1b",

@@ -98,11 +98,18 @@ def _read_section_content(lines, index):
 
                  currentline = lines[index]
                  index+=1
-                 if( _is_blank(currentline)):
+                 #BugFix do not discrard empty line as they are creating paragraph boundaries
+                 if _is_blank(currentline):
+                      content_lines.append("")
+                 else:
+                      content_lines.append(currentline.strip())
+                 """ if( _is_blank(currentline)):
                     continue
                  else:
                     #read line
-                    content_lines.append(currentline.strip())
+                    content_lines.append(currentline.strip()) """
+                
+                 # content_lines="\n".join(content_lines)
                  
            return content_lines, index
 #Main parser state machine#########################################
