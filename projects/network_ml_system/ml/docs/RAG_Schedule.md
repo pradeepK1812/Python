@@ -319,9 +319,10 @@ At the end of Phase 5, I should be able to:
 
 [✓] M5 - Complete End-to-End RAG Pipeline
       06-08-2026
+[✓] M6 - Automated Knowledge Ingestion Pipeline
+      08-08-2026
+[ ] M7 - Retrieval Optimization
 
-[ ] M6 - Retrieval Optimization
+[ ] M8 - Enterprise Knowledge Base
 
-[ ] M7 - Enterprise Knowledge Base
-
-[ ] M8 - Production Deployment
+[ ] M9 - Production Deployment
