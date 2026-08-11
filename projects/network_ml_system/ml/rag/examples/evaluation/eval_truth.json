@@ -2,9 +2,27 @@
   {
     "query": "Why does HTTP use TCP?",
     "relevant_chunks": [
-      "chunk_0002",
+      "chunk_0002"
+    ]
+  },
+  {
+    "query": "Why does DNS use UDP?",
+    "relevant_chunks": [
+      "chunk_0003"
+    ]
+  },
+  {
+    "query": "How does TCP provide reliable communication?",
+    "relevant_chunks": [
       "chunk_0000",
       "chunk_0004"
+    ]
+  },
+  {
+    "query": "What is the difference between TCP and UDP?",
+    "relevant_chunks": [
+      "chunk_0000",
+      "chunk_0001"
     ]
   }
 ]

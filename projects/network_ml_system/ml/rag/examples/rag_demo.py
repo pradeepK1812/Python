@@ -157,7 +157,7 @@ if __name__ == "__main__":
 
     vector_store = ChromaVectorStore(
         persist_directory=":memory:",
-        collection_name="test",
+        collection_name="rag_demo",
     )
     vector_store.add(embedded_chunks,)
 
