@@ -1,0 +1,16 @@
+{
+  "rag_demo": {
+    "tcp-001": ["tcp_characteristics"],
+    "udp-001": ["udp_characteristics"],
+    "http-001": ["http_over_tcp"],
+    "dns-001": ["dns_over_udp"]
+  },
+
+  "rag_chunker_exp": {
+    "chunk_0000": ["tcp_characteristics"],
+    "chunk_0001": ["udp_characteristics"],
+    "chunk_0002": ["http_over_tcp"],
+    "chunk_0003": ["dns_over_udp"],
+    "chunk_0004": ["tcp_reliability"]
+  }
+}

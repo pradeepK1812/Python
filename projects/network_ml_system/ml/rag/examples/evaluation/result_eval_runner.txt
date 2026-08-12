@@ -1,0 +1,83 @@
+ python -m ml.rag.examples.evaluation.eval_runner
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|█████████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 6372.72it/s]
+rag_demo count: 4
+rag_chunker_exp count: 5
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['http-001', 'tcp-001']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['dns-001', 'udp-001']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['tcp-001', 'udp-001']
+Precision@2: 0.500
+Recall@2   : 0.500
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['tcp-001', 'udp-001']
+Precision@2: 1.000
+Recall@2   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_demo
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 2
+Mean Precision@2: 0.625
+Mean Recall@2   : 0.875
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['chunk_0002', 'chunk_0000']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['chunk_0003', 'chunk_0001']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['chunk_0004', 'chunk_0000']
+Precision@2: 1.000
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['chunk_0001', 'chunk_0000']
+Precision@2: 1.000
+Recall@2   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_chunker_exp
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 2
+Mean Precision@2: 0.750
+Mean Recall@2   : 1.000
+MRR              : 1.000
+============================================================

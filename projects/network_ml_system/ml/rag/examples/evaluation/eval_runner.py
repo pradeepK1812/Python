@@ -3,6 +3,7 @@ import json
 from ml.rag.retrievers.retriever import Retriever
 from ml.rag.examples.evaluation.retrieval_metrics import precision_at_k,recall_at_k
 from ml.rag.examples.evaluation.retrieval_metrics import reciprocal_rank,mean_reciprocal_rank 
+from ml.rag.examples.evaluation.evaluation_utils import chunks_to_knowledge 
 
 from ml.rag.embeddings.sentence_transformer import (
     SentenceTransformerEmbeddingModel,
@@ -16,7 +17,8 @@ from ml.rag.retrievers.vector_store_retriever import (
 
 
 # Path to eval_truth.json file
-json_file_path = "ml/rag/examples/evaluation/eval_truth.json"
+truth_json_file_path = "ml/rag/examples/evaluation/eval_truth.json"
+knowledge_json_file_path = "ml/rag/examples/evaluation/chunk_knowledge_map.json"
 
 embedding_model = SentenceTransformerEmbeddingModel(
     model_name="all-MiniLM-L6-v2",
@@ -42,9 +44,16 @@ chunker_retriever = VectorStoreRetriever(
     vector_store=chunker_vector_store,
 )
 
+"""
 retrievers = [
     section_retriever,
     chunker_retriever,
+]
+
+"""
+retrievers = [
+    ("rag_demo", section_retriever),
+    ("rag_chunker_exp", chunker_retriever),
 ]
 
 print(
@@ -60,21 +69,22 @@ print(
 #set K as 2 for evaluation
 K =2
 # 1. Load the JSON file into a list
-with open(json_file_path, "r") as f:
+with open(truth_json_file_path, "r") as f:
     evaluation_cases = json.load(f)
 
 
+with open(knowledge_json_file_path, "r") as f:
+    chunk_knowledge_map = json.load(f)
+
 #list to store the reciprocal_rank, precisions and recalls
-for retriever in retrievers:
+for name, retriever in retrievers:
     reciprocal_ranks = []
     precisions = []
     recalls = []
+    knowledge_map = chunk_knowledge_map[name]
     for evaluation_case in evaluation_cases:
 
         query = evaluation_case["query"]
-        relevant_chunks = set(
-            evaluation_case["relevant_chunks"]
-        )
 
         retrieved_contexts = retriever.retrieve(
             query=query,
@@ -86,32 +96,39 @@ for retriever in retrievers:
             for context in retrieved_contexts
         ]
 
+        retrieved_knowledge = chunks_to_knowledge(
+          retrieved_chunks,
+          knowledge_map,
+        )
+         
+        relevant_knowledge = set( evaluation_case["relevant_knowledge"])
+
         precision = precision_at_k(
-            retrieved_chunks,
-            relevant_chunks,
+            retrieved_knowledge,
+            relevant_knowledge,
             K,
         )
 
         precisions.append(precision)
 
         recall = recall_at_k(
-            retrieved_chunks,
-            relevant_chunks,
+            retrieved_knowledge,
+            relevant_knowledge,
             K,
         )
 
         recalls.append(recall)
 
         rr = reciprocal_rank(
-            retrieved_chunks,
-            relevant_chunks,
+            retrieved_knowledge,
+            relevant_knowledge,
         )
 
         reciprocal_ranks.append(rr)
 
         print("-" * 60)
         print(f"Query: {query}")
-        print(f"Relevant : {sorted(relevant_chunks)}")
+        print(f"Relevant : {sorted(relevant_knowledge)}")
         print(f"Retrieved: {retrieved_chunks}")
         print(f"Precision@{K}: {precision:.3f}")
         print(f"Recall@{K}   : {recall:.3f}")
@@ -121,7 +138,7 @@ for retriever in retrievers:
     mean_recall = sum(recalls) / len(recalls)
     mrr = mean_reciprocal_rank(reciprocal_ranks)
 
-    print(f"Mean report for retriever:{retriever}")
+    print(f"Mean report for retriever:{name}")
     print()
     print("=" * 60)
     print("RAG Retrieval Evaluation")
