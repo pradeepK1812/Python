@@ -1,0 +1,528 @@
+ python -m ml.rag.examples.evaluation.eval_k_values_runner
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|█████████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 8674.27it/s]
+rag_demo count: 4
+rag_chunker_exp count: 5
+------------------------------------------------------------
+Resul for K value: 1
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['http-001']
+Precision@1: 1.000
+Recall@1   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['dns-001']
+Precision@1: 1.000
+Recall@1   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['tcp-001']
+Precision@1: 1.000
+Recall@1   : 0.500
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['tcp-001']
+Precision@1: 1.000
+Recall@1   : 0.500
+RR          : 1.000
+Mean report for retriever:rag_demo
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 1
+Mean Precision@1: 1.000
+Mean Recall@1   : 0.750
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['chunk_0002']
+Precision@1: 1.000
+Recall@1   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['chunk_0003']
+Precision@1: 1.000
+Recall@1   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['chunk_0004']
+Precision@1: 1.000
+Recall@1   : 0.500
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['chunk_0001']
+Precision@1: 1.000
+Recall@1   : 0.500
+RR          : 1.000
+Mean report for retriever:rag_chunker_exp
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 1
+Mean Precision@1: 1.000
+Mean Recall@1   : 0.750
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Resul for K value: 2
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['http-001', 'tcp-001']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['dns-001', 'udp-001']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['tcp-001', 'udp-001']
+Precision@2: 0.500
+Recall@2   : 0.500
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['tcp-001', 'udp-001']
+Precision@2: 1.000
+Recall@2   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_demo
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 2
+Mean Precision@2: 0.625
+Mean Recall@2   : 0.875
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['chunk_0002', 'chunk_0000']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['chunk_0003', 'chunk_0001']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['chunk_0004', 'chunk_0000']
+Precision@2: 1.000
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['chunk_0001', 'chunk_0000']
+Precision@2: 1.000
+Recall@2   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_chunker_exp
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 2
+Mean Precision@2: 0.750
+Mean Recall@2   : 1.000
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Resul for K value: 3
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['http-001', 'tcp-001', 'dns-001']
+Precision@3: 0.333
+Recall@3   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['dns-001', 'udp-001', 'tcp-001']
+Precision@3: 0.333
+Recall@3   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['tcp-001', 'udp-001', 'dns-001']
+Precision@3: 0.333
+Recall@3   : 0.500
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['tcp-001', 'udp-001', 'dns-001']
+Precision@3: 0.667
+Recall@3   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_demo
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 3
+Mean Precision@3: 0.417
+Mean Recall@3   : 0.875
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['chunk_0002', 'chunk_0000', 'chunk_0004']
+Precision@3: 0.333
+Recall@3   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['chunk_0003', 'chunk_0001', 'chunk_0004']
+Precision@3: 0.333
+Recall@3   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['chunk_0004', 'chunk_0000', 'chunk_0001']
+Precision@3: 0.667
+Recall@3   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['chunk_0001', 'chunk_0000', 'chunk_0003']
+Precision@3: 0.667
+Recall@3   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_chunker_exp
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 3
+Mean Precision@3: 0.500
+Mean Recall@3   : 1.000
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Resul for K value: 4
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['http-001', 'tcp-001', 'dns-001', 'udp-001']
+Precision@4: 0.250
+Recall@4   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['dns-001', 'udp-001', 'tcp-001', 'http-001']
+Precision@4: 0.250
+Recall@4   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['tcp-001', 'udp-001', 'dns-001', 'http-001']
+Precision@4: 0.250
+Recall@4   : 0.500
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['tcp-001', 'udp-001', 'dns-001', 'http-001']
+Precision@4: 0.500
+Recall@4   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_demo
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 4
+Mean Precision@4: 0.312
+Mean Recall@4   : 0.875
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['chunk_0002', 'chunk_0000', 'chunk_0004', 'chunk_0003']
+Precision@4: 0.250
+Recall@4   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['chunk_0003', 'chunk_0001', 'chunk_0004', 'chunk_0000']
+Precision@4: 0.250
+Recall@4   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['chunk_0004', 'chunk_0000', 'chunk_0001', 'chunk_0003']
+Precision@4: 0.500
+Recall@4   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['chunk_0001', 'chunk_0000', 'chunk_0003', 'chunk_0004']
+Precision@4: 0.500
+Recall@4   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_chunker_exp
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 4
+Mean Precision@4: 0.375
+Mean Recall@4   : 1.000
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Resul for K value: 5
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['http-001', 'tcp-001', 'dns-001', 'udp-001']
+Precision@5: 0.250
+Recall@5   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['dns-001', 'udp-001', 'tcp-001', 'http-001']
+Precision@5: 0.250
+Recall@5   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['tcp-001', 'udp-001', 'dns-001', 'http-001']
+Precision@5: 0.250
+Recall@5   : 0.500
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['tcp-001', 'udp-001', 'dns-001', 'http-001']
+Precision@5: 0.500
+Recall@5   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_demo
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 5
+Mean Precision@5: 0.312
+Mean Recall@5   : 0.875
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['chunk_0002', 'chunk_0000', 'chunk_0004', 'chunk_0003', 'chunk_0001']
+Precision@5: 0.200
+Recall@5   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['chunk_0003', 'chunk_0001', 'chunk_0004', 'chunk_0000', 'chunk_0002']
+Precision@5: 0.200
+Recall@5   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['chunk_0004', 'chunk_0000', 'chunk_0001', 'chunk_0003', 'chunk_0002']
+Precision@5: 0.400
+Recall@5   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['chunk_0001', 'chunk_0000', 'chunk_0003', 'chunk_0004', 'chunk_0002']
+Precision@5: 0.400
+Recall@5   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_chunker_exp
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 5
+Mean Precision@5: 0.300
+Mean Recall@5   : 1.000
+MRR              : 1.000
+============================================================
+
+================================================================================
+
+Notes :
+---------------------------------------------------------------------------------
+K-Sensitivity Experiment #1
+
+Corpus:
+    Small TCP/UDP/HTTP/DNS corpus
+
+K values:
+    1, 2, 3, 4, 5
+
+Observation:
+    Increasing K consistently decreases Precision@K.
+
+    Recall improves from K=1 to K=2 for both retrievers,
+    after which it plateaus.
+
+    rag_chunker_exp:
+        Recall reaches 1.0 at K=2 and remains there.
+
+    rag_demo:
+        Recall reaches 0.875 at K=2 and does not improve
+        even when retrieving the entire available corpus.
+
+    MRR remains 1.0 for all K because the first retrieved
+    result is relevant for every query.
+
+Initial conclusion:
+    K=2 provides the best precision/recall trade-off for
+    this dataset.
+
+Architectural observation:
+    Increasing K cannot compensate indefinitely for poor
+    knowledge representation or retrieval quality.
+
+=============================================================================
+So we have to choose the optimal K as per the business objective
+
+                    Business Objective
+                           │
+            ┌──────────────┼──────────────┐
+            ▼              ▼              ▼
+        Quality         Latency          Cost
+        Precision        Search          Tokens
+        Recall            Time            LLM
+        MRR
+            │              │              │
+            └──────────────┼──────────────┘
+                           ▼
+                    Choose optimal K
+
+
+-----------------------------------------------------------------------------------
+
+
+For example:
+
+Customer-support RAG:
+---------------------
+
+You may prioritize recall:
+
+"Missing the correct troubleshooting procedure is worse than providing a little extra context."
+
+So a larger K may be justified.
+
+Real-time network-management RAG:
+--------------------------------
+
+You may prioritize latency + precision:
+
+"Give the engineer the most relevant diagnostic information quickly."
+
+Then a smaller K may be preferable.
+
+Cost-sensitive enterprise assistant
+-----------------------------------
+
+You may have:
+
+K ↑
+→ more retrieved context
+→ larger prompt
+→ potentially higher LLM cost
+→ potentially higher latency
+
+So the architectural question becomes:
+
+What is the smallest K that satisfies the required business-level retrieval quality?
+
+That is a much better formulation than:
+
+"What K gives the highest recall?"
+
+And this connects directly to the principle you mentioned earlier:
+
+An architect should optimize the system according to business logic, not simply maximize a technical metric.
+
+The flow should be like this :
+------------------------------
+
+Business requirement
+        ↓
+Define acceptable quality
+        ↓
+Experiment with K
+        ↓
+Measure Precision / Recall / MRR
+        ↓
+Measure latency / context / cost
+        ↓
+Find acceptable trade-off
+        ↓
+Select K
+        ↓
+Validate in production
+
+
+There is no universally optimal K. The optimum K is business-scenario dependent and must be determined experimentally by balancing retrieval quality, latency, context size, and cost against the business objective.
+
+===========================================================================================================================
