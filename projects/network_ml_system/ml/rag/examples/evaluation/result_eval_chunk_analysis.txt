@@ -1,0 +1,106 @@
+Chunk analysis shows that the improved paragraph-based retrieval cannot be attributed simply to smaller chunks; its average chunk size is larger than the section-based representation. This suggests semantic boundary placement and knowledge concentration may be stronger factors than raw chunk size.
+
+=====================================================================================================================
+
+python -m ml.rag.examples.evaluation.eval_chunk_analysis
+============================================================
+rag_demo
+============================================================
+------------------------------------------------------------
+Chunk ID : tcp-001
+Characters : 99
+Words : 14
+Content:
+TCP is a connection-oriented transport protocol. It provides reliable and ordered delivery of data.
+------------------------------------------------------------
+Chunk ID : udp-001
+Characters : 137
+Words : 18
+Content:
+ UDP (User Datagram Protocol) is a connectionless transport protocol. It does not guarantee delivery, ordering, or duplicate protection. 
+------------------------------------------------------------
+Chunk ID : http-001
+Characters : 298
+Words : 33
+Content:
+HTTP (Hypertext Transfer Protocol) is an application layer protocol                                      used for communication between web clients and web servers. HTTP typically runs over TCP because reliable and ordered delivery is                                      required for web content. 
+------------------------------------------------------------
+Chunk ID : dns-001
+Characters : 319
+Words : 40
+Content:
+DNS (Domain Name System) translates domain names into IP addresses. Most DNS queries use UDP because the request and response messages                                       are typically small and low latency is preferred. TCP may be used                                       for large DNS responses or zone transfers.
+
+============================================================
+rag_chunker_exp
+============================================================
+------------------------------------------------------------
+Chunk ID : chunk_0000
+Characters : 247
+Words : 30
+Content:
+TCP (Transmission Control Protocol) is a connection-oriented transport
+protocol. It provides reliable and ordered delivery of data between
+applications. TCP uses acknowledgements, retransmissions, and flow
+control to ensure reliable communication.
+------------------------------------------------------------
+Chunk ID : chunk_0001
+Characters : 234
+Words : 32
+Content:
+UDP (User Datagram Protocol) is a connectionless transport protocol.
+It does not guarantee delivery, ordering, or duplicate protection.
+UDP is commonly used for latency-sensitive applications such as
+streaming, DNS, and online gaming.
+------------------------------------------------------------
+Chunk ID : chunk_0002
+Characters : 223
+Words : 33
+Content:
+HTTP (Hypertext Transfer Protocol) is an application layer protocol
+used for communication between web clients and web servers. HTTP
+typically runs over TCP because reliable and ordered delivery is
+required for web content.
+------------------------------------------------------------
+Chunk ID : chunk_0003
+Characters : 243
+Words : 40
+Content:
+DNS (Domain Name System) translates domain names into IP addresses.
+Most DNS queries use UDP because the request and response messages
+are typically small and low latency is preferred. TCP may be used
+for large DNS responses or zone transfers.
+------------------------------------------------------------
+Chunk ID : chunk_0004
+Characters : 224
+Words : 26
+Content:
+Reliable communication ensures that transmitted data arrives at the
+destination without loss, duplication, or reordering. TCP achieves
+this through acknowledgements, sequence numbers, retransmissions,
+and congestion control.
+====================================================================================================================
+
+Experiment #2 — Chunk Representation Analysis
+
+Observed:
+- rag_demo       → 4 chunks
+- rag_chunker_exp → 5 chunks
+
+Measured:
+- character count
+- word count
+- chunk content
+- semantic boundaries
+
+Finding:
+Paragraph-based chunks are NOT smaller on average.
+
+Therefore:
+The retrieval improvement cannot be explained simply
+by smaller chunk size.
+
+Revised hypothesis:
+Semantic boundary placement and knowledge concentration
+may be more important than raw chunk size.
+==============================================================================================

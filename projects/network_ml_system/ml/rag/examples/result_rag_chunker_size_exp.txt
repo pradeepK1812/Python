@@ -1,0 +1,196 @@
+============================================================
+Controlled Chunking Experiment
+============================================================
+
+Experiment: Naive Fixed-Size Chunking
+Target Chunk Size: ~230 characters
+Overlap: 0
+============================================================
+
+Observed Result
+------------------------------------------------------------
+
+Created 7 chunks:
+
+chunk_0000 : 230 chars
+chunk_0001 : 230 chars
+chunk_0002 :  23 chars
+chunk_0003 : 230 chars
+chunk_0004 : 230 chars
+chunk_0005 :   8 chars
+chunk_0006 : 224 chars
+
+Important observations:
+
+1. Fixed-size splitting created very small residual chunks:
+   - chunk_0002 = 23 characters
+   - chunk_0005 = 8 characters
+
+2. Words were split across chunk boundaries:
+   - "reliab" / "le"
+   - "tr" / "ansfers"
+
+3. Sentences and semantic units were also split across
+   chunk boundaries.
+
+4. Although the target size was approximately 230 characters,
+   the resulting chunk-size distribution was highly uneven.
+
+------------------------------------------------------------
+Engineering Conclusion
+------------------------------------------------------------
+
+A fixed chunk size should not be treated as the complete
+chunking strategy.
+
+Chunk size should be treated as a TARGET CONSTRAINT,
+while semantic boundaries should guard the actual cut points.
+
+A production-quality chunker should prefer boundaries in
+the following order:
+
+    Paragraph boundary
+          ↓
+    Sentence boundary
+          ↓
+    Word boundary
+          ↓
+    Character boundary (last resort)
+
+The chunker should also prevent extremely small residual
+chunks from being created.
+
+Therefore:
+
+    Chunk Size
+         +
+    Semantic Boundaries
+         +
+    Minimum Useful Chunk Size
+         ↓
+    Robust Chunking Strategy
+
+Raw character-based splitting is unsuitable as a
+production chunking strategy by itself.
+
+------------------------------------------------------------
+Next Experiment
+------------------------------------------------------------
+
+Implement boundary-aware fixed-size chunking while keeping:
+
+Document       : SAME
+Embedding      : SAME
+Target size    : ~230 characters
+Overlap        : 0
+Vector store   : SAME
+
+Only the boundary-selection logic will change.
+========================================================================================
+Current result :
+
+python -m ml.rag.examples.rag_chunker_size_exp
+Loaded 1 document(s)
+------------------------------------------------------------
+doc_chunker_exp.md
+ml/rag/examples/chunker_exp_docs/doc_chunker_exp.md
+1605 characters
+
+Created 7 chunk(s)
+------------------------------------------------------------
+chunk_0000
+Characters: 230
+Words: 29
+TCP (Transmission Control Protocol) is a connection-oriented transport
+protocol. It provides reliable and ordered delivery of data between
+applications. TCP uses acknowledgements, retransmissions, and flow
+control to ensure reliab
+------------------------------------------------------------
+chunk_0001
+Characters: 230
+Words: 30
+le communication.
+
+UDP (User Datagram Protocol) is a connectionless transport protocol.
+It does not guarantee delivery, ordering, or duplicate protection.
+UDP is commonly used for latency-sensitive applications such as
+streaming, 
+------------------------------------------------------------
+chunk_0002
+Characters: 23
+Words: 4
+DNS, and online gaming.
+------------------------------------------------------------
+chunk_0003
+Characters: 230
+Words: 35
+HTTP (Hypertext Transfer Protocol) is an application layer protocol
+used for communication between web clients and web servers. HTTP
+typically runs over TCP because reliable and ordered delivery is
+required for web content.
+
+DNS (
+------------------------------------------------------------
+chunk_0004
+Characters: 230
+Words: 39
+Domain Name System) translates domain names into IP addresses.
+Most DNS queries use UDP because the request and response messages
+are typically small and low latency is preferred. TCP may be used
+for large DNS responses or zone tr
+------------------------------------------------------------
+chunk_0005
+Characters: 8
+Words: 1
+ansfers.
+------------------------------------------------------------
+chunk_0006
+Characters: 224
+Words: 26
+Reliable communication ensures that transmitted data arrives at the
+destination without loss, duplication, or reordering. TCP achieves
+this through acknowledgements, sequence numbers, retransmissions,
+and congestion control.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|███████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 5759.26it/s]
+Embedding Model: all-MiniLM-L6-v2
+Generated 7 embeddings
+------------------------------------------------------------
+chunk_0000
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0001
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0002
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0003
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0004
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0005
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0006
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+
+Stored embeddings in Chroma.
+Collection : rag_chunker_exp
+Chunks      : 7

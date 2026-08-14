@@ -9,9 +9,9 @@ Planned Completion : 26-08-2026
 
 Current Phase      : Week 2
 Current Milestone  : End-to-End RAG Pipeline
-Last Updated       : 06-08-2026
+Last Updated       : 15-09-2026
 
-Overall Progress   : ~40%
+Overall Progress   : ~45%
 
 
 # ==========================================================
@@ -132,15 +132,15 @@ Improve retrieval quality using production techniques.
 
 Topics
 
-[ ] Chunk Size Experiments
+[x] Chunk Size Experiments
 [ ] Chunk Overlap
 [ ] Metadata Filtering
 [ ] Hybrid Search
 [ ] BM25 + Vector Search
 [ ] Reranking Models
-[ ] Retrieval Precision
-[ ] Retrieval Recall
-[ ] Retrieval Evaluation
+[x] Retrieval Precision
+[x] Retrieval Recall
+[x] Retrieval Evaluation
 
 Deliverable
 
@@ -159,7 +159,7 @@ Topics
 [ ] FAISS Implementation
 [ ] IVF Index
 [ ] HNSW Graph
-[ ] ChromaDB
+[x] ChromaDB
 [ ] Qdrant
 [ ] Milvus
 [ ] Pinecone Architecture
