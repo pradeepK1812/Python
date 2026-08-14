@@ -1,0 +1,108 @@
+Boundary-aware fixed-size chunking eliminated word fragmentation and produced semantically cleaner chunks, but introduced a 58-character residual chunk. Therefore, semantic boundary selection alone is insufficient; the chunker also needs a minimum useful chunk-size/rebalancing rule.
+
+----------------------------------------------------------------------------------------------
+
+
+@pradeepK1812 ➜ /workspaces/Python/projects/network_ml_system (Python-Dev) $ python -m ml.rag.examples.rag_chunker_boundary_exp
+Loaded 1 document(s)
+------------------------------------------------------------
+doc_chunker_exp.md
+ml/rag/examples/chunker_exp_docs/doc_chunker_exp.md
+1605 characters
+
+Created 7 chunk(s)
+------------------------------------------------------------
+chunk_0000
+Characters: 152
+Words: 19
+TCP (Transmission Control Protocol) is a connection-oriented transport
+protocol. It provides reliable and ordered delivery of data between
+applications.
+------------------------------------------------------------
+chunk_0001
+Characters: 164
+Words: 20
+TCP uses acknowledgements, retransmissions, and flow
+control to ensure reliable communication.
+
+UDP (User Datagram Protocol) is a connectionless transport protocol.
+------------------------------------------------------------
+chunk_0002
+Characters: 165
+Words: 23
+It does not guarantee delivery, ordering, or duplicate protection.
+UDP is commonly used for latency-sensitive applications such as
+streaming, DNS, and online gaming.
+------------------------------------------------------------
+chunk_0003
+Characters: 223
+Words: 33
+HTTP (Hypertext Transfer Protocol) is an application layer protocol
+used for communication between web clients and web servers. HTTP
+typically runs over TCP because reliable and ordered delivery is
+required for web content.
+------------------------------------------------------------
+chunk_0004
+Characters: 184
+Words: 29
+DNS (Domain Name System) translates domain names into IP addresses.
+Most DNS queries use UDP because the request and response messages
+are typically small and low latency is preferred.
+------------------------------------------------------------
+chunk_0005
+Characters: 58
+Words: 11
+TCP may be used
+for large DNS responses or zone transfers.
+------------------------------------------------------------
+chunk_0006
+Characters: 224
+Words: 26
+Reliable communication ensures that transmitted data arrives at the
+destination without loss, duplication, or reordering. TCP achieves
+this through acknowledgements, sequence numbers, retransmissions,
+and congestion control.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████████████████████████████████| 103/103 [00:02<00:00, 43.78it/s]
+Embedding Model: all-MiniLM-L6-v2
+Generated 7 embeddings
+------------------------------------------------------------
+chunk_0000
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0001
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0002
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0003
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0004
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0005
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0006
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+
+Stored embeddings in Chroma.
+Collection : rag_chunker_exp
+Chunks      : 7
+
