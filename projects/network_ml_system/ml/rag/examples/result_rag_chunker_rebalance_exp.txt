@@ -1,0 +1,178 @@
+ python -m ml.rag.examples.rag_chunker_rebalance_exp
+Loaded 1 document(s)
+------------------------------------------------------------
+doc_chunker_exp.md
+ml/rag/examples/chunker_exp_docs/doc_chunker_exp.md
+1605 characters
+
+Created 6 chunk(s)
+------------------------------------------------------------
+chunk_0000
+Characters: 152
+Words: 19
+TCP (Transmission Control Protocol) is a connection-oriented transport
+protocol. It provides reliable and ordered delivery of data between
+applications.
+------------------------------------------------------------
+chunk_0001
+Characters: 164
+Words: 20
+TCP uses acknowledgements, retransmissions, and flow
+control to ensure reliable communication.
+
+UDP (User Datagram Protocol) is a connectionless transport protocol.
+------------------------------------------------------------
+chunk_0002
+Characters: 165
+Words: 23
+It does not guarantee delivery, ordering, or duplicate protection.
+UDP is commonly used for latency-sensitive applications such as
+streaming, DNS, and online gaming.
+------------------------------------------------------------
+chunk_0003
+Characters: 223
+Words: 33
+HTTP (Hypertext Transfer Protocol) is an application layer protocol
+used for communication between web clients and web servers. HTTP
+typically runs over TCP because reliable and ordered delivery is
+required for web content.
+------------------------------------------------------------
+chunk_0004
+Characters: 243
+Words: 40
+DNS (Domain Name System) translates domain names into IP addresses.
+Most DNS queries use UDP because the request and response messages
+are typically small and low latency is preferred. TCP may be used
+for large DNS responses or zone transfers.
+------------------------------------------------------------
+chunk_0005
+Characters: 224
+Words: 26
+Reliable communication ensures that transmitted data arrives at the
+destination without loss, duplication, or reordering. TCP achieves
+this through acknowledgements, sequence numbers, retransmissions,
+and congestion control.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|████████████████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 5873.98it/s]
+Embedding Model: all-MiniLM-L6-v2
+Generated 6 embeddings
+------------------------------------------------------------
+chunk_0000
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0001
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0002
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0003
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0004
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+------------------------------------------------------------
+chunk_0005
+all-MiniLM-L6-v2
+384
+Vector dimension : 384
+
+Stored embeddings in Chroma.
+Collection : rag_chunker_exp
+Chunks      : 6
+=======================================================================================================
+============================================================
+ARCHITECTURAL CONCLUSION — CONTROLLED CHUNKING
+============================================================
+
+The experiments demonstrate that chunk size alone should NOT
+be treated as the chunking strategy.
+
+A production-quality chunker should treat chunk size as a
+TARGET rather than a rigid boundary.
+
+The chunking strategy should balance three constraints:
+
+    Target Chunk Size
+            +
+    Semantic Boundary Preservation
+            +
+    Minimum Useful Chunk Size
+            ↓
+    Robust Chunk Representation
+
+
+Key observations from the experiments:
+
+1. Naive fixed-size character splitting can create poor
+   retrieval units by splitting words, sentences, and semantic
+   concepts across chunk boundaries.
+
+2. Semantic-boundary-aware splitting eliminates word and
+   sentence fragmentation and produces more meaningful
+   knowledge units.
+
+3. Semantic boundary selection alone can create very small
+   residual chunks. Therefore, the chunker must validate the
+   resulting chunk sizes and rebalance boundaries when required.
+
+4. A minimum useful chunk-size constraint is therefore
+   necessary to prevent pathological residual chunks.
+
+5. The target chunk size should be treated as a SOFT target,
+   not necessarily a hard maximum. A slightly larger chunk
+   is preferable to creating a semantically incomplete or
+   extremely small chunk.
+
+6. Therefore, chunk quality is determined not only by the
+   number of characters/tokens in a chunk, but also by where
+   the semantic boundaries occur and how much meaningful
+   knowledge each chunk represents.
+
+Architectural Principle:
+
+    Chunk Size ≠ Chunking Strategy
+
+    Chunking Strategy =
+        Target Size
+        +
+        Semantic Boundaries
+        +
+        Minimum Useful Size
+        +
+        Rebalancing
+
+
+Engineering Trade-off:
+
+A smaller chunk is NOT automatically a better chunk.
+
+The objective is to create chunks that are:
+
+    • semantically coherent
+    • independently retrievable
+    • sufficiently informative
+    • free from artificial fragmentation
+    • reasonably bounded in size
+
+The optimal chunking strategy must therefore be selected
+experimentally for the characteristics of the knowledge base
+and the business retrieval requirements.
+
+Important:
+
+These conclusions are architectural principles derived from
+the current experiments. Retrieval-quality superiority of the
+new rebalanced strategy still needs to be validated using the
+retrieval evaluation framework (Precision, Recall, RR and MRR).
+============================================================

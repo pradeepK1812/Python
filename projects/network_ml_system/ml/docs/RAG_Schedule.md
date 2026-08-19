@@ -5,11 +5,11 @@
 Project Name       : Network ML Framework - RAG
 Start Date         : 15-07-2026
 Target Duration    : ~6 Weeks
-Planned Completion : 26-08-2026
+Planned Completion : 19-09-2026
 
 Current Phase      : Week 2
 Current Milestone  : End-to-End RAG Pipeline
-Last Updated       : 15-09-2026
+Last Updated       : 19-08-2026
 
 Overall Progress   : ~45%
 
@@ -326,3 +326,33 @@ At the end of Phase 5, I should be able to:
 [ ] M8 - Enterprise Knowledge Base
 
 [ ] M9 - Production Deployment
+==================================================================================================
+19 Aug ─────────────── ~30 Aug
+        Retrieval Optimization
+        ├─ Chunking
+        ├─ Overlap
+        ├─ Metadata
+        ├─ Hybrid/BM25
+        └─ Reranking
+
+30 Aug ─────────────── ~06 Sep
+        Vector Infrastructure
+        ├─ FAISS
+        ├─ IVF
+        ├─ HNSW
+        └─ Vector DB comparison
+
+06 Sep ─────────────── ~12 Sep
+        Enterprise RAG
+        ├─ Multi-KB
+        ├─ Intent routing
+        ├─ Orchestration
+        └─ Context/cost optimization
+
+12 Sep ─────────────── ~19 Sep
+        Production System
+        ├─ FastAPI
+        ├─ Docker
+        ├─ Logging
+        ├─ Monitoring
+        └─ Evaluation
