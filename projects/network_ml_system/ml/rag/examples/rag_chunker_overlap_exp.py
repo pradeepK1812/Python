@@ -1,5 +1,5 @@
 """
-Module: rag_chunker_overlap_exp.py
+Module: rag_chunker_boundary_exp.py
 
 Demonstrates the complete Retrieval-Augmented Generation (RAG)
 pipeline using the framework.
@@ -46,6 +46,18 @@ from ml.rag.parser import parse
 CHUNK_SIZE = 230
 #define the minimum chunk boundary
 MIN_CHUNK_SIZE=100
+
+
+#get the last sentence from previous chunk based upon delimiter 
+def _get_last_sentence(content: str) -> str:
+    sentences = content.split(".")
+
+    if len(sentences) < 2:
+        return ""
+
+    return sentences[-2].strip() + "."
+
+
 # creates chunk from the paragraph created from the Section
 def _create_experimental_chunk(
     document: StructuredDocument,
@@ -100,6 +112,7 @@ def chunk_by_boundary(
 
         content = section.content.strip()
         start = 0
+        previous_content = None 
 
         while start < len(content):
 
@@ -119,7 +132,15 @@ def chunk_by_boundary(
             if len(content) - end <= MIN_CHUNK_SIZE:
                 end = len(content)
 
-            chunk_content = content[start:end].strip()
+            raw_chunk_content = content[start:end].strip()
+            #initialize chunk_content with raw_chunk_content 
+            chunk_content = raw_chunk_content
+            if previous_content:
+                overlap = _get_last_sentence(previous_content)
+                if overlap:
+                     chunk_content = overlap + "\n" + raw_chunk_content
+            #update previous content with raw chunk content
+            previous_content = raw_chunk_content
 
             if chunk_content:
                 chunks.append(
@@ -205,7 +226,7 @@ if __name__ == "__main__":
 
     vector_store = ChromaVectorStore(
         persist_directory=":memory:",
-        collection_name="rag_chunker_rebalance_exp",
+        collection_name="rag_chunker_overlap_exp",
     )
     vector_store.add(embedded_chunks,)
     print()
