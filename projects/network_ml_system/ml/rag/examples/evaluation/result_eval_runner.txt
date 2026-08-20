@@ -81,3 +81,193 @@ Mean Precision@2: 0.750
 Mean Recall@2   : 1.000
 MRR              : 1.000
 ============================================================
+
+
+RUN2 after adding the rag_chunker_rebalance
+==========================================================================================================================
+
+python -m ml.rag.examples.evaluation.eval_runner
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|████████████████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 5878.21it/s]
+rag_demo count: 4
+rag_chunker_exp count: 5
+rag_chunker_rebalance_exp count: 6
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['http-001', 'tcp-001']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['dns-001', 'udp-001']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['tcp-001', 'udp-001']
+Precision@2: 0.500
+Recall@2   : 0.500
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['tcp-001', 'udp-001']
+Precision@2: 1.000
+Recall@2   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_demo
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 2
+Mean Precision@2: 0.625
+Mean Recall@2   : 0.875
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['chunk_0002', 'chunk_0000']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['chunk_0003', 'chunk_0001']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['chunk_0004', 'chunk_0000']
+Precision@2: 1.000
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['chunk_0001', 'chunk_0000']
+Precision@2: 1.000
+Recall@2   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_chunker_exp
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 2
+Mean Precision@2: 0.750
+Mean Recall@2   : 1.000
+MRR              : 1.000
+============================================================
+------------------------------------------------------------
+Query: Why does HTTP use TCP?
+Relevant : ['http_over_tcp']
+Retrieved: ['chunk_0003', 'chunk_0000']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: Why does DNS use UDP?
+Relevant : ['dns_over_udp']
+Retrieved: ['chunk_0004', 'chunk_0002']
+Precision@2: 0.500
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: How does TCP provide reliable communication?
+Relevant : ['tcp_characteristics', 'tcp_reliability']
+Retrieved: ['chunk_0005', 'chunk_0000']
+Precision@2: 1.000
+Recall@2   : 1.000
+RR          : 1.000
+------------------------------------------------------------
+Query: What is the difference between TCP and UDP?
+Relevant : ['tcp_characteristics', 'udp_characteristics']
+Retrieved: ['chunk_0001', 'chunk_0000']
+Precision@2: 1.000
+Recall@2   : 1.000
+RR          : 1.000
+Mean report for retriever:rag_chunker_rebalance_exp
+
+============================================================
+RAG Retrieval Evaluation
+============================================================
+Queries          : 4
+K                : 2
+Mean Precision@2: 0.750
+Mean Recall@2   : 1.000
+MRR              : 1.000
+============================================================
+===========================================================================================================
+============================================================
+RETRIEVAL VALIDATION — CHUNKING STRATEGIES
+============================================================
+
+Three chunk representations were evaluated using the same
+evaluation dataset, embedding model, K=2 and retrieval metrics.
+
+                    Precision@2   Recall@2   MRR
+rag_demo                0.625        0.875   1.000
+rag_chunker_exp         0.750        1.000   1.000
+rag_chunker_rebalance   0.750        1.000   1.000
+
+Observations:
+
+1. Both chunk-based representations outperformed the original
+   section-based representation on this evaluation dataset.
+
+2. Paragraph-based and rebalanced target-size chunking produced
+   identical retrieval metrics.
+
+3. The rebalanced strategy produced a technically cleaner and
+   more controlled chunk representation, but this improvement
+   did not translate into measurable retrieval improvement on
+   the current evaluation set.
+
+4. Therefore, improved chunk structure does not automatically
+   imply improved retrieval quality.
+
+5. The results suggest that knowledge-unit granularity has a
+   measurable impact on retrieval quality, while the additional
+   rebalancing strategy requires a broader evaluation set to
+   determine whether it provides a retrieval advantage.
+
+Architectural Conclusion:
+
+Chunk quality and retrieval quality are related but distinct
+concerns.
+
+A chunking strategy should therefore be evaluated at two levels:
+
+    1. Structural quality
+       - semantic coherence
+       - boundary preservation
+       - useful chunk size
+       - absence of pathological fragments
+
+    2. Retrieval quality
+       - Precision
+       - Recall
+       - MRR
+
+A structurally improved chunker should not be considered
+superior until retrieval evaluation demonstrates a measurable
+benefit.
+
+Important:
+
+These conclusions apply to the current dataset and evaluation
+set and should not be generalized as a universal ranking of
+chunking strategies.
+===================================================================================================

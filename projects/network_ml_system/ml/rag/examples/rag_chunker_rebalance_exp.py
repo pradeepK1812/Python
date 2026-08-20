@@ -205,7 +205,7 @@ if __name__ == "__main__":
 
     vector_store = ChromaVectorStore(
         persist_directory=":memory:",
-        collection_name="rag_chunker_exp",
+        collection_name="rag_chunker_rebalance_exp",
     )
     vector_store.add(embedded_chunks,)
     print()

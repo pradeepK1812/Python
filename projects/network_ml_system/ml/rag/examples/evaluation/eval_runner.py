@@ -1,4 +1,4 @@
-
+import sys
 import json
 from ml.rag.retrievers.retriever import Retriever
 from ml.rag.examples.evaluation.retrieval_metrics import precision_at_k,recall_at_k
@@ -34,6 +34,11 @@ chunker_vector_store = ChromaVectorStore(
     collection_name="rag_chunker_exp",
 )
 
+rebalanced_vector_store = ChromaVectorStore(
+    persist_directory=":memory:",
+    collection_name="rag_chunker_rebalance_exp",
+)
+
 section_retriever = VectorStoreRetriever(
     embedding_model=embedding_model,
     vector_store=section_vector_store,
@@ -44,16 +49,15 @@ chunker_retriever = VectorStoreRetriever(
     vector_store=chunker_vector_store,
 )
 
-"""
-retrievers = [
-    section_retriever,
-    chunker_retriever,
-]
+rebalanced_retriever = VectorStoreRetriever(
+    embedding_model=embedding_model,
+    vector_store=rebalanced_vector_store,
+)
 
-"""
 retrievers = [
     ("rag_demo", section_retriever),
     ("rag_chunker_exp", chunker_retriever),
+    ("rag_chunker_rebalance_exp", rebalanced_retriever),
 ]
 
 print(
@@ -65,6 +69,17 @@ print(
     "rag_chunker_exp count:",
     chunker_vector_store._collection.count(),
 )
+
+print(
+    "rag_chunker_rebalance_exp count:",
+    rebalanced_vector_store._collection.count(),
+)
+
+
+#=============================================
+#added to create exit checkpoint for testing
+#sys.exit(0)
+#=============================================
 
 #set K as 2 for evaluation
 K =2
