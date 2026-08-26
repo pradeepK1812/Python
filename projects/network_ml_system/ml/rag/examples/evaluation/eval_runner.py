@@ -54,10 +54,21 @@ rebalanced_retriever = VectorStoreRetriever(
     vector_store=rebalanced_vector_store,
 )
 
+overlap_vector_store = ChromaVectorStore(
+    persist_directory=":memory:",
+    collection_name="rag_chunker_overlap_exp",
+)
+
+overlap_retriever = VectorStoreRetriever(
+    embedding_model=embedding_model,
+    vector_store=overlap_vector_store,
+)
+
 retrievers = [
     ("rag_demo", section_retriever),
     ("rag_chunker_exp", chunker_retriever),
     ("rag_chunker_rebalance_exp", rebalanced_retriever),
+    ("rag_chunker_overlap_exp", overlap_retriever)
 ]
 
 print(
@@ -73,6 +84,10 @@ print(
 print(
     "rag_chunker_rebalance_exp count:",
     rebalanced_vector_store._collection.count(),
+)
+print(
+    "rag_chunker_overlap_exp count:",
+    overlap_vector_store._collection.count(),
 )
 
 
