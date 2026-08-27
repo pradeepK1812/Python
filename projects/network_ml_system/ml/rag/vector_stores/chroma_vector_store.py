@@ -79,6 +79,7 @@ class ChromaVectorStore(VectorStore):
         self,
         embedding: list[float],
         top_k: int = 5,
+        metadata_filter: dict[str, Any] | None = None, #metadata filtering paramter 
     ) -> list[EmbeddedChunk]:
 
         """
@@ -88,11 +89,24 @@ class ChromaVectorStore(VectorStore):
         if top_k < 1:
            raise ValueError("top_k must be greater than zero.")
         
+        
+        query_kwargs = {
+          "query_embeddings": [embedding],
+          "n_results": top_k,
+          "include": ["documents", "embeddings", "metadatas"],
+        }
+        # if there is metadata filter then add it to db query
+        if metadata_filter:
+            query_kwargs["where"] = metadata_filter
+
+        results = self._collection.query(**query_kwargs)
+        """
         results = self._collection.query(
             query_embeddings=[embedding],
             n_results=top_k,
             include=["documents", "embeddings", "metadatas"],
         )
+        """
         # Chroma query returns lists of lists per input embedding query
         ids = results.get("ids", [[]])[0]
         documents = results.get("documents", [[]])[0]

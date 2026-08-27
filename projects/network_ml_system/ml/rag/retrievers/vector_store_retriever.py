@@ -9,6 +9,7 @@ from __future__ import annotations
 from ..domain import RetrievedContext,VectorStore
 from ..embeddings.base import EmbeddingModel
 from .retriever import Retriever
+from typing import Any
 #from .vector_store import VectorStore
 
 
@@ -45,6 +46,7 @@ class VectorStoreRetriever(Retriever):
         self,
         query: str,
         top_k: int = 5,
+        metadata_filter: dict[str, Any] | None = None,
     ) -> list[RetrievedContext]:
         """
         Retrieve the most relevant contexts for the supplied query.
@@ -55,6 +57,7 @@ class VectorStoreRetriever(Retriever):
         embedded_chunks = self._vector_store.search(
             embedding=query_embedding,
             top_k=top_k,
+            metadata_filter=metadata_filter,
         )
 
         contexts: list[RetrievedContext] = []

@@ -1,0 +1,14 @@
+{
+  "Why does HTTP use TCP?": {
+    "section_title": "Application Protocols"
+  },
+  "Why does DNS use UDP?": {
+    "section_title": "Application Protocols"
+  },
+  "How does TCP provide reliable communication?": {
+    "section_title": "Reliable Communication"
+  },
+  "What is the difference between TCP and UDP?": {
+    "section_title": "Transport Protocols"
+  }
+}

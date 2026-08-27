@@ -19,6 +19,8 @@ from ml.rag.retrievers.vector_store_retriever import (
 # Path to eval_truth.json file
 truth_json_file_path = "ml/rag/examples/evaluation/eval_truth.json"
 knowledge_json_file_path = "ml/rag/examples/evaluation/chunk_knowledge_map.json"
+metadata_filter_json_file_path = "ml/rag/examples/evaluation/metadata_filter_truth.json"
+
 
 embedding_model = SentenceTransformerEmbeddingModel(
     model_name="all-MiniLM-L6-v2",
@@ -64,11 +66,22 @@ overlap_retriever = VectorStoreRetriever(
     vector_store=overlap_vector_store,
 )
 
+metadata_filter_vector_store = ChromaVectorStore(
+    persist_directory=":memory:",
+    collection_name="rag_chunker_metadata_filter_exp",
+)
+
+metadata_filter_retriever = VectorStoreRetriever(
+    embedding_model=embedding_model,
+    vector_store=metadata_filter_vector_store,
+)
+
 retrievers = [
     ("rag_demo", section_retriever),
     ("rag_chunker_exp", chunker_retriever),
     ("rag_chunker_rebalance_exp", rebalanced_retriever),
-    ("rag_chunker_overlap_exp", overlap_retriever)
+    ("rag_chunker_overlap_exp", overlap_retriever),
+    ("rag_chunker_metadata_filter_exp", metadata_filter_retriever)
 ]
 
 print(
@@ -90,7 +103,10 @@ print(
     overlap_vector_store._collection.count(),
 )
 
-
+print(
+    "rag_chunker_metadata_filter_exp count:",
+    metadata_filter_vector_store._collection.count(),
+)
 #=============================================
 #added to create exit checkpoint for testing
 #sys.exit(0)
@@ -106,6 +122,10 @@ with open(truth_json_file_path, "r") as f:
 with open(knowledge_json_file_path, "r") as f:
     chunk_knowledge_map = json.load(f)
 
+#Load metadata filter map
+with open(metadata_filter_json_file_path, "r") as f:
+    metadata_filter_map = json.load(f)
+
 #list to store the reciprocal_rank, precisions and recalls
 for name, retriever in retrievers:
     reciprocal_ranks = []
@@ -116,11 +136,19 @@ for name, retriever in retrievers:
 
         query = evaluation_case["query"]
 
+
+        metadata_filter = None
+
+        if name == "rag_chunker_metadata_filter_exp":
+            metadata_filter = metadata_filter_map[query]
+
         retrieved_contexts = retriever.retrieve(
             query=query,
             top_k=K,
+            metadata_filter=metadata_filter,
         )
 
+        
         retrieved_chunks = [
             context.metadata["chunk_id"]
             for context in retrieved_contexts
