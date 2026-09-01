@@ -4,3 +4,4 @@ torch
 pydantic
 chromadb
 sentence-transformers
+rank_bm25

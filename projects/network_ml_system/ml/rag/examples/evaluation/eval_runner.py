@@ -1,5 +1,22 @@
 import sys
 import json
+
+from ml.rag.domain import (
+    Document,
+    StructuredDocument,
+    Section,
+    Chunk,
+    EmbeddedChunk,
+    VectorStore,
+)
+from ml.rag.reader import read_documents
+from ml.rag.retrievers.bm25_retriever import BM25Retriever
+from ml.rag.domain import RetrievedContext
+from ml.rag.chunker import chunk
+from ml.rag.parser import parse
+from ml.rag.examples.rag_chunker_exp import chunk_by_paragraph
+
+
 from ml.rag.retrievers.retriever import Retriever
 from ml.rag.examples.evaluation.retrieval_metrics import precision_at_k,recall_at_k
 from ml.rag.examples.evaluation.retrieval_metrics import reciprocal_rank,mean_reciprocal_rank 
@@ -76,12 +93,31 @@ metadata_filter_retriever = VectorStoreRetriever(
     vector_store=metadata_filter_vector_store,
 )
 
+#BM25 retriever after reading the doc and creating the chunks
+documents = read_documents(
+        "ml/rag/examples/chunker_exp_docs",
+    )
+
+  
+document = documents[0]
+
+#parse the document to create the structured document
+strDoc = parse(document)
+
+section = strDoc.sections
+chunks = chunk_by_paragraph(strDoc)
+
+bm25_retriever = BM25Retriever(
+      chunks=chunks,
+    ) 
+
 retrievers = [
     ("rag_demo", section_retriever),
     ("rag_chunker_exp", chunker_retriever),
     ("rag_chunker_rebalance_exp", rebalanced_retriever),
     ("rag_chunker_overlap_exp", overlap_retriever),
-    ("rag_chunker_metadata_filter_exp", metadata_filter_retriever)
+    ("rag_chunker_metadata_filter_exp", metadata_filter_retriever),
+    ("rag_chunker_bm25_exp", bm25_retriever),
 ]
 
 print(
