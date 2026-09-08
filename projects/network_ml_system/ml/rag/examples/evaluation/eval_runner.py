@@ -31,7 +31,7 @@ from ml.rag.vector_stores.chroma_vector_store import (
 from ml.rag.retrievers.vector_store_retriever import (
     VectorStoreRetriever,
 )
-
+from ml.rag.retrievers.rrf_retriever import RRFHybridRetriever
 
 # Path to eval_truth.json file
 truth_json_file_path = "ml/rag/examples/evaluation/eval_truth.json"
@@ -96,9 +96,12 @@ metadata_filter_retriever = VectorStoreRetriever(
 #BM25 retriever after reading the doc and creating the chunks
 documents = read_documents(
         "ml/rag/examples/chunker_exp_docs",
-    )
+)
+#for RRF we need to use the knowledge map from the existing ones
+knowledge_map_names = {
+    "rag_chunker_rrf_exp": "rag_chunker_exp",
+}
 
-  
 document = documents[0]
 
 #parse the document to create the structured document
@@ -110,6 +113,14 @@ chunks = chunk_by_paragraph(strDoc)
 bm25_retriever = BM25Retriever(
       chunks=chunks,
     ) 
+#RRF retriever instance cration 
+rrf_retriever = RRFHybridRetriever(
+    retrievers=[
+        chunker_retriever,
+        bm25_retriever,
+    ],
+    rrf_k=2,
+)
 
 retrievers = [
     ("rag_demo", section_retriever),
@@ -118,6 +129,7 @@ retrievers = [
     ("rag_chunker_overlap_exp", overlap_retriever),
     ("rag_chunker_metadata_filter_exp", metadata_filter_retriever),
     ("rag_chunker_bm25_exp", bm25_retriever),
+    ("rag_chunker_rrf_exp", rrf_retriever),
 ]
 
 print(
@@ -167,7 +179,10 @@ for name, retriever in retrievers:
     reciprocal_ranks = []
     precisions = []
     recalls = []
-    knowledge_map = chunk_knowledge_map[name]
+    #knowledge_map = chunk_knowledge_map[name]
+    #extract the knowledge map using the retriever name 
+    knowledge_map_name = knowledge_map_names.get(name, name)
+    knowledge_map = chunk_knowledge_map[knowledge_map_name]
     for evaluation_case in evaluation_cases:
 
         query = evaluation_case["query"]
@@ -177,13 +192,17 @@ for name, retriever in retrievers:
 
         if name == "rag_chunker_metadata_filter_exp":
             metadata_filter = metadata_filter_map[query]
-
-        retrieved_contexts = retriever.retrieve(
-            query=query,
-            top_k=K,
-            metadata_filter=metadata_filter,
-        )
-
+            retrieved_contexts = retriever.retrieve(
+                query=query,
+                top_k=K,
+                metadata_filter=metadata_filter,
+            )
+        else:
+            retrieved_contexts = retriever.retrieve(
+                query=query,
+                top_k=K,
+            )
+        
         
         retrieved_chunks = [
             context.metadata["chunk_id"]
