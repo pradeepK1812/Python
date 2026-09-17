@@ -1,40 +1,21 @@
 import json
 from llm import LLM
 from tools import read_file
-
-TOOLS = [
-    {
-        "type": "function",
-        "function": {
-            "name": "read_file",
-            "description": "Read and return the contents of a text file.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "path": {
-                        "type": "string",
-                        "description": "Path of the text file to read.",
-                    }
-                },
-                "required": ["path"],
-            },
-        },
-    }
-]
+from tools import TOOL_DEFINITIONS, TOOL_REGISTRY
 
 
 def execute_tool(tool_call):
     """Execute a tool requested by the LLM."""
 
     function_name = tool_call.function.name
-    #arguments = tool_call.function.arguments
     arguments = json.loads(tool_call.function.arguments)
 
-    if function_name == "read_file":
-        return read_file(arguments["path"])
+    tool = TOOL_REGISTRY.get(function_name)
 
-    raise ValueError(f"Unknown tool: {function_name}")
+    if tool is None:
+        raise ValueError(f"Unknown tool: {function_name}")
 
+    return tool(**arguments)
 
 def run_agent(objective: str):
     """Run the basic agent loop."""
@@ -55,10 +36,14 @@ def run_agent(objective: str):
         },
     ]
 
-    while True:
+    MAX_ITERATIONS = 10
+
+    for iteration in range(MAX_ITERATIONS):
+        
+        print(f"\n--- Agent iteration {iteration + 1} ---")
         message = llm.generate(
             messages,
-            tools=TOOLS,
+            tools = TOOL_DEFINITIONS,
         )
 
         # Add the assistant's response to the conversation.
@@ -78,3 +63,9 @@ def run_agent(objective: str):
                     "content": result,
                 }
             )
+    
+    raise RuntimeError(
+        f"Agent stopped after reaching the maximum "
+        f"of {MAX_ITERATIONS} iterations."
+    )
+

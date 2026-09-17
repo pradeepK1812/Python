@@ -206,5 +206,31 @@ Seperation of concerns in Agent architecture
 │  Repository / OS / compiler / tests  │
 └──────────────────────────────────────┘
 
+===================================================================================================================
 
+Architecture update  17th Sep:
+
+
+                 ┌──────────────┐
+                 │     Qwen     │
+                 └──────┬───────┘
+                        │
+                  TOOL_DEFINITIONS
+                        │
+                        ▼
+                 ┌──────────────┐
+                 │   agent.py   │
+                 │ Agent / Loop │
+                 └──────┬───────┘
+                        │
+                   tool name
+                        │
+                        ▼
+                 ┌──────────────┐
+                 │TOOL_REGISTRY │
+                 └──────┬───────┘
+                        │
+                 ┌──────┴───────┐
+                 ▼              ▼
+            read_file()    write_file()
 
