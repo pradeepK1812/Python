@@ -33,10 +33,107 @@ from ml.rag.retrievers.vector_store_retriever import (
 )
 from ml.rag.retrievers.rrf_retriever import RRFHybridRetriever
 
+from ml.rag.rerankers.cross_encoder_reranker import CrossEncoderReranker
+
+
 # Path to eval_truth.json file
 truth_json_file_path = "ml/rag/examples/evaluation/eval_truth.json"
 knowledge_json_file_path = "ml/rag/examples/evaluation/chunk_knowledge_map.json"
 metadata_filter_json_file_path = "ml/rag/examples/evaluation/metadata_filter_truth.json"
+
+
+###############################################################################
+#re-ranker function
+
+def evaluate_reranker(
+    retriever,
+    reranker,
+    evaluation_cases,
+    knowledge_map,
+    retrieval_k,
+    final_k,
+):
+    reciprocal_ranks = []
+    precisions = []
+    recalls = []
+
+    for evaluation_case in evaluation_cases:
+
+        query = evaluation_case["query"]
+
+        # Retrieve candidate contexts
+        candidate_contexts = retriever.retrieve(
+            query=query,
+            top_k=retrieval_k,
+        )
+
+        # Rerank candidates
+        reranked_contexts = reranker.rerank(
+            query=query,
+            contexts=candidate_contexts,
+            top_k=final_k,
+        )
+
+        retrieved_chunks = [
+            context.metadata["chunk_id"]
+            for context in reranked_contexts
+        ]
+
+        retrieved_knowledge = chunks_to_knowledge(
+            retrieved_chunks,
+            knowledge_map,
+        )
+
+        relevant_knowledge = set(
+            evaluation_case["relevant_knowledge"]
+        )
+
+        precision = precision_at_k(
+            retrieved_knowledge,
+            relevant_knowledge,
+            final_k,
+        )
+
+        recall = recall_at_k(
+            retrieved_knowledge,
+            relevant_knowledge,
+            final_k,
+        )
+
+        rr = reciprocal_rank(
+            retrieved_knowledge,
+            relevant_knowledge,
+        )
+
+        precisions.append(precision)
+        recalls.append(recall)
+        reciprocal_ranks.append(rr)
+
+        print("-" * 60)
+        print(f"Query: {query}")
+        print(f"Relevant : {sorted(relevant_knowledge)}")
+        print(f"Retrieved: {retrieved_chunks}")
+        print(f"Precision@{final_k}: {precision:.3f}")
+        print(f"Recall@{final_k}   : {recall:.3f}")
+        print(f"RR                 : {rr:.3f}")
+
+    mean_precision = sum(precisions) / len(precisions)
+    mean_recall = sum(recalls) / len(recalls)
+    mrr = mean_reciprocal_rank(reciprocal_ranks)
+
+    print()
+    print("=" * 60)
+    print("Reranker Evaluation")
+    print("=" * 60)
+    print(f"Queries           : {len(evaluation_cases)}")
+    print(f"Candidate K       : {retrieval_k}")
+    print(f"Final K           : {final_k}")
+    print(f"Mean Precision@{final_k}: {mean_precision:.3f}")
+    print(f"Mean Recall@{final_k}   : {mean_recall:.3f}")
+    print(f"MRR               : {mrr:.3f}")
+    print("=" * 60)
+
+################################################################################
 
 
 embedding_model = SentenceTransformerEmbeddingModel(
@@ -122,6 +219,9 @@ rrf_retriever = RRFHybridRetriever(
     rrf_k=2,
 )
 
+#reranker instance creation
+reranker = CrossEncoderReranker()
+
 retrievers = [
     ("rag_demo", section_retriever),
     ("rag_chunker_exp", chunker_retriever),
@@ -162,6 +262,9 @@ print(
 
 #set K as 2 for evaluation
 K =2
+#set retrieval k as 5 for reranker
+RETRIEVAL_K = 5
+
 # 1. Load the JSON file into a list
 with open(truth_json_file_path, "r") as f:
     evaluation_cases = json.load(f)
@@ -262,3 +365,15 @@ for name, retriever in retrievers:
     print(f"Mean Recall@{K}   : {mean_recall:.3f}")
     print(f"MRR              : {mrr:.3f}")
     print("=" * 60)
+
+
+
+#calling the reranker evaluation function
+evaluate_reranker(
+    retriever=chunker_retriever,
+    reranker=reranker,
+    evaluation_cases=evaluation_cases,
+    knowledge_map=chunk_knowledge_map["rag_chunker_exp"],
+    retrieval_k=RETRIEVAL_K,
+    final_k=K,
+)
