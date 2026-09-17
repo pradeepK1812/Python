@@ -4,21 +4,21 @@
 
 Project Name       : Network ML Framework - RAG
 Start Date         : 15-07-2026
-Target Duration    : ~6 Weeks
-Planned Completion : 19-09-2026
+Target Duration    : ~12 Weeks
+Planned Completion : 10-10-2026
 
-Current Phase      : Week 2
+Current Phase      : Week 4
 Current Milestone  : End-to-End RAG Pipeline
-Last Updated       : 19-08-2026
+Last Updated       : 17-09-2026
 
-Overall Progress   : ~45%
+Overall Progress   : ~65%
 
 
 # ==========================================================
 # PHASE 5 : RETRIEVAL AUGMENTED GENERATION (RAG)
 # ==========================================================
 #
-# Duration : ~6 Weeks
+# Duration : ~12 Weeks
 #
 # Goal:
 # Build a production-grade RAG system from scratch while
@@ -133,11 +133,11 @@ Improve retrieval quality using production techniques.
 Topics
 
 [x] Chunk Size Experiments
-[ ] Chunk Overlap
-[ ] Metadata Filtering
-[ ] Hybrid Search
-[ ] BM25 + Vector Search
-[ ] Reranking Models
+[X] Chunk Overlap
+[X] Metadata Filtering
+[X] Hybrid Search
+[X] BM25 + Vector Search
+[X] Reranking Models
 [x] Retrieval Precision
 [x] Retrieval Recall
 [x] Retrieval Evaluation
@@ -321,11 +321,13 @@ At the end of Phase 5, I should be able to:
       06-08-2026
 [✓] M6 - Automated Knowledge Ingestion Pipeline
       08-08-2026
-[ ] M7 - Retrieval Optimization
+[✓] M7 - Retrieval Optimization
+      17-09-2026
 
 [ ] M8 - Enterprise Knowledge Base
 
 [ ] M9 - Production Deployment
+
 ==================================================================================================
 19 Aug ─────────────── ~30 Aug
         Retrieval Optimization
@@ -335,21 +337,21 @@ At the end of Phase 5, I should be able to:
         ├─ Hybrid/BM25
         └─ Reranking
 
-30 Aug ─────────────── ~06 Sep
+17 Sep  ─────────────── ~ 24 Sep
         Vector Infrastructure
         ├─ FAISS
         ├─ IVF
         ├─ HNSW
         └─ Vector DB comparison
 
-06 Sep ─────────────── ~12 Sep
+25 Sep ─────────────── ~1 Oct
         Enterprise RAG
         ├─ Multi-KB
         ├─ Intent routing
         ├─ Orchestration
         └─ Context/cost optimization
 
-12 Sep ─────────────── ~19 Sep
+2 Oct  ─────────────── ~ 10 Oct 
         Production System
         ├─ FastAPI
         ├─ Docker
