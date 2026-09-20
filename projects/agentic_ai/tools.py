@@ -6,6 +6,16 @@ def read_file(path: str) -> str:
     """Read and return the contents of a text file."""
     return Path(path).read_text(encoding="utf-8")
 
+def list_files(path: str = ".") -> str:
+    """List files and directories at the specified path."""
+    
+    path = path or "."
+    entries = sorted(Path(path).iterdir())
+
+    return "\n".join(
+        str(entry)
+        for entry in entries
+    )
 
 
 def write_file(path: str, content: str) -> str:
@@ -33,6 +43,7 @@ TOOL_REGISTRY = {
     "read_file": read_file,
     "write_file": write_file,
     "run_tests": run_tests,
+    "list_files": list_files,
 }
 
 # Describes tools that are exposed to the LLM.
@@ -84,6 +95,31 @@ TOOL_DEFINITIONS = [
             "parameters": {
                 "type": "object",
                 "properties": {},
+                "required": [],
+            },
+        },
+    },
+
+    {
+        "type": "function",
+        "function": {
+            "name": "list_files",
+            "description": (
+                "List files and directories at the specified path. "
+                "Use this to discover the project structure before "
+                "assuming that a file exists."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": (
+                            "Directory path to inspect. "
+                            "Defaults to the current directory."
+                        ),
+                    }
+                },
                 "required": [],
             },
         },

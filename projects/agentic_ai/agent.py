@@ -1,8 +1,9 @@
 import json
-from llm import LLM
+from llm import HuggingFaceLLM
+from llm import GroqLLM
 from tools import read_file
 from tools import TOOL_DEFINITIONS, TOOL_REGISTRY
-
+from task_spec import TaskSpecification
 
 def execute_tool(tool_call):
     """Execute a tool requested by the LLM."""
@@ -14,26 +15,48 @@ def execute_tool(tool_call):
 
     if tool is None:
         raise ValueError(f"Unknown tool: {function_name}")
+    
+    try:
+        return tool(**arguments)
 
-    return tool(**arguments)
+    except Exception as exc:
+        return (
+            f"Tool error while executing '{function_name}': "
+            f"{type(exc).__name__}: {exc}"
+        ) 
 
-def run_agent(objective: str):
+
+
+def run_agent(task: TaskSpecification):
     """Run the basic agent loop."""
 
-    llm = LLM()
+    #llm = LLM()
+    #llm = HuggingFaceLLM()
+    llm = GroqLLM()
 
     messages = [
         {
             "role": "system",
             "content": (
                 "You are a Python coding assistant. "
-                "Use the available tools when necessary."
+                "Use only the tools explicitly provided to you. "
+                "Do not invent, assume, or call tools that are not provided. "
+                "When creating tests for this project, place them under "
+                "the tests/ directory."
             ),
         },
         {
             "role": "user",
-            "content": objective,
+            "content": (
+                f"Objective:\n{task.objective}\n\n"
+                "Acceptance criteria:\n"
+                + "\n".join(
+                    f"- {criterion}"
+                    for criterion in task.acceptance_criteria
+                )
+            ),
         },
+
     ]
 
     MAX_ITERATIONS = 10
@@ -63,6 +86,7 @@ def run_agent(objective: str):
             messages.append(
                 {
                     "role": "tool",
+                    "tool_call_id": tool_call.id,
                     "content": result,
                 }
             )
@@ -72,3 +96,21 @@ def run_agent(objective: str):
         f"of {MAX_ITERATIONS} iterations."
     )
 
+
+
+if __name__ == "__main__":
+    import sys
+    from task_loader import load_task
+
+    if len(sys.argv) != 2:
+        print("Usage: python agent.py <task-file>")
+        sys.exit(1)
+
+    task_file = sys.argv[1]
+
+    task = load_task(task_file)
+
+    result = run_agent(task)
+
+    print("\n=== Agent Result ===")
+    print(result)
