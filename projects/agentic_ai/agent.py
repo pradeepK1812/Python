@@ -55,6 +55,9 @@ def run_agent(objective: str):
 
         # Execute requested tools.
         for tool_call in message.tool_calls:
+
+            print(f"Tool requested: {tool_call.function.name}")
+            print(f"Arguments: {tool_call.function.arguments}")
             result = execute_tool(tool_call)
 
             messages.append(

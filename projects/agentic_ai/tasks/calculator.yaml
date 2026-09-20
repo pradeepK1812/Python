@@ -1,0 +1,6 @@
+objective: >
+  Create calculator.py with functions for addition, subtraction,
+  division, and modular division. Handle division by zero correctly.
+
+acceptance_criteria:
+  - All unit tests must pass.
