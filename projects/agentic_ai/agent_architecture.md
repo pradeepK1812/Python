@@ -233,4 +233,42 @@ Architecture update  17th Sep:
                  ┌──────┴───────┐
                  ▼              ▼
             read_file()    write_file()
+=========================================================================================================
+First run of agent on 20th September:
 
+## Agent v1.0 — Architecture & Flow
+
+
+
+### This is what the diagram represents
+
+```text
+Start
+  ↓
+Load Task
+  ↓
+Initialize Agent
+  ↓
+Send Context to LLM
+  ↓
+LLM decides next action
+  ↓
+Tool call?
+ ┌───────────────┴───────────────┐
+Yes                             No
+ ↓                               ↓
+Execute Tool                    Done
+ ↓
+Tool operates on repository
+ ↓
+Result returned
+ ↓
+Add result to context
+ ↓
+Objective achieved?
+ ┌───────────────┴───────────────┐
+No                              Yes
+ ↓                               ↓
+Loop back to LLM                Done
+
+=============================================================================

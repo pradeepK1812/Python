@@ -1,26 +1,41 @@
-def add(x, y):
-    """Add two numbers."""
-    return x + y
+"""Simple calculator module providing basic arithmetic operations.
+
+Functions:
+- add(a, b): Return the sum of a and b.
+- subtract(a, b): Return the difference a - b.
+- divide(a, b): Return a / b, raising ZeroDivisionError if b is zero.
+- mod_divide(a, b): Return a % b, raising ZeroDivisionError if b is zero.
+
+All functions accept numbers (int or float) and return the appropriate result.
+"""
+
+def add(a, b):
+    """Return the sum of a and b."""
+    return a + b
 
 
-def subtract(x, y):
-    """Subtract y from x."""
-    return x - y
+def subtract(a, b):
+    """Return the difference a - b."""
+    return a - b
 
 
-def divide(x, y):
-    """Divide x by y."""
-    if y == 0:
-        raise ZeroDivisionError("Cannot divide by zero")
-    return x / y
+def divide(a, b):
+    """Return a divided by b.
 
-
-def mod_divide(x, y):
-    """Perform modular division (x mod y).
-
-    The remainder is always non‑negative, regardless of the sign of ``y``.
+    Raises:
+        ZeroDivisionError: If b is zero.
     """
-    if y == 0:
-        raise ZeroDivisionError("Cannot perform modular division by zero")
-    # Use the absolute value of the divisor to ensure a positive remainder.
-    return x % abs(y)
+    if b == 0:
+        raise ZeroDivisionError("division by zero")
+    return a / b
+
+
+def mod_divide(a, b):
+    """Return a modulo b (remainder of division).
+
+    Raises:
+        ZeroDivisionError: If b is zero.
+    """
+    if b == 0:
+        raise ZeroDivisionError("modulo division by zero")
+    return a % b
