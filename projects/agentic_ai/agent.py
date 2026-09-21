@@ -4,6 +4,9 @@ from llm import GroqLLM
 from tools import read_file
 from tools import TOOL_DEFINITIONS, TOOL_REGISTRY
 from task_spec import TaskSpecification
+from evaluator import EvaluationContext
+from evaluators.test_evaluator import TestEvaluator
+
 
 def execute_tool(tool_call):
     """Execute a tool requested by the LLM."""
@@ -33,7 +36,7 @@ def run_agent(task: TaskSpecification):
     #llm = LLM()
     #llm = HuggingFaceLLM()
     llm = GroqLLM()
-
+    test_evaluator = TestEvaluator()
     messages = [
         {
             "role": "system",
@@ -90,7 +93,26 @@ def run_agent(task: TaskSpecification):
                     "content": result,
                 }
             )
-    
+
+            if tool_call.function.name == "run_tests":
+                evaluation_context = EvaluationContext(
+                    objective=task.objective,
+                    tool_name=tool_call.function.name,
+                    tool_result=result,
+                    state={},
+                )
+
+                evaluation = test_evaluator.evaluate(evaluation_context)
+
+                print(f"Evaluation: {evaluation.reason}")
+
+                if evaluation.satisfied:
+                    return (
+                        f"Objective satisfied.\n"
+                        f"Evaluation: {evaluation.reason}"
+                    )
+            
+               
     raise RuntimeError(
         f"Agent stopped after reaching the maximum "
         f"of {MAX_ITERATIONS} iterations."

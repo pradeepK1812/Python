@@ -272,3 +272,23 @@ No                              Yes
 Loop back to LLM                Done
 
 =============================================================================
+Agent v 1.1 evaluation driven architecture
+
+Objective
+    ↓
+   LLM
+    ↓
+  Tools
+    ↓
+ Results
+    ↓
+ Evaluator
+    ↓
+ ┌───────────────┐
+ │ Satisfied?    │
+ └───────┬───────┘
+     No  │  Yes
+      ↓  │   ↓
+     LLM Done
+
+==========================================================================================
