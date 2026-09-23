@@ -1,12 +1,20 @@
+#json
 import json
+#LLM 
 from llm import HuggingFaceLLM
 from llm import GroqLLM
+#tools
 from tools import read_file
 from tools import TOOL_DEFINITIONS, TOOL_REGISTRY
+#tasks
 from task_spec import TaskSpecification
-from evaluator import EvaluationContext
+#evaluators
+from evaluator import EvaluationContext,EvaluationStatus
+from evaluators.evaluation_engine import EvaluationEngine
 from evaluators.test_evaluator import TestEvaluator
-
+from evaluators.acceptance_criteria_evaluator import (
+    AcceptanceCriteriaEvaluator,
+)
 
 def execute_tool(tool_call):
     """Execute a tool requested by the LLM."""
@@ -32,20 +40,33 @@ def execute_tool(tool_call):
 
 def run_agent(task: TaskSpecification):
     """Run the basic agent loop."""
-
+    
+    #LLM initialization
     #llm = LLM()
     #llm = HuggingFaceLLM()
     llm = GroqLLM()
-    test_evaluator = TestEvaluator()
+    #initialization of evaluation engine
+    evaluation_engine = EvaluationEngine(
+        [
+            TestEvaluator(),
+            AcceptanceCriteriaEvaluator(),
+        ]
+    )
     messages = [
         {
             "role": "system",
             "content": (
-                "You are a Python coding assistant. "
-                "Use only the tools explicitly provided to you. "
-                "Do not invent, assume, or call tools that are not provided. "
-                "When creating tests for this project, place them under "
-                "the tests/ directory."
+                            " You are a Python coding agent working on the current repository. "
+                            "Use ONLY the tools provided in the tools parameter. "
+                            "The only available tools are: "
+                            "list_files, read_file, write_file, and run_tests. "
+                            "Never call or reference tools named search, repo_browser.search, "
+                            "repo_browser.print_tree, or any other tool that is not explicitly "
+                            "provided. "
+                            "If you need to inspect the repository, use list_files and read_file. "
+                            "If you need to create or modify a file, use write_file. "
+                            "If you need to verify the implementation, use run_tests. "
+                            "Do not assume that any other repository or filesystem tool exists. "
             ),
         },
         {
@@ -93,25 +114,27 @@ def run_agent(task: TaskSpecification):
                     "content": result,
                 }
             )
-
-            if tool_call.function.name == "run_tests":
-                evaluation_context = EvaluationContext(
-                    objective=task.objective,
-                    tool_name=tool_call.function.name,
-                    tool_result=result,
-                    state={},
-                )
-
-                evaluation = test_evaluator.evaluate(evaluation_context)
-
-                print(f"Evaluation: {evaluation.reason}")
-
-                if evaluation.satisfied:
-                    return (
-                        f"Objective satisfied.\n"
-                        f"Evaluation: {evaluation.reason}"
-                    )
             
+            evaluation_context = EvaluationContext(
+                objective=task.objective,
+                tool_name=tool_call.function.name,
+                tool_result=result,
+                state={
+                    "acceptance_criteria": task.acceptance_criteria,
+                },
+            )
+
+            evaluation = evaluation_engine.evaluate(evaluation_context)
+
+            print(f"Evaluation: {evaluation.reason}")
+
+            #if evaluation.satisfied:
+            if evaluation.status == EvaluationStatus.SATISFIED:
+                return (
+                    f"Objective satisfied.\n"
+                    f"Evaluation: {evaluation.reason}"
+                )
+                        
                
     raise RuntimeError(
         f"Agent stopped after reaching the maximum "

@@ -292,3 +292,65 @@ Objective
      LLM Done
 
 ==========================================================================================
+agent v1.2
+
+
+                 ┌──────────────┐
+                 │     Agent    │
+                 └──────┬───────┘
+                        │
+                        ▼
+                     LLM
+                        │
+                        ▼
+                     Tools
+                        │
+                        ▼
+                Tool execution result
+                        │
+                        ▼
+                EvaluationEngine
+                        │
+              ┌─────────┴─────────┐
+              ▼                   ▼
+       TestEvaluator    AcceptanceCriteriaEvaluator
+              │                   │
+              └─────────┬─────────┘
+                        ▼
+                EvaluationResult
+                        │
+                ┌───────┴────────┐
+                ▼                ▼
+             FAILED        SATISFIED /
+               │          NOT_APPLICABLE
+               ▼                │
+              STOP          continue
+
+
+
+Evaluator flow:
+----------------
+
+
+                    Tool Result
+                        │
+                        ▼
+                EvaluationEngine
+                        │
+             ┌──────────┼──────────┐
+             ▼          ▼          ▼
+          Evaluator  Evaluator   Evaluator
+             │          │          │
+             └──────────┼──────────┘
+                        ▼
+                EvaluationResult
+                        │
+          ┌─────────────┼─────────────┐
+          ▼             ▼             ▼
+      SATISFIED    NOT_APPLICABLE    FAILED
+          │             │              │
+          └──────┬──────┘              │
+                 ▼                     ▼
+              CONTINUE                STOP
+
+============================================================================================================

@@ -37,10 +37,11 @@ Architecture:
       |
       v
     EvaluationResult
-      |
-      +----> satisfied
-      +----> reason
-      +----> details
+      │
+      ├── SATISFIED
+      ├── FAILED
+      └── NOT_APPLICABLE  
+  
 
 Important distinction:
     An evaluator determines whether its specific condition is satisfied.
@@ -51,6 +52,16 @@ Important distinction:
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any
+from enum import Enum
+
+
+
+class EvaluationStatus(Enum):
+    """Possible outcomes of an evaluator."""
+
+    SATISFIED = "satisfied"
+    FAILED = "failed"
+    NOT_APPLICABLE = "not_applicable"
 
 
 @dataclass
@@ -67,7 +78,7 @@ class EvaluationContext:
 class EvaluationResult:
     """Standard result returned by an evaluator."""
 
-    satisfied: bool
+    status: EvaluationStatus
     reason: str
     details: dict[str, Any]
 

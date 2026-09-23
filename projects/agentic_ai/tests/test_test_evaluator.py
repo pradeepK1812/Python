@@ -1,4 +1,4 @@
-from evaluator import EvaluationContext
+from evaluator import EvaluationContext,EvaluationStatus
 from evaluators.test_evaluator import TestEvaluator
 
 
@@ -12,7 +12,7 @@ def test_test_evaluator_passed():
 
     result = TestEvaluator().evaluate(context)
 
-    assert result.satisfied is True
+    assert result.status == EvaluationStatus.SATISFIED
     assert result.reason == "All tests passed."
 
 
@@ -26,7 +26,7 @@ def test_test_evaluator_failed():
 
     result = TestEvaluator().evaluate(context)
 
-    assert result.satisfied is False
+    assert result.status == EvaluationStatus.FAILED
     assert result.reason == "Test suite contains failures."
 
 
@@ -40,5 +40,5 @@ def test_test_evaluator_without_test_result():
 
     result = TestEvaluator().evaluate(context)
 
-    assert result.satisfied is False
-    assert result.reason == "No test result is available."
+    assert result.status == EvaluationStatus.NOT_APPLICABLE
+    assert result.reason == "TestEvaluator does not apply to this tool."

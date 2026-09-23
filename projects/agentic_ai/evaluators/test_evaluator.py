@@ -1,6 +1,8 @@
+
 from evaluator import (
     EvaluationContext,
     EvaluationResult,
+    EvaluationStatus,
     Evaluator,
 )
 
@@ -15,8 +17,8 @@ class TestEvaluator(Evaluator):
 
         if context.tool_name != "run_tests":
             return EvaluationResult(
-                satisfied=False,
-                reason="No test result is available.",
+                status=EvaluationStatus.NOT_APPLICABLE,
+                reason="TestEvaluator does not apply to this tool.",
                 details={},
             )
 
@@ -24,7 +26,7 @@ class TestEvaluator(Evaluator):
 
         if "failed" in result.lower():
             return EvaluationResult(
-                satisfied=False,
+                status=EvaluationStatus.FAILED,
                 reason="Test suite contains failures.",
                 details={
                     "test_output": result,
@@ -33,7 +35,7 @@ class TestEvaluator(Evaluator):
 
         if "passed" in result.lower():
             return EvaluationResult(
-                satisfied=True,
+                status=EvaluationStatus.SATISFIED,
                 reason="All tests passed.",
                 details={
                     "test_output": result,
@@ -41,9 +43,11 @@ class TestEvaluator(Evaluator):
             )
 
         return EvaluationResult(
-            satisfied=False,
+            status=EvaluationStatus.FAILED,
             reason="Unable to determine test result.",
             details={
                 "test_output": result,
             },
         )
+
+
