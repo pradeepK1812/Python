@@ -20,12 +20,19 @@ def execute_tool(tool_call):
     """Execute a tool requested by the LLM."""
 
     function_name = tool_call.function.name
-    arguments = json.loads(tool_call.function.arguments)
+    
+    try:
+           arguments = json.loads(tool_call.function.arguments)
+    except json.JSONDecodeError as exc:
+        return (
+            f"Tool error: invalid JSON arguments for tool "
+            f"'{tool_call.function.name}': {exc}"
+        )
 
     tool = TOOL_REGISTRY.get(function_name)
-
+    
     if tool is None:
-        raise ValueError(f"Unknown tool: {function_name}")
+        return f"Tool error: unknown tool '{function_name}'."
     
     try:
         return tool(**arguments)
@@ -84,14 +91,25 @@ def run_agent(task: TaskSpecification):
     ]
 
     MAX_ITERATIONS = 10
+    LLM_MAX_RETRIES = 1
 
     for iteration in range(MAX_ITERATIONS):
         
         print(f"\n--- Agent iteration {iteration + 1} ---")
-        message = llm.generate(
-            messages,
-            tools = TOOL_DEFINITIONS,
-        )
+
+        for attempt in range(LLM_MAX_RETRIES + 1):
+            try:
+                message = llm.generate(
+                    messages,
+                    tools=TOOL_DEFINITIONS,
+                )
+                break
+            except Exception as exc:
+                if attempt == LLM_MAX_RETRIES:
+                    raise RuntimeError(
+                        f"LLM request failed after "
+                        f"{LLM_MAX_RETRIES} retry: {exc}"
+                    ) from exc
 
         # Add the assistant's response to the conversation.
         messages.append(message)

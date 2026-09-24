@@ -354,3 +354,63 @@ Evaluator flow:
               CONTINUE                STOP
 
 ============================================================================================================
+
+Agent Failure Contract — V1
+-------------------------------
+
+1. Tool failures are converted into tool-result errors.
+   The LLM receives the error and may recover.
+
+2. LLM/API failures are not converted into tool results.
+   They are controller-level failures.
+
+3. The controller may retry an LLM failure a bounded number
+   of times.
+
+4. If the LLM failure cannot be recovered within the retry
+   policy, the agent terminates with an explicit failure.
+
+5. The agent must never silently treat an LLM/API failure
+   as task success.
+
+6. Maximum agent iterations remain an independent termination
+   condition.
+
+                  
+             Agent
+               │
+       ┌───────┼────────┐
+       │       │        │
+       ▼       ▼        ▼
+ Tool error  LLM error  Max iterations
+    │           │             │
+    ▼           ▼             ▼
+  LLM can    Controller      Stop
+  recover     retries
+    │           │
+    ▼           ▼
+ continue    recover/stop
+
+
+
+Retry after failure:
+--------------------
+
+LLM call
+   │
+   ├── success ───────────────→ continue
+   │
+   └── failure
+         │
+         ▼
+      retry once
+         │
+      ┌──┴──┐
+      │     │
+   success failure
+      │     │
+      ▼     ▼
+  continue  terminate
+
+=====================================================================================
+
