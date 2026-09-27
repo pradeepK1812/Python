@@ -1,0 +1,6 @@
+# to check the import we can run the folliwng from project root
+python -c "from ml.rag.vector_stores.faiss_hnsw_vector_store import FAISSHNSWVectorStore; print('Import OK')"
+
+# to check the syntex we acan run the following from project roor:
+
+python -m py_compile ml/rag/vector_stores/faiss_hnsw_vector_store.py
