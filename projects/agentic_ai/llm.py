@@ -5,7 +5,10 @@ from groq import Groq
 
 MODEL = "Qwen/Qwen3-Coder-30B-A3B-Instruct"
 
+class LLMError(Exception):
+    """Base exception for LLM failures."""
 
+    
 class LLM(ABC):
     """Abstract interface for language model providers."""
 

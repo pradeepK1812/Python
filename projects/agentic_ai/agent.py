@@ -3,6 +3,7 @@ import json
 #LLM 
 from llm import HuggingFaceLLM
 from llm import GroqLLM
+from llm import LLMError
 #tools
 from tools import read_file
 from tools import TOOL_DEFINITIONS, TOOL_REGISTRY
@@ -104,7 +105,8 @@ def run_agent(task: TaskSpecification):
                     tools=TOOL_DEFINITIONS,
                 )
                 break
-            except Exception as exc:
+            # except Exception as exc:
+            except LLMError as exc:
                 if attempt == LLM_MAX_RETRIES:
                     raise RuntimeError(
                         f"LLM request failed after "

@@ -2,7 +2,7 @@ from unittest.mock import Mock
 import pytest
 import agent
 from task_spec import TaskSpecification
-
+from llm import LLMError
 
 class FakeLLM:
     def __init__(self):
@@ -12,7 +12,8 @@ class FakeLLM:
         self.calls += 1
 
         if self.calls == 1:
-            raise RuntimeError("temporary LLM failure")
+            # raise RuntimeError("temporary LLM failure")
+            raise LLMError("temporary LLM failure")
 
         return Mock(
             content="Task completed successfully.",
@@ -44,7 +45,8 @@ class AlwaysFailingLLM:
 
     def generate(self, messages, tools=None):
         self.calls += 1
-        raise RuntimeError("LLM unavailable")
+        #raise RuntimeError("LLM unavailable")
+        raise LLMError("LLM unavailable")
 
 
 def test_run_agent_stops_after_llm_retry_failure(monkeypatch):
@@ -64,3 +66,28 @@ def test_run_agent_stops_after_llm_retry_failure(monkeypatch):
         agent.run_agent(task)
 
     assert fake_llm.calls == 2
+
+
+class BuggyLLM:
+    def __init__(self):
+        self.calls = 0
+
+    def generate(self, messages, tools=None):
+        self.calls += 1
+        raise ValueError("unexpected programming error")
+
+
+def test_run_agent_does_not_retry_unexpected_exception(monkeypatch):
+    fake_llm = BuggyLLM()
+
+    monkeypatch.setattr(agent, "GroqLLM", lambda: fake_llm)
+
+    task = TaskSpecification(
+        objective="Test unexpected exception handling.",
+        acceptance_criteria=["Task completes successfully."],
+    )
+
+    with pytest.raises(ValueError, match="unexpected programming error"):
+        agent.run_agent(task)
+
+    assert fake_llm.calls == 1
