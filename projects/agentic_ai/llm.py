@@ -25,6 +25,7 @@ class HuggingFaceLLM(LLM):
         self.client = InferenceClient()
         self.model = model
 
+    
     def generate(self, messages, tools=None):
         """Send messages to the Hugging Face model."""
 
@@ -37,6 +38,8 @@ class HuggingFaceLLM(LLM):
 
         return response.choices[0].message
 
+   
+   
 
 class GroqLLM(LLM):
     """Groq hosted inference implementation."""
@@ -47,14 +50,19 @@ class GroqLLM(LLM):
         )
         self.model = model
 
+    
+
     def generate(self, messages, tools=None):
         """Send messages to the Groq model."""
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+                tools=tools,
+                max_tokens=512,
+            )
+            return response.choices[0].message
+        except Exception as exc:
+            raise LLMError(str(exc)) from exc
 
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=messages,
-            tools=tools,
-            max_tokens=512,
-        )
-
-        return response.choices[0].message
+    

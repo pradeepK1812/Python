@@ -413,4 +413,53 @@ LLM call
   continue  terminate
 
 =====================================================================================
+Error handling architecture:
 
+
+┌──────────────────────────────────┐
+│         Agent Controller         │
+│                                  │
+│  Retry / iteration / termination │
+└───────────────▲──────────────────┘
+                │
+             LLMError
+                │
+┌───────────────┴──────────────────┐
+│          LLM Adapter             │
+│                                  │
+│ Groq / HF / future providers     │
+│ → translate provider failures    │
+└──────────────────────────────────┘
+                │
+                ▼
+          External API
+----------------------------------------------------------------------------------------
+
+
+Current Agent Relaibility contract diagram:
+
+
+                    AGENT
+                      │
+                      │ generate()
+                      ▼
+               ┌─────────────┐
+               │  GroqLLM    │
+               └──────┬──────┘
+                      │
+             Provider/API error
+                      │
+                      ▼
+                 LLMError
+                      │
+                      ▼
+              Agent Controller
+                 │        │
+             retry       retry
+               │           │
+            success      failure
+               │           │
+               ▼           ▼
+            continue     terminate
+
+=====================================================================================================
