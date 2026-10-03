@@ -58,6 +58,19 @@ chunks = [
         embedding=[1.0, 1.0, 0.0],
         embedding_model="test-model",
     ),
+
+    EmbeddedChunk(
+        chunk=Chunk(
+            chunk_id="chunk-4",
+            source_document=document,
+            section=section,
+            chunk_index=2,
+            content="fourth  chunk",
+        ),
+        embedding=[1.0, 1.0, 1.0],
+        embedding_model="test-model",
+    ),
+
 ]
 
 store.add(chunks)
@@ -66,7 +79,7 @@ print("Chunks stored:", len(store._chunks))
 print("Chunk IDs:", [chunk.chunk.chunk_id for chunk in store._chunks])
 
 #serch for one query and print serach result
-query = [1.0, 0.0, 0.0]
+query = [1.0, 0.0,0.0]
 
 results = store.search(
     query,

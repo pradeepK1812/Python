@@ -44,8 +44,14 @@ class FAISSHNSWVectorStore(VectorStore):
        self,
        chunks: list[EmbeddedChunk],
     ) -> None:
+        
+
         if not chunks:
             return
+        
+        # validation for embeddings
+        if any(len(chunk.embedding) != self._dimension for chunk in chunks):
+            raise ValueError("embedding dimension does not match index dimension.")
 
         vectors = np.array(
             [chunk.embedding for chunk in chunks],
@@ -68,6 +74,10 @@ class FAISSHNSWVectorStore(VectorStore):
     ) -> list[EmbeddedChunk]:
         if top_k < 1:
             raise ValueError("top_k must be greater than zero.")
+        
+        #validation for embedding dimension
+        if len(embedding) != self._dimension:
+           raise ValueError("embedding dimension does not match index dimension.")
 
         if self._index.ntotal == 0:
             return []

@@ -54,12 +54,20 @@ class VectorStoreRetriever(Retriever):
 
         query_embedding = self._embedding_model.embed(query)
 
-        embedded_chunks = self._vector_store.search(
-            embedding=query_embedding,
-            top_k=top_k,
-            metadata_filter=metadata_filter,
-        )
+         #added to use filter conditionally
+        if metadata_filter is not None:
+            embedded_chunks = self._vector_store.search(
+                embedding=query_embedding,
+                top_k=top_k,
+                metadata_filter=metadata_filter,
+            )
+        else:
+            embedded_chunks = self._vector_store.search(
+                embedding=query_embedding,
+                top_k=top_k,
+            )
 
+        
         contexts: list[RetrievedContext] = []
 
         for embedded_chunk in embedded_chunks:

@@ -28,6 +28,9 @@ from ml.rag.embeddings.sentence_transformer import (
 from ml.rag.vector_stores.chroma_vector_store import (
     ChromaVectorStore,
 )
+from ml.rag.vector_stores.faiss_hnsw_vector_store import(
+     FAISSHNSWVectorStore
+)
 from ml.rag.retrievers.vector_store_retriever import (
     VectorStoreRetriever,
 )
@@ -150,6 +153,23 @@ chunker_vector_store = ChromaVectorStore(
     collection_name="rag_chunker_exp",
 )
 
+#HNSW 
+
+hnsw_embedded_chunks = chunker_vector_store.get_all()
+
+
+dimension_hnsw = len(hnsw_embedded_chunks[0].embedding)
+hnsw_vector_store = FAISSHNSWVectorStore(
+    dimension= dimension_hnsw,
+    M=8,
+    ef_search=500,
+)
+
+hnsw_vector_store.add(hnsw_embedded_chunks)
+
+######################################################
+
+
 rebalanced_vector_store = ChromaVectorStore(
     persist_directory=":memory:",
     collection_name="rag_chunker_rebalance_exp",
@@ -188,6 +208,11 @@ metadata_filter_vector_store = ChromaVectorStore(
 metadata_filter_retriever = VectorStoreRetriever(
     embedding_model=embedding_model,
     vector_store=metadata_filter_vector_store,
+)
+
+hnsw_retriever = VectorStoreRetriever(
+    embedding_model=embedding_model,
+    vector_store=hnsw_vector_store,
 )
 
 #BM25 retriever after reading the doc and creating the chunks
@@ -230,6 +255,7 @@ retrievers = [
     ("rag_chunker_metadata_filter_exp", metadata_filter_retriever),
     ("rag_chunker_bm25_exp", bm25_retriever),
     ("rag_chunker_rrf_exp", rrf_retriever),
+    ("rag_chunker_exp", hnsw_retriever),
 ]
 
 print(
@@ -255,6 +281,8 @@ print(
     "rag_chunker_metadata_filter_exp count:",
     metadata_filter_vector_store._collection.count(),
 )
+
+print(" HNSW Collection count:", chunker_vector_store._collection.count())
 #=============================================
 #added to create exit checkpoint for testing
 #sys.exit(0)
@@ -289,7 +317,6 @@ for name, retriever in retrievers:
     for evaluation_case in evaluation_cases:
 
         query = evaluation_case["query"]
-
 
         metadata_filter = None
 

@@ -202,4 +202,33 @@ class ChromaVectorStore(VectorStore):
        Converts a list of domain EmbeddedChunks to internal _ChromaRecords.
        """
        return [self._to_chroma(chunk) for chunk in chunks]
+    
 
+    def get_all(self) -> list[EmbeddedChunk]:
+        results = self._collection.get(
+            include=["documents", "embeddings", "metadatas"],
+        )
+
+        ids = results.get("ids", [])
+        documents = results.get("documents", [])
+        embeddings = results.get("embeddings", [])
+        metadatas = results.get("metadatas", [])
+
+        chunks: list[EmbeddedChunk] = []
+
+        for id_, doc, emb, meta in zip(
+            ids,
+            documents,
+            embeddings,
+            metadatas,
+        ):
+            record = _ChromaRecord(
+                id=id_,
+                document=doc,
+                embedding=emb,
+                metadata=meta or {},
+            )
+
+            chunks.append(self._from_chroma(record))
+
+        return chunks
